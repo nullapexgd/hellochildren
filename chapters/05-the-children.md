@@ -121,7 +121,7 @@ LaunchAngel
 __Angel
 ```
 
-There were also LaunchAngel-related messages and an entitlement associated with submitting them.
+The first v0.3 reproduction pass independently found LaunchAngel names and paths in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded additional LaunchAngel-related messages and an entitlement associated with submitting them; those details remain separate receipts until reproduced again.
 
 What does this prove?
 

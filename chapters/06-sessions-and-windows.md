@@ -151,7 +151,7 @@ At last, a form of authority no subsystem can reverse.
 
 ## Private archaeology
 
-The source conversation included a private-API artifact from a third-party project: a comment said a value “MUST be 1” or Finder would draw desktop icons. It is observed code, not public documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
+A third-party `CGSSpace.swift` artifact preserves the comment `this value MUST be 1, otherwise, Finder decides to draw desktop icons` beside a call to the private `CGSSpaceCreate` API. A 2025 GitHub Gist by Julian Schiavo identifies the file as derived from `avaidyam/Parrot` at commit `6cf7ba419176c386ed8f18e838690a7272fe57ee`. This is source-code evidence about that project's observed behavior, not Apple documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
 
 ```text
 Developer:

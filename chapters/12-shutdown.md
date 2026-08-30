@@ -87,11 +87,13 @@ the queue has been draining since Sonoma.
 
 Some processes cooperate. Others interpret “termination handler” as a venue for a second career.
 
-Then comes the observed launchd string around which this entire ending was built:
+Then comes the launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The sentence appeared in launchd material examined in the source conversation. We preserve it exactly and do not claim that the surrounding fictional exchange is Apple’s documented private shutdown sequence.
+The sentence was observed in the earlier source archaeology. The v0.3 reproduction pass did **not** find the exact sentence in `/sbin/launchd` on macOS 27.0 build 26A5416b. That makes its provenance build-specific evidence, not a universal claim about current macOS. Until the older build and artifact are pinned down, that is exactly how the book will describe it.
+
+The surrounding fictional exchange is not Apple's documented private shutdown sequence.
 
 The string does not need help.
 

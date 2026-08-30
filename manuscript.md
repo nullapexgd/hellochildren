@@ -597,21 +597,21 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from an Apple launchd binary. Before publication, each should be reproduced on the named target build. For this draft, we preserve them as observed strings and refuse to infer more than they say.
+The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. Two lines used here were reproduced on that exact build:
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
 And:
 
-> `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
-
-And:
-
 > `rlimit(3)? Really?`
+
+A third line remains an earlier source-archaeology observation pending independent reproduction:
+
+> `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
 
 At some point the authors of launchd stopped writing diagnostics and began responding personally.
 
-The strings establish that those words occurred in the examined material, not the full private code path or emotional condition of the engineer. The latter is a strong inference.
+The reproduced strings establish that those words occur in the named binary/build. They do not establish the full private code path or emotional condition of the engineer. The latter is a strong inference.
 
 ```text
 Job:
@@ -858,7 +858,7 @@ LaunchAngel
 __Angel
 ```
 
-There were also LaunchAngel-related messages and an entitlement associated with submitting them.
+The first v0.3 reproduction pass independently found LaunchAngel names and paths in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded additional LaunchAngel-related messages and an entitlement associated with submitting them; those details remain separate receipts until reproduced again.
 
 What does this prove?
 
@@ -1114,7 +1114,7 @@ At last, a form of authority no subsystem can reverse.
 
 ## Private archaeology
 
-The source conversation included a private-API artifact from a third-party project: a comment said a value “MUST be 1” or Finder would draw desktop icons. It is observed code, not public documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
+A third-party `CGSSpace.swift` artifact preserves the comment `this value MUST be 1, otherwise, Finder decides to draw desktop icons` beside a call to the private `CGSSpaceCreate` API. A 2025 GitHub Gist by Julian Schiavo identifies the file as derived from `avaidyam/Parrot` at commit `6cf7ba419176c386ed8f18e838690a7272fe57ee`. This is source-code evidence about that project's observed behavior, not Apple documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
 
 ```text
 Developer:
@@ -1874,9 +1874,9 @@ Concise dialogue does not imply simple machinery. The secure relative refuses to
 
 ## The mailbox
 
-The Application Processor and SEP need a way to communicate across their boundary. Reverse-engineering literature and the source conversation describe mailbox-style hardware messaging in this context.
+The Application Processor and SEP need a way to communicate across their boundary. Asahi Linux's public SEP documentation identifies a SEP mailbox, gives a mailbox base for documented reverse-engineering targets, and shows traced messages moving between AP-side software and SEP endpoints.
 
-We will use *mailbox* without inventing private opcodes, payload meanings, or authorization semantics.
+That is enough to use the word *mailbox*. It is not permission to invent private opcodes, payload meanings, or authorization semantics beyond what the reverse-engineering evidence actually establishes.
 
 This is especially difficult because the user also has a Unix mailbox.
 
@@ -2475,11 +2475,13 @@ the queue has been draining since Sonoma.
 
 Some processes cooperate. Others interpret “termination handler” as a venue for a second career.
 
-Then comes the observed launchd string around which this entire ending was built:
+Then comes the launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The sentence appeared in launchd material examined in the source conversation. We preserve it exactly and do not claim that the surrounding fictional exchange is Apple’s documented private shutdown sequence.
+The sentence was observed in the earlier source archaeology. The v0.3 reproduction pass did **not** find the exact sentence in `/sbin/launchd` on macOS 27.0 build 26A5416b. That makes its provenance build-specific evidence, not a universal claim about current macOS. Until the older build and artifact are pinned down, that is exactly how the book will describe it.
+
+The surrounding fictional exchange is not Apple's documented private shutdown sequence.
 
 The string does not need help.
 

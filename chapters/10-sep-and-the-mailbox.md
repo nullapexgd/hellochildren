@@ -92,9 +92,9 @@ Concise dialogue does not imply simple machinery. The secure relative refuses to
 
 ## The mailbox
 
-The Application Processor and SEP need a way to communicate across their boundary. Reverse-engineering literature and the source conversation describe mailbox-style hardware messaging in this context.
+The Application Processor and SEP need a way to communicate across their boundary. Asahi Linux's public SEP documentation identifies a SEP mailbox, gives a mailbox base for documented reverse-engineering targets, and shows traced messages moving between AP-side software and SEP endpoints.
 
-We will use *mailbox* without inventing private opcodes, payload meanings, or authorization semantics.
+That is enough to use the word *mailbox*. It is not permission to invent private opcodes, payload meanings, or authorization semantics beyond what the reverse-engineering evidence actually establishes.
 
 This is especially difficult because the user also has a Unix mailbox.
 

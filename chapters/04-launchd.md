@@ -47,21 +47,21 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from an Apple launchd binary. Before publication, each should be reproduced on the named target build. For this draft, we preserve them as observed strings and refuse to infer more than they say.
+The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. Two lines used here were reproduced on that exact build:
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
 And:
 
-> `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
-
-And:
-
 > `rlimit(3)? Really?`
+
+A third line remains an earlier source-archaeology observation pending independent reproduction:
+
+> `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
 
 At some point the authors of launchd stopped writing diagnostics and began responding personally.
 
-The strings establish that those words occurred in the examined material, not the full private code path or emotional condition of the engineer. The latter is a strong inference.
+The reproduced strings establish that those words occur in the named binary/build. They do not establish the full private code path or emotional condition of the engineer. The latter is a strong inference.
 
 ```text
 Job:
