@@ -58,15 +58,15 @@ why
 
 ## Eight badges
 
-In the examined macOS build from the source conversation, `/usr/libexec/amfid` exposed eight entitlement keys. That number is a build-specific observation, not a universal constant.
+The v0.3 reproduction pass extracted `/usr/libexec/amfid`'s entitlements on macOS 27.0 build 26A5416b and counted eight top-level keys. That independently reproduces the earlier source-conversation count. It is still a build-specific fact, not a universal constant.
 
-The set included developer-mode control, NVRAM, protected storage, a keystore/keybag path, TCC allowance, hardened-process state, and IOKit access. The number destroyed a bad theory: more entitlements do not mean more authority.
+The set includes developer-mode control, NVRAM read/write access, protected `amfid` storage, a keystore/keybag-load capability, a TCC allowance for `kTCCServiceSystemPolicyAllFiles`, hardened-process state, and access to `AppleMobileFileIntegrityUserClient`. The number destroys a bad theory: more entitlements do not mean more authority.
 
 The component crossing forty protected boundaries may need forty badges. The component enforcing one may need eight.
 
 ```text
 sharingd:
-I have 134 entitlements.
+I have 132 entitlements.
 
 amfid:
 I have 8.

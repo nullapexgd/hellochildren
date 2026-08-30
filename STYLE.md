@@ -61,7 +61,7 @@ Quote the exact observed spelling. Identify the binary, path, entitlement, or ot
 - LaunchAngels are treated as an observed undocumented Apple concept. Their complete semantics remain unknown.
 - “signature?” is comic dialogue assigned to `amfid`, not a claimed private protocol string.
 - The SEP mailbox is a hardware messaging metaphor grounded in mailbox-style communication; no private message opcode or payload meaning is invented.
-- “At the mercy of the kernel” is preserved as an observed launchd string from the source conversation’s binary archaeology.
+- “At the mercy of the kernel” is reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b, split across two adjacent extracted strings; preserve the reconstructed sentence exactly.
 - The hyprvisor is an outside character and not an Apple component.
 
 ## The revision test

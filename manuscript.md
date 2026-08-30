@@ -175,7 +175,7 @@ Some daemons carry more than a hundred entitlement keys in a particular build. A
 
 ```text
 sharingd:
-I have 134 entitlements.
+I have over a hundred entitlements.
 
 amfid:
 I have 8.
@@ -597,7 +597,7 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. Two lines used here were reproduced on that exact build:
+The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. All three lines used here were reproduced on that exact build:
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
@@ -605,7 +605,7 @@ And:
 
 > `rlimit(3)? Really?`
 
-A third line remains an earlier source-archaeology observation pending independent reproduction:
+And, with the unmistakable tone of an engineer whose day has taken a turn:
 
 > `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
 
@@ -858,7 +858,7 @@ LaunchAngel
 __Angel
 ```
 
-The first v0.3 reproduction pass independently found LaunchAngel names and paths in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded additional LaunchAngel-related messages and an entitlement associated with submitting them; those details remain separate receipts until reproduced again.
+The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded an entitlement associated with submitting them; that entitlement remains a separate receipt until reproduced again.
 
 What does this prove?
 
@@ -1223,15 +1223,15 @@ why
 
 ## Eight badges
 
-In the examined macOS build from the source conversation, `/usr/libexec/amfid` exposed eight entitlement keys. That number is a build-specific observation, not a universal constant.
+The v0.3 reproduction pass extracted `/usr/libexec/amfid`'s entitlements on macOS 27.0 build 26A5416b and counted eight top-level keys. That independently reproduces the earlier source-conversation count. It is still a build-specific fact, not a universal constant.
 
-The set included developer-mode control, NVRAM, protected storage, a keystore/keybag path, TCC allowance, hardened-process state, and IOKit access. The number destroyed a bad theory: more entitlements do not mean more authority.
+The set includes developer-mode control, NVRAM read/write access, protected `amfid` storage, a keystore/keybag-load capability, a TCC allowance for `kTCCServiceSystemPolicyAllFiles`, hardened-process state, and access to `AppleMobileFileIntegrityUserClient`. The number destroys a bad theory: more entitlements do not mean more authority.
 
 The component crossing forty protected boundaries may need forty badges. The component enforcing one may need eight.
 
 ```text
 sharingd:
-I have 134 entitlements.
+I have 132 entitlements.
 
 amfid:
 I have 8.
@@ -1358,15 +1358,15 @@ Somewhere nearby, a system larger than the speaker checks the signature. The lin
 
 Then this motherfucker arrives.
 
-In the examined macOS build from the source conversation, `/usr/libexec/sharingd` carried 134 entitlement keys.
+The earlier source-conversation build of `/usr/libexec/sharingd` counted 134 entitlement keys. The v0.3 reproduction target—macOS 27.0 build 26A5416b—counts **132**.
 
-The number is build-specific. The list is not a universal constant, a privacy verdict, or a ranking of royal power. It is still an extraordinary entrance.
+That two-key drift is useful evidence in its own right. Entitlement counts are build-specific, not universal constants, privacy verdicts, or rankings of royal power. Either count is still an extraordinary entrance.
 
-The keys touched Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking.
+The current set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also independently reproduces exact private keys including `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
 
 `sharingd` did not walk into the room.
 
-It arrived with a diplomatic passport and 134 visas.
+It arrived with a diplomatic passport and 132 visas.
 
 ## I share things
 
@@ -1403,7 +1403,7 @@ sharingd:
 several radios and services.
 
 User:
-why do you have 134 entitlements
+why do you have 132 entitlements
 
 sharingd:
 I told you.
@@ -1531,7 +1531,7 @@ launchd:
 badges?
 
 sharingd:
-*drops 134 entitlements on desk*
+*drops 132 entitlements on desk*
 
 launchd:
 I asked a yes-or-no question
@@ -2479,9 +2479,13 @@ Then comes the launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The sentence was observed in the earlier source archaeology. The v0.3 reproduction pass did **not** find the exact sentence in `/sbin/launchd` on macOS 27.0 build 26A5416b. That makes its provenance build-specific evidence, not a universal claim about current macOS. Until the older build and artifact are pinned down, that is exactly how the book will describe it.
+The earlier source archaeology saw that sentence, and the v0.3 reproduction pass found it again in `/sbin/launchd` on macOS 27.0 build 26A5416b—with one wonderfully annoying wrinkle. A plain exact-string search missed it because the binary's extracted strings split the sentence in two adjacent pieces:
 
-The surrounding fictional exchange is not Apple's documented private shutdown sequence.
+> `(or halting) the system now. Any processes that are still running`
+>
+> `will be abandoned to the mercy of the kernel.`
+
+Read together, the sentence is present on the current build. The surrounding fictional exchange is still not Apple's documented private shutdown sequence.
 
 The string does not need help.
 
@@ -2511,7 +2515,7 @@ that is why the sentence works.
 
 XNU has spent the book resenting every authority that qualified its title. At shutdown, userspace returns to the one fact nobody disputed: the kernel controls whether ordinary processes continue executing in its world.
 
-The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 134 badges. None is a defense against final kernel teardown.
+The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges on this build. None is a defense against final kernel teardown.
 
 ```text
 sharingd:

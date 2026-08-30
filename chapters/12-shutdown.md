@@ -91,9 +91,13 @@ Then comes the launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The sentence was observed in the earlier source archaeology. The v0.3 reproduction pass did **not** find the exact sentence in `/sbin/launchd` on macOS 27.0 build 26A5416b. That makes its provenance build-specific evidence, not a universal claim about current macOS. Until the older build and artifact are pinned down, that is exactly how the book will describe it.
+The earlier source archaeology saw that sentence, and the v0.3 reproduction pass found it again in `/sbin/launchd` on macOS 27.0 build 26A5416b—with one wonderfully annoying wrinkle. A plain exact-string search missed it because the binary's extracted strings split the sentence in two adjacent pieces:
 
-The surrounding fictional exchange is not Apple's documented private shutdown sequence.
+> `(or halting) the system now. Any processes that are still running`
+>
+> `will be abandoned to the mercy of the kernel.`
+
+Read together, the sentence is present on the current build. The surrounding fictional exchange is still not Apple's documented private shutdown sequence.
 
 The string does not need help.
 
@@ -123,7 +127,7 @@ that is why the sentence works.
 
 XNU has spent the book resenting every authority that qualified its title. At shutdown, userspace returns to the one fact nobody disputed: the kernel controls whether ordinary processes continue executing in its world.
 
-The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 134 badges. None is a defense against final kernel teardown.
+The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges on this build. None is a defense against final kernel teardown.
 
 ```text
 sharingd:

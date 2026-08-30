@@ -121,7 +121,7 @@ LaunchAngel
 __Angel
 ```
 
-The first v0.3 reproduction pass independently found LaunchAngel names and paths in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded additional LaunchAngel-related messages and an entitlement associated with submitting them; those details remain separate receipts until reproduced again.
+The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded an entitlement associated with submitting them; that entitlement remains a separate receipt until reproduced again.
 
 What does this prove?
 

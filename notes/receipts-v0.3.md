@@ -24,17 +24,27 @@ build 26A5416b
 
 The target binary for the launchd string pass was `/sbin/launchd`.
 
+The uploaded reproduction archive records these SHA-256 hashes:
+
+```text
+/sbin/launchd         d22838ef07a8c6e63f1692cccca48e1a7e22e6d65349dacdc203fc513086f36e
+/usr/libexec/amfid    896ed6b66560cc7e8abdea69f42c36e51ed033962b062556ebd2e801a9910944
+/usr/libexec/sharingd 3cd91f7e6c896f21ff59238eb81733b8fac4365bce260c027d9d0b95b3164a35
+```
+
+The same archive identifies `launchd` as `com.apple.xpc.launchd` / Darwin Bootstrapper `3298.1.1`, `amfid` as `com.apple.amfid`, and `sharingd` as `com.apple.sharingd`.
+
 ## Local reproduction results
 
 | Evidence ID | Claim / artifact | Class | v0.3 result | Publication rule |
 |---|---|---|---|---|
 | OBS-LAUNCHD-001 | `_ThrottleInterval set to zero. You're not that important. Ignoring.` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. | May quote exactly and name the build. Do not infer the complete runtime path from the string. |
 | OBS-LAUNCHD-002 | `rlimit(3)? Really?` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. | May quote exactly and name the build. |
-| SRC-LAUNCHD-003 | `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?` | SRC-OBS | Present in earlier source archaeology; not yet recorded as reproduced by the first v0.3 pass. | Keep as an earlier observed string until independently reproduced. |
-| OBS-ANGEL-001 | LaunchAngel names / paths | OBS + INF | LaunchAngel names and paths were reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. Their complete semantics remain unknown. | The existence of the names/paths is observable. The job description is not. |
-| NEG-LAUNCHD-001 | `Any processes that are still running will be abandoned to the mercy of the kernel.` | SRC-OBS + negative current-build result | The exact sentence was **not** present in `/sbin/launchd` on macOS 27.0 build 26A5416b. It remains an earlier source-conversation observation. | Never present it as a universal current launchd string. State the build-specific non-reproduction when discussing its provenance. |
-| PENDING-ENT-001 | `/usr/libexec/amfid` entitlement count = 8 | SRC-OBS | First v0.3 `codesign` attempt returned no XML; independent reproduction still pending. | Keep the count explicitly build-specific and sourced to the earlier observation until a second extraction method succeeds. |
-| PENDING-ENT-002 | `/usr/libexec/sharingd` entitlement count = 134 | SRC-OBS | First v0.3 `codesign` attempt returned no XML; independent reproduction still pending. | Same rule as above. Entitlement names establish granted capabilities, not proof of use. |
+| OBS-LAUNCHD-003 | `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. | May quote exactly; do not infer the complete runtime path. |
+| OBS-ANGEL-001 | `LaunchAngel`, `__Angel`, LaunchAngels paths, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` | OBS + INF | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. Three path spellings were observed: `/System/Library/LaunchAngels/`, `/System/AppleInternal/Library/LaunchAngels/`, and `/AppleInternal/Library/LaunchAngels/`. | Names, paths, and diagnostic are observable. Complete semantics are not. |
+| OBS-LAUNCHD-004 | `Any processes that are still running will be abandoned to the mercy of the kernel.` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b, split across two adjacent extracted strings: `(or halting) the system now. Any processes that are still running` and `will be abandoned to the mercy of the kernel.` | The split explains why a naive exact-string grep initially reported a false negative. Quote the reconstructed sentence exactly; do not invent the surrounding private call flow. |
+| OBS-ENT-001 | `/usr/libexec/amfid` entitlement count = 8 | OBS | XML extraction succeeded on macOS 27.0 build 26A5416b and contains eight top-level keys. | Build-specific count. Preserve values and arrays when interpreting capabilities. |
+| OBS-ENT-002 | `/usr/libexec/sharingd` entitlement count = 132 | OBS + SRC-OBS | XML extraction succeeded on macOS 27.0 build 26A5416b and contains 132 top-level keys. The earlier source-conversation build counted 134. | Count drift is itself a reason to label the build. Entitlements establish granted capability, not actual use. |
 
 ## Public primary-source receipts
 
@@ -162,12 +172,23 @@ Supports: the second-method entitlement reproduction attempt for Chapters 7 and 
 
 ## Still-open receipts
 
-The following should remain explicitly provisional until reproduced or sourced more strongly:
+The local reproduction closed several first-pass gaps. The following remain explicitly provisional or incomplete:
 
-1. Exact current-build `amfid` and `sharingd` entitlement sets and counts.
-2. Exact full spelling/location of every LaunchAngel-related artifact beyond the first reproduced names/paths.
-3. Exact provenance/build for the older `at the mercy of the kernel` string.
-4. Any broader WindowServer role that goes beyond the narrow public event-delivery documentation.
-5. Exact current-build entitlement extraction for `amfid` and `sharingd`; `tools/collect-macos-receipts.sh` now retries using Apple's current `codesign --display --entitlements - --xml` form and also preserves the default DER-aware representation.
+1. Exact provenance/build for the earlier **134-key** `sharingd` dump, now that the v0.3 target independently returns **132**.
+2. The earlier LaunchAngel-related entitlement associated with submitting them; current reproduction confirms names, paths, `__Angel`, and a resolution-failure diagnostic, but not that entitlement.
+3. Any broader WindowServer role that goes beyond the narrow public event-delivery documentation.
+4. Behavioral meaning of private entitlement names such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, or `com.apple.private.nsurlsession.impersonate`; current reproduction proves those keys are granted to `sharingd`, not what every authorized server-side path permits or what the daemon actually invokes.
+5. Runtime conditions for the undocumented `launchd` diagnostics. Static strings prove presence, not execution frequency or exact code path.
+
+### Reproduction lesson: exact-string search can lie by omission
+
+The shutdown sentence produced a useful methodology bug. Searching the extracted string table for the entire sentence failed because the binary stores/exposes it as adjacent pieces. Searching for the distinctive suffix found:
+
+```text
+(or halting) the system now. Any processes that are still running
+will be abandoned to the mercy of the kernel.
+```
+
+That is not evidence against exact-string searching; it is evidence that negative static-string results need a second search using distinctive fragments and surrounding context before being promoted to "absent."
 
 The manuscript should get more precise as these receipts improve, not more confident because a line is funny.

@@ -144,7 +144,7 @@ Some daemons carry more than a hundred entitlement keys in a particular build. A
 
 ```text
 sharingd:
-I have 134 entitlements.
+I have over a hundred entitlements.
 
 amfid:
 I have 8.

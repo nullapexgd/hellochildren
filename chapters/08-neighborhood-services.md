@@ -2,15 +2,15 @@
 
 Then this motherfucker arrives.
 
-In the examined macOS build from the source conversation, `/usr/libexec/sharingd` carried 134 entitlement keys.
+The earlier source-conversation build of `/usr/libexec/sharingd` counted 134 entitlement keys. The v0.3 reproduction target—macOS 27.0 build 26A5416b—counts **132**.
 
-The number is build-specific. The list is not a universal constant, a privacy verdict, or a ranking of royal power. It is still an extraordinary entrance.
+That two-key drift is useful evidence in its own right. Entitlement counts are build-specific, not universal constants, privacy verdicts, or rankings of royal power. Either count is still an extraordinary entrance.
 
-The keys touched Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking.
+The current set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also independently reproduces exact private keys including `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
 
 `sharingd` did not walk into the room.
 
-It arrived with a diplomatic passport and 134 visas.
+It arrived with a diplomatic passport and 132 visas.
 
 ## I share things
 
@@ -47,7 +47,7 @@ sharingd:
 several radios and services.
 
 User:
-why do you have 134 entitlements
+why do you have 132 entitlements
 
 sharingd:
 I told you.
@@ -175,7 +175,7 @@ launchd:
 badges?
 
 sharingd:
-*drops 134 entitlements on desk*
+*drops 132 entitlements on desk*
 
 launchd:
 I asked a yes-or-no question
