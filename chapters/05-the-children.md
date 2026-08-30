@@ -121,7 +121,9 @@ LaunchAngel
 __Angel
 ```
 
-The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded an entitlement associated with submitting them; that entitlement remains a separate receipt until reproduced again.
+The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. The same binary also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
+
+That last string is useful, but narrow evidence. It supports that launchd contains code or data referring to a private entitlement by that name. It does **not** prove which process carries the entitlement, the complete authorization path, or what submitting a LaunchAngel ultimately means.
 
 What does this prove?
 

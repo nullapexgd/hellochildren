@@ -59,6 +59,7 @@ Quote the exact observed spelling. Identify the binary, path, entitlement, or ot
 
 - Fake launchd is a deliberately created Unix user named `launchd`, UID 2. It is not Apple’s PID 1 process and it is not canonically part of macOS.
 - LaunchAngels are treated as an observed undocumented Apple concept. Their complete semantics remain unknown.
+- `com.apple.private.xpc.launchd.allow-submit-launch-angels` is reproduced as a string in current `launchd`; it is evidence of a named entitlement check/reference, not a license to invent the LaunchAngel protocol.
 - “signature?” is comic dialogue assigned to `amfid`, not a claimed private protocol string.
 - The SEP mailbox is a hardware messaging metaphor grounded in mailbox-style communication; no private message opcode or payload meaning is invented.
 - “At the mercy of the kernel” is reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b, split across two adjacent extracted strings; preserve the reconstructed sentence exactly.

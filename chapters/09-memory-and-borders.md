@@ -119,7 +119,7 @@ Unrestricted DMA is a burglar with excellent throughput.
 
 Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
 
-Apple’s DART blocks are the family’s I/O mapping enforcers.
+Apple's public security guide uses the generic term *IOMMU*. Public Asahi Linux reverse engineering identifies the Apple silicon IOMMU hardware as **DART**. That is why the family gives the loading-dock job to DART rather than pretending Apple used the name in the public security page.
 
 ```text
 Device:

@@ -858,7 +858,9 @@ LaunchAngel
 __Angel
 ```
 
-The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. Earlier archaeology also recorded an entitlement associated with submitting them; that entitlement remains a separate receipt until reproduced again.
+The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. The same binary also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
+
+That last string is useful, but narrow evidence. It supports that launchd contains code or data referring to a private entitlement by that name. It does **not** prove which process carries the entitlement, the complete authorization path, or what submitting a LaunchAngel ultimately means.
 
 What does this prove?
 
@@ -1044,9 +1046,9 @@ Then comes WindowServer.
 
 Apps tend to think they own their windows because the windows contain their names, controls, and occasionally an unsaved document they have been protecting from you for four hours.
 
-WindowServer sees windows, surfaces, displays, session state, event routing, and the machinery through which multiple clients inhabit one graphical universe.
+WindowServer sees the graphical world at a level individual apps do not. Apple publicly documents windows managed by the macOS window server, display-control features provided through that server, and the window server's role in delivering input events to applications.
 
-Apple publicly documents the system window server delivering input events to applications. Private frameworks and implementation details add much more, but the family can make its point without pretending every private API is known.
+That is enough for the family argument. Private frameworks and implementation details clearly add more, but we do not need to promote every observed private surface, entitlement, or symbol into a public architectural promise.
 
 ```text
 App:
@@ -1661,7 +1663,7 @@ Unrestricted DMA is a burglar with excellent throughput.
 
 Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
 
-Apple’s DART blocks are the family’s I/O mapping enforcers.
+Apple's public security guide uses the generic term *IOMMU*. Public Asahi Linux reverse engineering identifies the Apple silicon IOMMU hardware as **DART**. That is why the family gives the loading-dock job to DART rather than pretending Apple used the name in the public security page.
 
 ```text
 Device:

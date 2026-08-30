@@ -77,8 +77,10 @@ if [ -n "$STRINGS" ] && [ -e /sbin/launchd ]; then
         grep -F 'Any processes that are still running will be abandoned to the mercy of the kernel.' "$out/launchd.strings.txt" || true
     } > "$out/launchd.target-strings.txt"
 
-    grep -E 'LaunchAngel|LaunchAngels|__Angel' "$out/launchd.strings.txt" \
-        > "$out/launchd.launchangel.txt" || true
+    {
+        grep -E 'LaunchAngel|LaunchAngels|__Angel' "$out/launchd.strings.txt" || true
+        grep -F 'com.apple.private.xpc.launchd.allow-submit-launch-angels' "$out/launchd.strings.txt" || true
+    } > "$out/launchd.launchangel.txt"
 else
     printf 'strings tool unavailable\n' > "$out/launchd.strings-unavailable.txt"
 fi

@@ -81,9 +81,9 @@ Then comes WindowServer.
 
 Apps tend to think they own their windows because the windows contain their names, controls, and occasionally an unsaved document they have been protecting from you for four hours.
 
-WindowServer sees windows, surfaces, displays, session state, event routing, and the machinery through which multiple clients inhabit one graphical universe.
+WindowServer sees the graphical world at a level individual apps do not. Apple publicly documents windows managed by the macOS window server, display-control features provided through that server, and the window server's role in delivering input events to applications.
 
-Apple publicly documents the system window server delivering input events to applications. Private frameworks and implementation details add much more, but the family can make its point without pretending every private API is known.
+That is enough for the family argument. Private frameworks and implementation details clearly add more, but we do not need to promote every observed private surface, entitlement, or symbol into a public architectural promise.
 
 ```text
 App:

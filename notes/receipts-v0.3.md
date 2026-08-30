@@ -42,9 +42,12 @@ The same archive identifies `launchd` as `com.apple.xpc.launchd` / Darwin Bootst
 | OBS-LAUNCHD-002 | `rlimit(3)? Really?` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. | May quote exactly and name the build. |
 | OBS-LAUNCHD-003 | `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. | May quote exactly; do not infer the complete runtime path. |
 | OBS-ANGEL-001 | `LaunchAngel`, `__Angel`, LaunchAngels paths, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` | OBS + INF | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b. Three path spellings were observed: `/System/Library/LaunchAngels/`, `/System/AppleInternal/Library/LaunchAngels/`, and `/AppleInternal/Library/LaunchAngels/`. | Names, paths, and diagnostic are observable. Complete semantics are not. |
+| OBS-ANGEL-002 | `com.apple.private.xpc.launchd.allow-submit-launch-angels` | OBS + INF | Reproduced as an exact string in `/sbin/launchd` on macOS 27.0 build 26A5416b. | Supports that launchd contains a reference/check for a private entitlement by this name. Does not establish which process carries it, its full authorization path, or LaunchAngel semantics. |
 | OBS-LAUNCHD-004 | `Any processes that are still running will be abandoned to the mercy of the kernel.` | OBS | Reproduced in `/sbin/launchd` on macOS 27.0 build 26A5416b, split across two adjacent extracted strings: `(or halting) the system now. Any processes that are still running` and `will be abandoned to the mercy of the kernel.` | The split explains why a naive exact-string grep initially reported a false negative. Quote the reconstructed sentence exactly; do not invent the surrounding private call flow. |
 | OBS-ENT-001 | `/usr/libexec/amfid` entitlement count = 8 | OBS | XML extraction succeeded on macOS 27.0 build 26A5416b and contains eight top-level keys. | Build-specific count. Preserve values and arrays when interpreting capabilities. |
 | OBS-ENT-002 | `/usr/libexec/sharingd` entitlement count = 132 | OBS + SRC-OBS | XML extraction succeeded on macOS 27.0 build 26A5416b and contains 132 top-level keys. The earlier source-conversation build counted 134. | Count drift is itself a reason to label the build. Entitlements establish granted capability, not actual use. |
+| OBS-ENT-003 | Exact `amfid` entitlement values | OBS | Current-build XML includes `com.apple.private.tcc.allow = [kTCCServiceSystemPolicyAllFiles]`, `com.apple.security.exception.iokit-user-client-class = [AppleMobileFileIntegrityUserClient]`, plus six boolean keys. | Values matter. A key-only grep would lose the arrays and overstate what was actually observed. |
+| OBS-ENT-004 | Selected exact `sharingd` entitlement values | OBS | Current-build XML includes `com.apple.private.cloudkit.masquerade = true`, `com.apple.private.cloudkit.systemService = true`, `com.apple.private.nsurlsession.impersonate = true`, `com.apple.developer.icloud-services = [CloudKit]`, and `com.apple.private.tcc.allow = [kTCCServiceAddressBook, kTCCServiceLiverpool, kTCCServicePhotos]`. | These are granted claims in the code signature. Names alone do not establish runtime use or server-side authorization semantics. |
 
 ## Public primary-source receipts
 
@@ -88,6 +91,18 @@ Supports: Chapter 6's narrow event-delivery claim.
 
 Does **not** by itself support: every broader private WindowServer responsibility described by character metaphor.
 
+### PUB-WINDOW-002 — current public window/display-server surface
+
+Apple's current Quartz Window Services documentation describes onscreen and offscreen windows **managed by the macOS window server**, including window information scoped to the current user session. Quartz Display Services says it provides access to features in the macOS window server for display configuration and control.
+
+Sources:
+- <https://developer.apple.com/documentation/coregraphics/quartz-window-services>
+- <https://developer.apple.com/documentation/coregraphics/quartz-display-services>
+
+Supports: Chapter 6 saying WindowServer has authority over managed windows and participates in display control, alongside the older public event-delivery documentation.
+
+Does **not** support: treating every private SkyLight surface, entitlement, session primitive, or observed symbol as a documented WindowServer contract.
+
 ### PUB-TRUST-001 — code signing, notarization, Gatekeeper, trust caches are distinct
 
 Apple documents code signing and notarization as independent mechanisms with different goals; Gatekeeper applies launch-time policy to downloaded software; trust caches are a separate secure-boot/runtime trust mechanism.
@@ -119,6 +134,18 @@ Source: <https://support.apple.com/guide/security/direct-memory-access-protectio
 Supports: Chapter 9's loading-dock model.
 
 Caveat: Apple's public page says IOMMU. `DART` is the implementation name used in relevant Apple-silicon / reverse-engineering contexts; do not imply that the public page itself names DART.
+
+### RE-DART-001 — DART is the Apple silicon IOMMU name in public reverse engineering
+
+Asahi Linux documentation and project reports explicitly identify DART as Apple's IOMMU hardware on Apple silicon. The Linux configuration uses `CONFIG_APPLE_DART`, and Asahi describes peripheral blocks as sitting behind a DART IOMMU.
+
+Sources:
+- <https://asahilinux.org/docs/sw/kernel-config/>
+- <https://asahilinux.org/2025/10/progress-report-6-17/>
+
+Supports: Chapter 9 assigning the I/O-mapping character name **DART** while separately citing Apple for the generic per-DMA-agent IOMMU security property.
+
+Caveat: Asahi is public reverse-engineering evidence, not Apple documentation.
 
 ### PUB-SEP-001 — Secure Enclave is a distinct security subsystem
 
@@ -175,8 +202,8 @@ Supports: the second-method entitlement reproduction attempt for Chapters 7 and 
 The local reproduction closed several first-pass gaps. The following remain explicitly provisional or incomplete:
 
 1. Exact provenance/build for the earlier **134-key** `sharingd` dump, now that the v0.3 target independently returns **132**.
-2. The earlier LaunchAngel-related entitlement associated with submitting them; current reproduction confirms names, paths, `__Angel`, and a resolution-failure diagnostic, but not that entitlement.
-3. Any broader WindowServer role that goes beyond the narrow public event-delivery documentation.
+2. Complete LaunchAngel semantics. Current reproduction now confirms names, paths, `__Angel`, a resolution-failure diagnostic, and the exact private-entitlement string `com.apple.private.xpc.launchd.allow-submit-launch-angels`; none of that reveals the full object lifecycle or authorization path.
+3. Private WindowServer/SkyLight responsibilities beyond Apple's public claims about managed windows, display-server features, and event delivery.
 4. Behavioral meaning of private entitlement names such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, or `com.apple.private.nsurlsession.impersonate`; current reproduction proves those keys are granted to `sharingd`, not what every authorized server-side path permits or what the daemon actually invokes.
 5. Runtime conditions for the undocumented `launchd` diagnostics. Static strings prove presence, not execution frequency or exact code path.
 
