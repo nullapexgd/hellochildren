@@ -197,6 +197,49 @@ Source: <https://developer.apple.com/documentation/Technotes/tn3125-inside-code-
 
 Supports: the second-method entitlement reproduction attempt for Chapters 7 and 8.
 
+
+### PUB-ANE-001 — Core ML exposes CPU/GPU/Neural Engine compute-unit choices
+
+Apple's current `MLComputeUnits` documentation defines model-execution choices that include CPU-only, CPU+GPU, CPU+Neural Engine, and `all`, where the operating system may select the best available processing unit including the Neural Engine.
+
+Source: <https://developer.apple.com/documentation/coreml/mlcomputeunits>
+
+Supports: Chapter 11's claim that Core ML can place supported model work across CPU, GPU, and Neural Engine resources without promising that every model or operation runs on the ANE.
+
+Does **not** support: a claim about the exact scheduler, partitioning of a specific model, or a universal list of operations supported by the Neural Engine.
+
+### RE-DCP-001 — DCP sits in the Apple-silicon display path
+
+Asahi Linux's public reverse-engineering work describes DCP as a coprocessor attached to the Apple-silicon display engine. Its 2021 display bring-up report says much of the display driver runs in DCP firmware; its August 2026 Linux 7.2 report describes direct scanout of AGX- and AVD-produced framebuffers through DCP.
+
+Sources:
+- <https://asahilinux.org/2021/08/progress-report-august-2021/>
+- <https://asahilinux.org/2026/08/progress-report-7-2/>
+
+Supports: Chapter 11's downstream **Display Controller** character and the claim that rendering/composition and final display scanout are distinct stages.
+
+Caveat: this is public reverse-engineering evidence, not an Apple-documented DCP ABI. The book's character name is intentionally generic; exact pipelines vary by SoC, machine, and display path.
+
+### PUB-FTL-001 — APFS sits above a flash translation layer
+
+Apple's retired APFS FAQ explicitly discusses a *Flash translation layer* and notes that it can group writes into the same NAND block. The same guide treats APFS as a filesystem for Flash/SSD storage rather than a description of physical NAND placement.
+
+Source: <https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html>
+
+Supports: Chapter 11's storage-abstraction joke: a filesystem can retain a logical block identity while lower storage layers choose physical NAND placement.
+
+Caveat: the APFS guide is retired, and this receipt does not document the exact controller firmware or mapping algorithms in a current Apple-silicon Mac.
+
+### RE-STORAGE-001 — public reverse engineering identifies an Apple-silicon NAND/SSD controller
+
+Asahi Linux's platform introduction lists `S5E` as the NAND (SSD) controller on documented Apple-silicon targets and records a separate controller/firmware role beneath the operating-system storage stack.
+
+Source: <https://asahilinux.org/docs/platform/introduction/>
+
+Supports: Chapter 11 giving the lower storage layer a controller character distinct from APFS.
+
+Caveat: this is public reverse-engineering documentation. It does not expose the private flash-translation mapping for a particular logical block or make `S5E` universal across every Apple-silicon generation.
+
 ## Still-open receipts
 
 The local reproduction closed several first-pass gaps. The following remain explicitly provisional or incomplete:

@@ -104,7 +104,7 @@ Display Controller:
 they have to leave eventually.
 ```
 
-The display controller handles scanout and timing work on the path toward the panel.
+The family calls the downstream character the Display Controller. Public Asahi reverse engineering describes Apple's DCP as a coprocessor attached to the display engine, and current work shows DCP directly scanning out framebuffers. The exact pipeline varies by machine and display path; the joke only needs the handoff to be real.
 
 ```text
 WindowServer:
@@ -140,7 +140,7 @@ ANE:
 give.
 ```
 
-Core ML and related frameworks can select accelerators such as the CPU, GPU, and ANE for supported model work. The exact scheduling and supported operations vary. The character’s narrow vocabulary dramatizes specialized authority, not a promise that every neural network executes entirely on ANE.
+Core ML exposes compute-unit choices that can allow the CPU, GPU, and Neural Engine in different combinations, including a mode where the operating system may choose among all available units. The exact scheduling and supported operations vary. The character’s narrow vocabulary dramatizes specialized authority, not a promise that every neural network executes entirely on ANE.
 
 ```text
 User:
@@ -191,7 +191,7 @@ Storage Controller:
 nothing ❤️
 ```
 
-Filesystems work in logical structures. Flash storage controllers manage physical media behavior beneath those abstractions, including translation and wear-related work. Exact Apple controller internals are product-specific and not all publicly documented. The general authority is the power to maintain an abstraction convincing enough that the layer above need not know where a particular physical cell went.
+Filesystems work in logical structures. Apple’s APFS documentation explicitly acknowledges a flash translation layer beneath the filesystem and notes that it groups writes into NAND blocks. Public Asahi platform documentation separately identifies an Apple-silicon NAND/SSD controller. Neither source tells us where physical cell 927 went on this Mac. The authority in the joke is the abstraction: logical identity does not reveal physical placement.
 
 Later:
 
