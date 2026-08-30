@@ -6,7 +6,7 @@ It carries a signature, several entitlements, and a claim that notarization know
 
 Everybody at the desk asks a different question.
 
-Code signing addresses integrity and signer identity under a trust model. Notarization records Apple’s malware check for submitted software. Gatekeeper applies launch policy. Trust caches, mandatory controls, and runtime enforcement answer other questions.
+Code signing addresses integrity and signer identity under a trust model. Notarization records that Apple received the submitted software and found no known malware at that check. Gatekeeper’s documented job is narrower than "all execution": by default it evaluates downloaded software when the user first opens it, checking developer identity, notarization, integrity, provenance, and user approval. Trust caches, mandatory controls, and runtime enforcement answer other questions.
 
 The family calls this entire layered system “the bouncer” because the family has been drinking.
 
@@ -16,7 +16,7 @@ It is tempting to put `amfid` alone at the door and say it decides whether code 
 
 That is a satisfying character and an inaccurate constitution.
 
-AMFI spans kernel-side policy and supporting mechanisms. `amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Boot state, signatures, trust caches, entitlements, kernel enforcement, notarization, and Gatekeeper matter in different situations.
+`amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Apple’s published XNU source contains kernel code-signing initialization, trust-cache initialization, code-signing process flags, and page-level code-signing state. Apple’s platform-security documentation separately describes trust caches, Gatekeeper, notarization, entitlements, and other runtime controls. Whatever the private division of labor on one release, `amfid` is not the sole enforcement point.
 
 So the dialogue is a compression, not a protocol trace:
 
@@ -152,9 +152,9 @@ Gatekeeper:
 that is a different column.
 ```
 
-Administrative choice can alter settings through authorized procedures. That is different from every request succeeding under the current policy.
+Administrative choice can alter settings through authorized procedures. Apple documents that users can override Gatekeeper for particular software, and Gatekeeper can be disabled when policy permits. That is different from every request succeeding automatically merely because the caller is UID 0.
 
-The distinction sounds pedantic until it is the only thing separating a deliberate configuration change from arbitrary code execution.
+The distinction sounds pedantic until it is the only thing separating a deliberate policy change from arbitrary code execution.
 
 ## Trust is not virtue
 

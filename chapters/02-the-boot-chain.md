@@ -4,7 +4,9 @@ Before macOS exists, before XNU exists, before `root` has anything to be root *o
 
 Boot ROM enters the story with the confidence of a character who knows he cannot be uninstalled.
 
-On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. The full modern sequence includes security modes, LocalPolicy, lower-level loading, firmware for other processors, iBoot, verified collections, and a signed system volume. The durable point: later authority begins only after earlier authority authenticates it.
+On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. Apple documents the normal macOS path more concretely: Boot ROM hands off to the Low-Level Bootloader (LLB); LLB loads system-paired firmware and the LocalPolicy for the selected system, then hands off to iBoot; iBoot loads the macOS-paired firmware, static trust cache, device tree, and Boot Kernel Collection, and enforces later boot policy such as the signed-system-volume check according to LocalPolicy. Recovery paths differ, and Apple changes details across generations.
+
+The durable point is not that one tiny monarch personally verifies every byte forever. It is that secure boot is staged: later execution depends on trust decisions and policy established before that later code receives control.
 
 XNU does not arrive by kicking down the door.
 
@@ -61,7 +63,7 @@ Boot ROM:
 we are not doing genealogy at boot
 ```
 
-The family version compresses several authenticated stages into a dinner-table exchange. The ledger keeps the real sequence honest across device generations and security configurations. XNU’s future power gives it no retrospective authority over the code that decided whether XNU could begin.
+The family version compresses several stages into a dinner-table exchange. The ledger keeps the documented handoffs honest across device generations, boot modes, and security configurations. XNU’s future power gives it no retrospective authority over the machinery and policy that decided whether XNU could begin.
 
 ## Future mayor, present guest
 

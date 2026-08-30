@@ -202,7 +202,9 @@ Before macOS exists, before XNU exists, before `root` has anything to be root *o
 
 Boot ROM enters the story with the confidence of a character who knows he cannot be uninstalled.
 
-On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. The full modern sequence includes security modes, LocalPolicy, lower-level loading, firmware for other processors, iBoot, verified collections, and a signed system volume. The durable point: later authority begins only after earlier authority authenticates it.
+On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. Apple documents the normal macOS path more concretely: Boot ROM hands off to the Low-Level Bootloader (LLB); LLB loads system-paired firmware and the LocalPolicy for the selected system, then hands off to iBoot; iBoot loads the macOS-paired firmware, static trust cache, device tree, and Boot Kernel Collection, and enforces later boot policy such as the signed-system-volume check according to LocalPolicy. Recovery paths differ, and Apple changes details across generations.
+
+The durable point is not that one tiny monarch personally verifies every byte forever. It is that secure boot is staged: later execution depends on trust decisions and policy established before that later code receives control.
 
 XNU does not arrive by kicking down the door.
 
@@ -259,7 +261,7 @@ Boot ROM:
 we are not doing genealogy at boot
 ```
 
-The family version compresses several authenticated stages into a dinner-table exchange. The ledger keeps the real sequence honest across device generations and security configurations. XNU’s future power gives it no retrospective authority over the code that decided whether XNU could begin.
+The family version compresses several stages into a dinner-table exchange. The ledger keeps the documented handoffs honest across device generations, boot modes, and security configurations. XNU’s future power gives it no retrospective authority over the machinery and policy that decided whether XNU could begin.
 
 ## Future mayor, present guest
 
@@ -1173,7 +1175,7 @@ It carries a signature, several entitlements, and a claim that notarization know
 
 Everybody at the desk asks a different question.
 
-Code signing addresses integrity and signer identity under a trust model. Notarization records Apple’s malware check for submitted software. Gatekeeper applies launch policy. Trust caches, mandatory controls, and runtime enforcement answer other questions.
+Code signing addresses integrity and signer identity under a trust model. Notarization records that Apple received the submitted software and found no known malware at that check. Gatekeeper’s documented job is narrower than "all execution": by default it evaluates downloaded software when the user first opens it, checking developer identity, notarization, integrity, provenance, and user approval. Trust caches, mandatory controls, and runtime enforcement answer other questions.
 
 The family calls this entire layered system “the bouncer” because the family has been drinking.
 
@@ -1183,7 +1185,7 @@ It is tempting to put `amfid` alone at the door and say it decides whether code 
 
 That is a satisfying character and an inaccurate constitution.
 
-AMFI spans kernel-side policy and supporting mechanisms. `amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Boot state, signatures, trust caches, entitlements, kernel enforcement, notarization, and Gatekeeper matter in different situations.
+`amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Apple’s published XNU source contains kernel code-signing initialization, trust-cache initialization, code-signing process flags, and page-level code-signing state. Apple’s platform-security documentation separately describes trust caches, Gatekeeper, notarization, entitlements, and other runtime controls. Whatever the private division of labor on one release, `amfid` is not the sole enforcement point.
 
 So the dialogue is a compression, not a protocol trace:
 
@@ -1319,9 +1321,9 @@ Gatekeeper:
 that is a different column.
 ```
 
-Administrative choice can alter settings through authorized procedures. That is different from every request succeeding under the current policy.
+Administrative choice can alter settings through authorized procedures. Apple documents that users can override Gatekeeper for particular software, and Gatekeeper can be disabled when policy permits. That is different from every request succeeding automatically merely because the caller is UID 0.
 
-The distinction sounds pedantic until it is the only thing separating a deliberate configuration change from arbitrary code execution.
+The distinction sounds pedantic until it is the only thing separating a deliberate policy change from arbitrary code execution.
 
 ## Trust is not virtue
 
@@ -1930,7 +1932,7 @@ The joke survives because the distinction survives. Claim shared semantics and X
 
 A communication channel does not erase the boundary it crosses.
 
-The Application Processor can submit a request. SEP decides how it is parsed, authorized, and executed. The mailbox does not dissolve the boundary.
+The Application Processor can send a message across the documented reverse-engineered mailbox path. What happens next is governed by SEP-side firmware, protocol, state, and whatever authorization rules apply to that operation. The mailbox does not dissolve the boundary, and receipt of a message is not evidence that the requested operation was authorized.
 
 ```text
 XNU:
@@ -1974,7 +1976,7 @@ SEP:
 wrong authority.
 ```
 
-Unix group membership may affect Unix authorization decisions. SEP operations obey their own protocols, cryptographic policies, and state. A suggestive local group name is not a passphrase whispered through silicon.
+Unix group membership may affect Unix authorization decisions. Nothing in the observed group name establishes authority over SEP operations, whose interfaces and security state belong to a different domain. A suggestive local group name is not a passphrase whispered through silicon.
 
 Fake launchd writes this down as “inconclusive.”
 

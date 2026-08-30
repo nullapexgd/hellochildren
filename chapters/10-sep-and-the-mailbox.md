@@ -146,7 +146,7 @@ The joke survives because the distinction survives. Claim shared semantics and X
 
 A communication channel does not erase the boundary it crosses.
 
-The Application Processor can submit a request. SEP decides how it is parsed, authorized, and executed. The mailbox does not dissolve the boundary.
+The Application Processor can send a message across the documented reverse-engineered mailbox path. What happens next is governed by SEP-side firmware, protocol, state, and whatever authorization rules apply to that operation. The mailbox does not dissolve the boundary, and receipt of a message is not evidence that the requested operation was authorized.
 
 ```text
 XNU:
@@ -190,7 +190,7 @@ SEP:
 wrong authority.
 ```
 
-Unix group membership may affect Unix authorization decisions. SEP operations obey their own protocols, cryptographic policies, and state. A suggestive local group name is not a passphrase whispered through silicon.
+Unix group membership may affect Unix authorization decisions. Nothing in the observed group name establishes authority over SEP operations, whose interfaces and security state belong to a different domain. A suggestive local group name is not a passphrase whispered through silicon.
 
 Fake launchd writes this down as “inconclusive.”
 

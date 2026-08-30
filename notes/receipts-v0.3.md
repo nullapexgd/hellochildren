@@ -240,6 +240,44 @@ Supports: Chapter 11 giving the lower storage layer a controller character disti
 
 Caveat: this is public reverse-engineering documentation. It does not expose the private flash-translation mapping for a particular logical block or make `S5E` universal across every Apple-silicon generation.
 
+
+### PUB-BOOT-MODES-001 — Apple documents the normal Apple-silicon handoff sequence
+
+Apple's current boot-modes documentation gives the normal macOS sequence explicitly: Boot ROM hands off to LLB; LLB loads system-paired firmware and the LocalPolicy and hands off to iBoot; iBoot loads macOS-paired firmware, the static trust cache, device tree, and Boot Kernel Collection, conditionally loads an Auxiliary Kernel Collection, and verifies the signed-system-volume root signature hash when LocalPolicy has not disabled that check.
+
+Sources:
+- <https://support.apple.com/guide/security/boot-process-secac71d5623/web>
+- <https://support.apple.com/guide/security/boot-modes-sec10869885b/web>
+
+Supports: Chapter 2 replacing the vague "earlier stage authenticates later stage" shorthand with a documented staged handoff.
+
+Caveat: recovery modes take different paths, and the sequence is version/product specific. The family dialogue remains compression, not a literal protocol trace.
+
+### OSS-XNU-CS-001 — code-signing enforcement has explicit kernel machinery
+
+Apple's published XNU source initializes code-signing and trust-cache machinery during kernel startup. Public headers define process code-signing flags such as `CS_VALID`, `CS_HARD`, `CS_KILL`, `CS_ENFORCEMENT`, `CS_ENTITLEMENTS_VALIDATED`, `CS_PLATFORM_BINARY`, and `CS_SIGNED`; VM page state includes code-signing validation/taint bits.
+
+Sources:
+- <https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/startup.c>
+- <https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/cs_blobs.h>
+- <https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/vm/vm_page.h>
+
+Supports: Chapter 7's statement that `amfid` is not a single all-powerful userspace bouncer. There is explicit kernel-side code-signing state and enforcement machinery in addition to userspace services and platform policy.
+
+Caveat: public source does not by itself document the complete current private protocol between XNU, AMFI components, CoreTrust, and `amfid`.
+
+### PUB-GATEKEEPER-001 — Gatekeeper is not every code-execution check
+
+Apple documents Gatekeeper as policy for downloaded software, especially the first open: it checks identified-developer status, notarization, integrity, provenance, and user approval. Apple also documents that users can override Gatekeeper for software and, when policy permits, disable it.
+
+Sources:
+- <https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web>
+- <https://support.apple.com/guide/security/sec3ad8e6e53/web>
+
+Supports: Chapter 7 narrowing Gatekeeper's character from generic "launch authority" to one part of macOS app-trust policy.
+
+Does **not** support: treating a Gatekeeper approval or override as a bypass of unrelated code-signing, entitlement, SIP, sandbox, or runtime controls.
+
 ## Still-open receipts
 
 The local reproduction closed several first-pass gaps. The following remain explicitly provisional or incomplete:
