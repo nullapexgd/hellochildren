@@ -4,7 +4,7 @@
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
-### v0.3 — The Receipts Edition
+### v0.2 — The Editor Pass
 
 ---
 
@@ -25,8 +25,6 @@ That rule occasionally produces an unusual ending for a mystery:
 > We found the name. We found the path. We found the code asking for it. We still do not know what the damn thing completely does.
 
 This is not failure. This is technical integrity wearing sensible shoes to a costume party.
-
-The working files classify claims as public documentation, direct observation, source-conversation observation, reverse-engineering evidence, bounded inference, or dramatization. The joke still gets to enter. It just has to show identification.
 
 Welcome to the family.
 
@@ -177,7 +175,7 @@ Some daemons carry more than a hundred entitlement keys in a particular build. A
 
 ```text
 sharingd:
-I have over a hundred entitlements.
+I have 134 entitlements.
 
 amfid:
 I have 8.
@@ -204,9 +202,7 @@ Before macOS exists, before XNU exists, before `root` has anything to be root *o
 
 Boot ROM enters the story with the confidence of a character who knows he cannot be uninstalled.
 
-On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. Apple documents the normal macOS path more concretely: Boot ROM hands off to the Low-Level Bootloader (LLB); LLB loads system-paired firmware and the LocalPolicy for the selected system, then hands off to iBoot; iBoot loads the macOS-paired firmware, static trust cache, device tree, and Boot Kernel Collection, and enforces later boot policy such as the signed-system-volume check according to LocalPolicy. Recovery paths differ, and Apple changes details across generations.
-
-The durable point is not that one tiny monarch personally verifies every byte forever. It is that secure boot is staged: later execution depends on trust decisions and policy established before that later code receives control.
+On Apple silicon, the boot chain begins in immutable Boot ROM code established during fabrication. The full modern sequence includes security modes, LocalPolicy, lower-level loading, firmware for other processors, iBoot, verified collections, and a signed system volume. The durable point: later authority begins only after earlier authority authenticates it.
 
 XNU does not arrive by kicking down the door.
 
@@ -263,7 +259,7 @@ Boot ROM:
 we are not doing genealogy at boot
 ```
 
-The family version compresses several stages into a dinner-table exchange. The ledger keeps the documented handoffs honest across device generations, boot modes, and security configurations. XNU’s future power gives it no retrospective authority over the machinery and policy that decided whether XNU could begin.
+The family version compresses several authenticated stages into a dinner-table exchange. The ledger keeps the real sequence honest across device generations and security configurations. XNU’s future power gives it no retrospective authority over the code that decided whether XNU could begin.
 
 ## Future mayor, present guest
 
@@ -360,7 +356,7 @@ Finally, somebody with some fucking authority.
 
 XNU arrives.
 
-Processes. Threads. Scheduling. Virtual memory. Mach IPC. Filesystems. Networking. Drivers. Interrupts. The low-level machinery upon which much of the operating system depends. Apple’s published XNU tree is unusually literal about the first half of that list: task and thread machinery, scheduler code, Mach IPC initialization, and virtual-memory maps are all there in public source.
+Processes. Threads. Scheduling. Virtual memory. Mach IPC. Filesystems. Networking. Drivers. Interrupts. The low-level machinery upon which much of the operating system depends.
 
 XNU looks upon creation and sees that it is good.
 
@@ -601,21 +597,21 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. All three lines used here were reproduced on that exact build:
+The source conversation examined strings from an Apple launchd binary. Before publication, each should be reproduced on the named target build. For this draft, we preserve them as observed strings and refuse to infer more than they say.
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
 And:
 
-> `rlimit(3)? Really?`
-
-And, with the unmistakable tone of an engineer whose day has taken a turn:
-
 > `XPC bundles can't have KeepAlive, they can't even set it as a plist key, how did we get here?`
+
+And:
+
+> `rlimit(3)? Really?`
 
 At some point the authors of launchd stopped writing diagnostics and began responding personally.
 
-The reproduced strings establish that those words occur in the named binary/build. They do not establish the full private code path or emotional condition of the engineer. The latter is a strong inference.
+The strings establish that those words occurred in the examined material, not the full private code path or emotional condition of the engineer. The latter is a strong inference.
 
 ```text
 Job:
@@ -862,9 +858,7 @@ LaunchAngel
 __Angel
 ```
 
-The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. The same binary also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
-
-That last string is useful, but narrow evidence. It supports that launchd contains code or data referring to a private entitlement by that name. It does **not** prove which process carries the entitlement, the complete authorization path, or what submitting a LaunchAngel ultimately means.
+There were also LaunchAngel-related messages and an entitlement associated with submitting them.
 
 What does this prove?
 
@@ -979,7 +973,7 @@ Enter `loginwindow`, carrying the kind of keyring that causes a belt injury.
 
 ## Please authenticate before existing
 
-Apple’s archived daemon-lifecycle documentation describes `loginwindow` coordinating the visual and security portions of login and then setting up the authenticated user environment. Apple’s current device-management documentation still exposes `com.apple.loginwindow` as the payload type for Login Window behavior. The first source is historical architecture, not proof that every private call path survived unchanged; the second confirms that Login Window remains a current system surface.
+Apple assigns `loginwindow` a coordinating role in login and user-environment setup. The internals evolve, and `loginwindow` does not become every authority it consults.
 
 A component may carry many credentials because it spends all day asking other offices to do their jobs.
 
@@ -1050,9 +1044,9 @@ Then comes WindowServer.
 
 Apps tend to think they own their windows because the windows contain their names, controls, and occasionally an unsaved document they have been protecting from you for four hours.
 
-WindowServer sees the graphical world at a level individual apps do not. Apple publicly documents windows managed by the macOS window server, display-control features provided through that server, and the window server's role in delivering input events to applications.
+WindowServer sees windows, surfaces, displays, session state, event routing, and the machinery through which multiple clients inhabit one graphical universe.
 
-That is enough for the family argument. Private frameworks and implementation details clearly add more, but we do not need to promote every observed private surface, entitlement, or symbol into a public architectural promise.
+Apple publicly documents the system window server delivering input events to applications. Private frameworks and implementation details add much more, but the family can make its point without pretending every private API is known.
 
 ```text
 App:
@@ -1120,7 +1114,7 @@ At last, a form of authority no subsystem can reverse.
 
 ## Private archaeology
 
-A third-party `CGSSpace.swift` artifact preserves the comment `this value MUST be 1, otherwise, Finder decides to draw desktop icons` beside a call to the private `CGSSpaceCreate` API. A 2025 GitHub Gist by Julian Schiavo identifies the file as derived from `avaidyam/Parrot` at commit `6cf7ba419176c386ed8f18e838690a7272fe57ee`. This is source-code evidence about that project's observed behavior, not Apple documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
+The source conversation included a private-API artifact from a third-party project: a comment said a value “MUST be 1” or Finder would draw desktop icons. It is observed code, not public documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
 
 ```text
 Developer:
@@ -1177,7 +1171,7 @@ It carries a signature, several entitlements, and a claim that notarization know
 
 Everybody at the desk asks a different question.
 
-Code signing addresses integrity and signer identity under a trust model. Notarization records that Apple received the submitted software and found no known malware at that check. Gatekeeper’s documented job is narrower than "all execution": by default it evaluates downloaded software when the user first opens it, checking developer identity, notarization, integrity, provenance, and user approval. Trust caches, mandatory controls, and runtime enforcement answer other questions.
+Code signing addresses integrity and signer identity under a trust model. Notarization records Apple’s malware check for submitted software. Gatekeeper applies launch policy. Trust caches, mandatory controls, and runtime enforcement answer other questions.
 
 The family calls this entire layered system “the bouncer” because the family has been drinking.
 
@@ -1187,7 +1181,7 @@ It is tempting to put `amfid` alone at the door and say it decides whether code 
 
 That is a satisfying character and an inaccurate constitution.
 
-`amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Apple’s published XNU source contains kernel code-signing initialization, trust-cache initialization, code-signing process flags, and page-level code-signing state. Apple’s platform-security documentation separately describes trust caches, Gatekeeper, notarization, entitlements, and other runtime controls. Whatever the private division of labor on one release, `amfid` is not the sole enforcement point.
+AMFI spans kernel-side policy and supporting mechanisms. `amfid` participates in userspace validation and policy work, but code trust is not one daemon with a clipboard. Boot state, signatures, trust caches, entitlements, kernel enforcement, notarization, and Gatekeeper matter in different situations.
 
 So the dialogue is a compression, not a protocol trace:
 
@@ -1229,15 +1223,15 @@ why
 
 ## Eight badges
 
-The v0.3 reproduction pass extracted `/usr/libexec/amfid`'s entitlements on macOS 27.0 build 26A5416b and counted eight top-level keys. That independently reproduces the earlier source-conversation count. It is still a build-specific fact, not a universal constant.
+In the examined macOS build from the source conversation, `/usr/libexec/amfid` exposed eight entitlement keys. That number is a build-specific observation, not a universal constant.
 
-The set includes developer-mode control, NVRAM read/write access, protected `amfid` storage, a keystore/keybag-load capability, a TCC allowance for `kTCCServiceSystemPolicyAllFiles`, hardened-process state, and access to `AppleMobileFileIntegrityUserClient`. The number destroys a bad theory: more entitlements do not mean more authority.
+The set included developer-mode control, NVRAM, protected storage, a keystore/keybag path, TCC allowance, hardened-process state, and IOKit access. The number destroyed a bad theory: more entitlements do not mean more authority.
 
 The component crossing forty protected boundaries may need forty badges. The component enforcing one may need eight.
 
 ```text
 sharingd:
-I have 132 entitlements.
+I have 134 entitlements.
 
 amfid:
 I have 8.
@@ -1323,9 +1317,9 @@ Gatekeeper:
 that is a different column.
 ```
 
-Administrative choice can alter settings through authorized procedures. Apple documents that users can override Gatekeeper for particular software, and Gatekeeper can be disabled when policy permits. That is different from every request succeeding automatically merely because the caller is UID 0.
+Administrative choice can alter settings through authorized procedures. That is different from every request succeeding under the current policy.
 
-The distinction sounds pedantic until it is the only thing separating a deliberate policy change from arbitrary code execution.
+The distinction sounds pedantic until it is the only thing separating a deliberate configuration change from arbitrary code execution.
 
 ## Trust is not virtue
 
@@ -1364,15 +1358,15 @@ Somewhere nearby, a system larger than the speaker checks the signature. The lin
 
 Then this motherfucker arrives.
 
-The earlier source-conversation build of `/usr/libexec/sharingd` counted 134 entitlement keys. The v0.3 reproduction target—macOS 27.0 build 26A5416b—counts **132**.
+In the examined macOS build from the source conversation, `/usr/libexec/sharingd` carried 134 entitlement keys.
 
-That two-key drift is useful evidence in its own right. Entitlement counts are build-specific, not universal constants, privacy verdicts, or rankings of royal power. Either count is still an extraordinary entrance.
+The number is build-specific. The list is not a universal constant, a privacy verdict, or a ranking of royal power. It is still an extraordinary entrance.
 
-The current set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also independently reproduces exact private keys including `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
+The keys touched Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking.
 
 `sharingd` did not walk into the room.
 
-It arrived with a diplomatic passport and 132 visas.
+It arrived with a diplomatic passport and 134 visas.
 
 ## I share things
 
@@ -1409,7 +1403,7 @@ sharingd:
 several radios and services.
 
 User:
-why do you have 132 entitlements
+why do you have 134 entitlements
 
 sharingd:
 I told you.
@@ -1537,7 +1531,7 @@ launchd:
 badges?
 
 sharingd:
-*drops 132 entitlements on desk*
+*drops 134 entitlements on desk*
 
 launchd:
 I asked a yes-or-no question
@@ -1575,10 +1569,10 @@ Safari:
 sudo?
 
 MMU:
-wrong noun.
+that's not how any of this works
 ```
 
-The MMU has never heard of Safari. It has an address and a permission check.
+The MMU does not know Safari is a browser or launchd is PID 1. It knows translations, privilege, access types, and protections: total authority over an operation, total indifference to biography.
 
 ```text
 root:
@@ -1600,7 +1594,7 @@ MMU:
 do you have an address or a podcast
 ```
 
-XNU configures the state. Hardware says no at machine speed.
+XNU configures the state. Hardware enforces it.
 
 Policy without enforcement is a wish.
 
@@ -1608,7 +1602,9 @@ Enforcement without policy is a very fast misunderstanding.
 
 ## Unified does not mean communal
 
-Apple GPUs use unified memory in which CPU and GPU share system memory. The family hears “shared” and immediately creates a refrigerator dispute.
+Apple GPUs use unified memory in which CPU and GPU share system memory. Marketing celebrates the lack of a traditional separate VRAM pool.
+
+The family hears “shared” and immediately creates a refrigerator dispute.
 
 ```text
 CPU:
@@ -1630,26 +1626,27 @@ CPU + GPU:
 NO.
 ```
 
-Unified memory does not let every engine read every byte. Metal still distinguishes shared and private storage modes, and synchronization still matters, because the word *unified* did not destroy computer science.
+Unified memory does not let every engine read every byte. Metal resource modes distinguish shared and private access; synchronization and mappings still matter.
 
 ```text
 Unified Memory:
-everybody shares one pool.
-
-CPU:
-so I can read every buffer.
+I bring this family together ❤️
 
 MMU:
-no.
+with permissions
+
+DART:
+and device mappings
 
 GPU:
-same question.
+and resource modes
 
-MMU:
-different office.
+CPU:
+and synchronization
 
 Unified Memory:
-I was talking about the DRAM.
+I bring this heavily regulated
+family together ❤️
 ```
 
 The phrase *zero-copy* is often invited to these discussions and should be watched around the silverware.
@@ -1664,7 +1661,7 @@ Unrestricted DMA is a burglar with excellent throughput.
 
 Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
 
-Apple's public security guide calls them IOMMUs. Public Asahi Linux reverse engineering identifies the Apple silicon hardware as **DART**. The receipts keep the distinction. DART keeps the loading dock.
+Apple’s DART blocks are the family’s I/O mapping enforcers.
 
 ```text
 Device:
@@ -1692,7 +1689,7 @@ DART:
 that's awesome bro
 ```
 
-The device is hardware. So is the thing denying it.
+Hardware is not one class with a universal backstage pass. A device is hardware. The IOMMU is also hardware. Their disagreement is resolved by an address-translation table, which is the least sentimental possible form of family mediation.
 
 ```text
 Device:
@@ -1704,43 +1701,11 @@ on your I/O mapping
 
 DART is the MMU’s cousin who works security at the loading dock.
 
-## The address dispute
+The CPU enters through the front and meets CPU translation.
 
-Then root returns carrying hexadecimal.
+A DMA agent arrives at the loading dock.
 
-```text
-root:
-I need memory at 0x1000.
-
-MMU:
-in whose address space
-
-root:
-the computer's
-
-MMU:
-adorable.
-
-Device:
-my 0x1000 maps somewhere else.
-
-DART:
-if I say it does.
-
-root:
-I have the address.
-
-MMU:
-you have an address.
-
-root:
-WHICH ONE IS REAL
-
-Memory Controller:
-do you want memory or philosophy
-```
-
-Same number, different maps. Root brought an address and assumed it was the deed.
+DART asks for a manifest.
 
 ## Thunderbolt brought someone
 
@@ -1766,39 +1731,53 @@ DART:
 absolutely fucking not
 ```
 
-Drivers and mappings may eventually let the device in. “Plugged in” is not the same as “owns RAM.”
+Drivers, policy, and mappings may establish access. DART makes “plugged in” different from “owns RAM.”
 
-A cable should not be a constitutional amendment.
+That distinction becomes more important as interfaces become faster and more capable. A cable should not be a constitutional amendment.
 
 ## The landlord’s landlord
 
-Below all those maps, somebody still has to move the bytes. The memory controller runs the deli counter.
+Below the address spaces and device mappings sits the machinery arbitrating actual memory traffic.
+
+The book gives the memory controller the exhausted demeanor of a deli counter at noon.
 
 ```text
 CPU:
 memory please
 
 GPU:
-urgent memory please
+memory please
 
 ANE:
-mine is neural.
+memory please
 
 Memory Controller:
-congratulations on the adjective.
-
-CPU:
-I'm the CPU.
-
-Memory Controller:
-take two numbers.
+take a number
 ```
 
 Fabric and controller topology varies by generation. “Memory Controller” represents arbitration and movement beneath software abstractions, not one tiny person with a clipboard.
 
-XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
+```text
+GPU:
+I'm rendering at 240 frames per second.
+
+Memory Controller:
+and I care because
+
+GPU:
+bandwidth.
+
+Memory Controller:
+now you're speaking my language
+```
+
+At every layer, a grand title becomes a request in somebody else’s queue. XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
 
 The DRAM cells store charge and have never heard of root.
+
+Authority has finally reached physics.
+
+Physics declines to attend the status meeting.
 
 
 # 10. SEP Has a Mailbox
@@ -1895,9 +1874,9 @@ Concise dialogue does not imply simple machinery. The secure relative refuses to
 
 ## The mailbox
 
-The Application Processor and SEP need a way to communicate across their boundary. Asahi Linux's public SEP documentation identifies a SEP mailbox, gives a mailbox base for documented reverse-engineering targets, and shows traced messages moving between AP-side software and SEP endpoints.
+The Application Processor and SEP need a way to communicate across their boundary. Reverse-engineering literature and the source conversation describe mailbox-style hardware messaging in this context.
 
-That is enough to use the word *mailbox*. It is not permission to invent private opcodes, payload meanings, or authorization semantics beyond what the reverse-engineering evidence actually establishes.
+We will use *mailbox* without inventing private opcodes, payload meanings, or authorization semantics.
 
 This is especially difficult because the user also has a Unix mailbox.
 
@@ -1949,7 +1928,7 @@ The joke survives because the distinction survives. Claim shared semantics and X
 
 A communication channel does not erase the boundary it crosses.
 
-The Application Processor can send a message across the documented reverse-engineered mailbox path. What happens next is governed by SEP-side firmware, protocol, state, and whatever authorization rules apply to that operation. The mailbox does not dissolve the boundary, and receipt of a message is not evidence that the requested operation was authorized.
+The Application Processor can submit a request. SEP decides how it is parsed, authorized, and executed. The mailbox does not dissolve the boundary.
 
 ```text
 XNU:
@@ -1993,7 +1972,7 @@ SEP:
 wrong authority.
 ```
 
-Unix group membership may affect Unix authorization decisions. Nothing in the observed group name establishes authority over SEP operations, whose interfaces and security state belong to a different domain. A suggestive local group name is not a passphrase whispered through silicon.
+Unix group membership may affect Unix authorization decisions. SEP operations obey their own protocols, cryptographic policies, and state. A suggestive local group name is not a passphrase whispered through silicon.
 
 Fake launchd writes this down as “inconclusive.”
 
@@ -2128,7 +2107,7 @@ Display Controller:
 they have to leave eventually.
 ```
 
-The family calls the downstream character the Display Controller. Public Asahi reverse engineering describes Apple's DCP as a coprocessor attached to the display engine, and current work shows DCP directly scanning out framebuffers. The exact pipeline varies by machine and display path; the joke only needs the handoff to be real.
+The display controller handles scanout and timing work on the path toward the panel.
 
 ```text
 WindowServer:
@@ -2164,7 +2143,7 @@ ANE:
 give.
 ```
 
-Core ML exposes compute-unit choices that can allow the CPU, GPU, and Neural Engine in different combinations, including a mode where the operating system may choose among all available units. The exact scheduling and supported operations vary. The character’s narrow vocabulary dramatizes specialized authority, not a promise that every neural network executes entirely on ANE.
+Core ML and related frameworks can select accelerators such as the CPU, GPU, and ANE for supported model work. The exact scheduling and supported operations vary. The character’s narrow vocabulary dramatizes specialized authority, not a promise that every neural network executes entirely on ANE.
 
 ```text
 User:
@@ -2215,7 +2194,7 @@ Storage Controller:
 nothing ❤️
 ```
 
-Filesystems work in logical structures. Apple’s APFS documentation explicitly acknowledges a flash translation layer beneath the filesystem and notes that it groups writes into NAND blocks. Public Asahi platform documentation separately identifies an Apple-silicon NAND/SSD controller. Neither source tells us where physical cell 927 went on this Mac. The authority in the joke is the abstraction: logical identity does not reveal physical placement.
+Filesystems work in logical structures. Flash storage controllers manage physical media behavior beneath those abstractions, including translation and wear-related work. Exact Apple controller internals are product-specific and not all publicly documented. The general authority is the power to maintain an abstraction convincing enough that the layer above need not know where a particular physical cell went.
 
 Later:
 
@@ -2496,17 +2475,11 @@ the queue has been draining since Sonoma.
 
 Some processes cooperate. Others interpret “termination handler” as a venue for a second career.
 
-Then comes the launchd string around which this entire ending was built:
+Then comes the observed launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The earlier source archaeology saw that sentence, and the v0.3 reproduction pass found it again in `/sbin/launchd` on macOS 27.0 build 26A5416b—with one wonderfully annoying wrinkle. A plain exact-string search missed it because the binary's extracted strings split the sentence in two adjacent pieces:
-
-> `(or halting) the system now. Any processes that are still running`
->
-> `will be abandoned to the mercy of the kernel.`
-
-Read together, the sentence is present on the current build. The surrounding fictional exchange is still not Apple's documented private shutdown sequence.
+The sentence appeared in launchd material examined in the source conversation. We preserve it exactly and do not claim that the surrounding fictional exchange is Apple’s documented private shutdown sequence.
 
 The string does not need help.
 
@@ -2536,7 +2509,7 @@ that is why the sentence works.
 
 XNU has spent the book resenting every authority that qualified its title. At shutdown, userspace returns to the one fact nobody disputed: the kernel controls whether ordinary processes continue executing in its world.
 
-The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges on this build. None is a defense against final kernel teardown.
+The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 134 badges. None is a defense against final kernel teardown.
 
 ```text
 sharingd:

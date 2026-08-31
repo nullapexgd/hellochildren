@@ -8,7 +8,7 @@ The argument of this book is simple:
 
 > There is no single highest form of authority inside a modern computer. Authority has a jurisdiction.
 
-This directory contains the v0.2 editor pass. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1 manuscript](releases/HELLO-CHILDREN-v0.1.md) remains available for comparison.
+This directory contains v0.3, the receipts edition. The 13 numbered chapters plus the title/editorial file make 14 chapter-source files; no chapter is missing. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md) and [v0.2](releases/HELLO-CHILDREN-v0.2.md) manuscripts remain available for comparison.
 
 ## Read the book
 
@@ -37,7 +37,7 @@ Edit chapter files, then rebuild from this directory:
 
 The build has no third-party dependencies. It concatenates `chapters/*.md` in filename order and replaces only the generated `manuscript.md`.
 
-The editorial voice and evidence rules live in [STYLE.md](STYLE.md). Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are tracked in [notes/fact-check-ledger.md](notes/fact-check-ledger.md).
+The editorial voice and evidence rules live in [STYLE.md](STYLE.md). Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are indexed in [notes/fact-check-ledger.md](notes/fact-check-ledger.md). The claim-level [v0.3 receipts file](notes/receipts-v0.3.md) records primary sources, reverse-engineering evidence, exact build observations, negative results, and the limits of each claim.
 
 ## Technical-integrity rule
 
@@ -47,5 +47,7 @@ Character dialogue is dramatization. It may compress a documented relationship, 
 
 ## Draft status
 
-v0.2 is a structural compression pass. It adds no lore, characters, or chapters. Research notes remain separate so the comedy can move while the claims stay auditable. The next planned milestone is the v0.3 receipts edition.
+v0.3 audits the claims most likely to attract a technically justified “actually.” Stable claims prefer primary public sources; build-specific observations name macOS 27.0 build `26A5416b`; reverse-engineered behavior and inference stay labeled. Chapter 9 includes one approved comedy repair—the address dispute—without adding a character, chapter, or new hardware claim.
+
+The reading sequence still ends at `moo.` Back matter stays outside the manuscript.
 # hellochildren

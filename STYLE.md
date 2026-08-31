@@ -26,6 +26,8 @@ That could describe anything and therefore explains nothing.
 
 ## Evidence categories
 
+The v0.3 receipts ledger uses `PUB`, `OBS`, `SRC-OBS`, `RE`, `INF`, and `DRAM`. These labels stay in the editorial notes rather than interrupting every paragraph of the reading copy.
+
 ### Proven
 
 State documented or directly observed behavior plainly. Record a primary source or reproducible observation in the ledger.

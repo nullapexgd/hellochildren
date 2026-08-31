@@ -27,10 +27,10 @@ Safari:
 sudo?
 
 MMU:
-that's not how any of this works
+wrong noun.
 ```
 
-The MMU does not know Safari is a browser or launchd is PID 1. It knows translations, privilege, access types, and protections: total authority over an operation, total indifference to biography.
+The MMU has never heard of Safari. It has an address and a permission check.
 
 ```text
 root:
@@ -52,7 +52,7 @@ MMU:
 do you have an address or a podcast
 ```
 
-XNU configures the state. Hardware enforces it.
+XNU configures the state. Hardware says no at machine speed.
 
 Policy without enforcement is a wish.
 
@@ -60,9 +60,7 @@ Enforcement without policy is a very fast misunderstanding.
 
 ## Unified does not mean communal
 
-Apple GPUs use unified memory in which CPU and GPU share system memory. Marketing celebrates the lack of a traditional separate VRAM pool.
-
-The family hears “shared” and immediately creates a refrigerator dispute.
+Apple GPUs use unified memory in which CPU and GPU share system memory. The family hears “shared” and immediately creates a refrigerator dispute.
 
 ```text
 CPU:
@@ -84,27 +82,26 @@ CPU + GPU:
 NO.
 ```
 
-Unified memory does not let every engine read every byte. Metal resource modes distinguish shared and private access; synchronization and mappings still matter.
+Unified memory does not let every engine read every byte. Metal still distinguishes shared and private storage modes, and synchronization still matters, because the word *unified* did not destroy computer science.
 
 ```text
 Unified Memory:
-I bring this family together ❤️
-
-MMU:
-with permissions
-
-DART:
-and device mappings
-
-GPU:
-and resource modes
+everybody shares one pool.
 
 CPU:
-and synchronization
+so I can read every buffer.
+
+MMU:
+no.
+
+GPU:
+same question.
+
+MMU:
+different office.
 
 Unified Memory:
-I bring this heavily regulated
-family together ❤️
+I was talking about the DRAM.
 ```
 
 The phrase *zero-copy* is often invited to these discussions and should be watched around the silverware.
@@ -119,7 +116,7 @@ Unrestricted DMA is a burglar with excellent throughput.
 
 Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
 
-Apple's public security guide uses the generic term *IOMMU*. Public Asahi Linux reverse engineering identifies the Apple silicon IOMMU hardware as **DART**. That is why the family gives the loading-dock job to DART rather than pretending Apple used the name in the public security page.
+Apple's public security guide calls them IOMMUs. Public Asahi Linux reverse engineering identifies the Apple silicon hardware as **DART**. The receipts keep the distinction. DART keeps the loading dock.
 
 ```text
 Device:
@@ -147,7 +144,7 @@ DART:
 that's awesome bro
 ```
 
-Hardware is not one class with a universal backstage pass. A device is hardware. The IOMMU is also hardware. Their disagreement is resolved by an address-translation table, which is the least sentimental possible form of family mediation.
+The device is hardware. So is the thing denying it.
 
 ```text
 Device:
@@ -159,11 +156,43 @@ on your I/O mapping
 
 DART is the MMU’s cousin who works security at the loading dock.
 
-The CPU enters through the front and meets CPU translation.
+## The address dispute
 
-A DMA agent arrives at the loading dock.
+Then root returns carrying hexadecimal.
 
-DART asks for a manifest.
+```text
+root:
+I need memory at 0x1000.
+
+MMU:
+in whose address space
+
+root:
+the computer's
+
+MMU:
+adorable.
+
+Device:
+my 0x1000 maps somewhere else.
+
+DART:
+if I say it does.
+
+root:
+I have the address.
+
+MMU:
+you have an address.
+
+root:
+WHICH ONE IS REAL
+
+Memory Controller:
+do you want memory or philosophy
+```
+
+Same number, different maps. Root brought an address and assumed it was the deed.
 
 ## Thunderbolt brought someone
 
@@ -189,50 +218,36 @@ DART:
 absolutely fucking not
 ```
 
-Drivers, policy, and mappings may establish access. DART makes “plugged in” different from “owns RAM.”
+Drivers and mappings may eventually let the device in. “Plugged in” is not the same as “owns RAM.”
 
-That distinction becomes more important as interfaces become faster and more capable. A cable should not be a constitutional amendment.
+A cable should not be a constitutional amendment.
 
 ## The landlord’s landlord
 
-Below the address spaces and device mappings sits the machinery arbitrating actual memory traffic.
-
-The book gives the memory controller the exhausted demeanor of a deli counter at noon.
+Below all those maps, somebody still has to move the bytes. The memory controller runs the deli counter.
 
 ```text
 CPU:
 memory please
 
 GPU:
-memory please
+urgent memory please
 
 ANE:
-memory please
+mine is neural.
 
 Memory Controller:
-take a number
+congratulations on the adjective.
+
+CPU:
+I'm the CPU.
+
+Memory Controller:
+take two numbers.
 ```
 
 Fabric and controller topology varies by generation. “Memory Controller” represents arbitration and movement beneath software abstractions, not one tiny person with a clipboard.
 
-```text
-GPU:
-I'm rendering at 240 frames per second.
-
-Memory Controller:
-and I care because
-
-GPU:
-bandwidth.
-
-Memory Controller:
-now you're speaking my language
-```
-
-At every layer, a grand title becomes a request in somebody else’s queue. XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
+XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
 
 The DRAM cells store charge and have never heard of root.
-
-Authority has finally reached physics.
-
-Physics declines to attend the status meeting.

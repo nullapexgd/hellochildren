@@ -2,7 +2,7 @@
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
-### v0.2 — The Editor Pass
+### v0.3 — The Receipts Edition
 
 ---
 
@@ -23,5 +23,7 @@ That rule occasionally produces an unusual ending for a mystery:
 > We found the name. We found the path. We found the code asking for it. We still do not know what the damn thing completely does.
 
 This is not failure. This is technical integrity wearing sensible shoes to a costume party.
+
+The working files classify claims as public documentation, direct observation, source-conversation observation, reverse-engineering evidence, bounded inference, or dramatization. The joke still gets to enter. It just has to show identification.
 
 Welcome to the family.

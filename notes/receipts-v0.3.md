@@ -147,6 +147,19 @@ Supports: Chapter 9 assigning the I/O-mapping character name **DART** while sepa
 
 Caveat: Asahi is public reverse-engineering evidence, not Apple documentation.
 
+### PUB-ADDR-001 — an address needs a translation context
+
+Arm's memory-management guide documents multiple independent virtual address spaces and gives the example that `NS.EL2:0x8000` means address `0x8000` in one specific translation regime. Apple's DMA guide separately documents per-agent IOMMU translation tables, while the Asahi DART sources expose per-stream I/O translation.
+
+Sources:
+- <https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Learn%20the%20Architecture/LearnTheArchitecture-MemoryManagement-101811_0100_00_en.pdf>
+- <https://support.apple.com/guide/security/direct-memory-access-protections-for-mac-computers-seca4960c2b5/web>
+- <https://github.com/AsahiLinux/m1n1/blob/main/proxyclient/m1n1/hw/dart.py>
+
+Supports: Chapter 9's address-dispute beat. The same numeric address can belong to different CPU or I/O translation contexts.
+
+Caveat: `0x1000` is an illustrative number. The dialogue is **DRAM**, not a trace of a real mapping or a shared conversation among MMU, DART, and the memory controller.
+
 ### PUB-SEP-001 — Secure Enclave is a distinct security subsystem
 
 Apple documents the Secure Enclave as a dedicated subsystem isolated from the main processor, with its own processor environment, dedicated Boot ROM, protected memory mechanisms, cryptographic hardware, and sepOS verification.
