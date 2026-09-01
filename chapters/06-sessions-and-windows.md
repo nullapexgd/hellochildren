@@ -197,4 +197,4 @@ WindowServer:
 whose point is that
 ```
 
-Privilege can end a world without understanding it. That is power, not government.
+Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.

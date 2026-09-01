@@ -1164,7 +1164,7 @@ WindowServer:
 whose point is that
 ```
 
-Privilege can end a world without understanding it. That is power, not government.
+Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
 
 
 # 7. Trust and Signatures
@@ -1291,7 +1291,15 @@ amfid:
 with whose authority
 
 fake launchd:
-UID 2.
+GenuineApple™.
+
+amfid:
+that isn't a signing authority.
+it isn't even a CPU vendor string
+on this architecture.
+
+fake launchd:
+branding transcends ISA.
 
 amfid:
 leave.
@@ -1318,7 +1326,7 @@ root:
 I am the administrator.
 
 Gatekeeper:
-that is a different column.
+that's your résumé.
 ```
 
 Administrative choice can alter settings through authorized procedures. Apple documents that users can override Gatekeeper for particular software, and Gatekeeper can be disabled when policy permits. That is different from every request succeeding automatically merely because the caller is UID 0.
