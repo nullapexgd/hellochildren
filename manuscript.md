@@ -969,21 +969,23 @@ We still do not know what that means.
 We do know it has excellent timing.
 
 
-# 6. Sessions, Windows, and Ceremonial Root
+# 6. Who Owns the User Session?
 
 The Mac has booted. XNU governs execution. launchd has populated userspace. You still do not exist.
 
 Computationally. We cannot help with the other kind.
 
-There is no authenticated graphical session associated with your account. The machine may be alive, but it has not agreed that *you* are the person who gets a desktop.
+Your account can exist in a directory while nobody is logged in. Your password can be accepted before your desktop exists. Your desktop can exist while a background service associated with your account has no window at all. These facts travel together so often that the wallpaper encourages us to call them one thing.
 
-Enter `loginwindow`, carrying the kind of keyring that causes a belt injury.
+The wallpaper is lying.
 
 ## Please authenticate before existing
 
-Apple’s archived daemon-lifecycle documentation describes `loginwindow` coordinating the visual and security portions of login and then setting up the authenticated user environment. Apple’s current device-management documentation still exposes `com.apple.loginwindow` as the payload type for Login Window behavior. The first source is historical architecture, not proof that every private call path survived unchanged; the second confirms that Login Window remains a current system surface.
+Enter `loginwindow`, carrying the kind of keyring that causes a belt injury.
 
-A component may carry many credentials because it spends all day asking other offices to do their jobs.
+Apple's detailed public account of this territory is historical. Its archived daemon-lifecycle documentation describes `loginwindow` coordinating the visual and security portions of login, then setting up the authenticated user environment. Current device-management documentation still exposes `com.apple.loginwindow` as the payload type for Login Window behavior.
+
+That supports a durable role, not a promise that every private call path from old OS X survived unchanged. The receptionist still works here. We are not publishing the floor plan behind the desk.
 
 ```text
 loginwindow:
@@ -999,7 +1001,7 @@ launchd:
 ask whom?
 ```
 
-Authentication, directory identity, keychain state, preferences, and graphical startup are related. They are not one operation named `let_human_in()`.
+An account name answers *which recorded identity?* Authentication answers *has this attempt supplied acceptable proof?* A session answers *which live environment is being formed for that identity now?* One may lead to the next. None is a synonym for the next.
 
 ```text
 User:
@@ -1018,11 +1020,45 @@ which version of you is logging in,
 and what furniture that version expects.
 ```
 
+Authentication, directory identity, keychain state, preferences, and graphical startup are related. They are not one operation named `let_human_in()`.
+
 The family metaphor calls `loginwindow` the receptionist. This is unfair to receptionists, who are rarely responsible for initiating an authenticated computing environment while the guest repeatedly asks why the wallpaper has not appeared.
+
+## The account was already here
+
+This is the part humans find suspicious. If the account already existed, what exactly did login create?
+
+Not the account. A live relationship between that identity and this period of activity.
+
+The distinction explains several otherwise haunted observations. Files can belong to a user who is asleep. A scheduled system task can refer to an account with no desktop on screen. Two processes can carry the same numeric user identity yet inhabit different moments, service contexts, or expectations about what “the current session” means.
+
+The book will not turn that last sentence into a claim about one undocumented internal object. It is the safer architectural point: persistent identity and live session state answer different questions.
+
+```text
+Account record:
+I've existed for three years.
+
+loginwindow:
+congratulations.
+
+Account record:
+so I am logged in.
+
+loginwindow:
+you are a row with a home directory.
+
+Account record:
+harsh.
+
+loginwindow:
+accurate.
+```
+
+Logging out makes the boundary even clearer. The account remains. Its files remain. The particular user environment can end. Identity survives the party because identity was never the party.
 
 ## Root arrives without an appointment
 
-Root assumes that UID 0 should simplify the encounter.
+Root assumes UID 0 should simplify the encounter.
 
 ```text
 root:
@@ -1044,17 +1080,109 @@ loginwindow:
 please stop inventing products at the desk
 ```
 
-Unix credentials remain relevant, but they do not collapse every session concept into root’s living room. “I can access a file” does not imply “this rectangle belongs in this user’s graphical world.”
+Unix credentials matter. They can answer file-access and process-privilege questions with tremendous force. They do not manufacture an authenticated human, choose the active user's preferences, or make every per-user service regard the caller as its resident.
 
-## Those are my windows
+This is where root becomes ceremonial in a very specific sense. The title remains real. The ceremony is root announcing it to an office currently asking for a different noun.
 
-Then comes WindowServer.
+```text
+root:
+I can read the user's files.
+
+loginwindow:
+that is a file answer.
+
+root:
+I can signal the user's processes.
+
+loginwindow:
+that is a process answer.
+
+root:
+I am running out of answers.
+
+loginwindow:
+you brought the wrong form.
+```
+
+## The apartment above the system
+
+Once a user environment is active, services and agents can live in a per-user context rather than the root system context. Chapter 4 called launchd's world a civilization; here we discover it has zoning.
+
+A system daemon may serve the whole machine. A user agent may belong to one logged-in environment. An application may arrive later and ask that environment for a service by name. The exact private construction has changed across releases and contains more machinery than this family portrait shows. The point is the boundary: machine-alive and user-present are different conditions.
+
+```text
+system service:
+I've been awake since boot.
+
+user agent:
+I live with Efe.
+
+system service:
+the account?
+
+user agent:
+the current session.
+
+system service:
+same thing.
+
+loginwindow:
+absolutely not.
+```
+
+Account ownership does not make the service global. System scope does not make the daemon a member of every user's session. launchd can organize both without pretending they occupy one flat household.
+
+This is also why “the user launched it” can be a useful explanation and a terrible complete specification. Which user identity? Which active environment? Which service context? Which policy accepted the request? The ordinary sentence compresses all four because ordinary people are trying to open Calendar, not defend a dissertation before breakfast.
+
+Inside the machine, the missing nouns still matter.
+
+## The handoff the user calls “the Mac”
+
+The session becomes visible only after authority passes through several jurisdictions. This is the map; the next chapter lives in its right-hand half.
+
+```text
+account identity + authentication
+              |
+              v
+         loginwindow
+              |
+              v
+  authenticated user session
+      |                 |
+      v                 v
+per-user services   WindowServer
+                          |
+                          v
+                    GPU execution
+                          |
+                          v
+                 display scanout -> light -> user
+```
+
+Nothing in the diagram is promoted to supreme owner by appearing lower or farther right. `loginwindow` does not render. A user agent does not become WindowServer because it owns a menu. WindowServer cannot authenticate the person by arranging the password field beautifully.
+
+At the end of login, the account has become a live user environment. The services in that environment can answer. The graphical government can now construct the world the user will recognize.
+
+Root can still end many of its processes. That does not mean root formed the session, understands it, or can substitute a title for the identity it was built around.
+
+Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
+
+
+# 7. Those Are My Windows
+
+The session exists. This is immediately followed by a property dispute.
 
 Apps tend to think they own their windows because the windows contain their names, controls, and occasionally an unsaved document they have been protecting from you for four hours.
 
-WindowServer sees the graphical world at a level individual apps do not. Apple publicly documents windows managed by the macOS window server, display-control features provided through that server, and the window server's role in delivering input events to applications.
+Then WindowServer walks in and asks what they mean by *own*.
 
-That is enough for the family argument. Private frameworks and implementation details clearly add more, but we do not need to promote every observed private surface, entitlement, or symbol into a public architectural promise.
+## The content and the rectangle
+
+An app owns the state and behavior that make its interface useful. It decides that a button means Save, that a document contains seventeen paragraphs, and that the spinning progress indicator should continue offering hope long after hope has left the process.
+
+The graphical object participating in the shared desktop is a different concern. Apple publicly documents onscreen and offscreen windows managed by the macOS window server, including information scoped to the current user session. Its Quartz display documentation also exposes display configuration and control through window-server facilities.
+
+That is enough to establish the dispute without claiming every private detail is a stable contract.
 
 ```text
 App:
@@ -1076,9 +1204,85 @@ WindowServer:
 you sound behind on frames.
 ```
 
-The window server can coordinate windows without becoming the GPU or arrange display content without becoming the display controller. This family has pipelines, not a final boss.
+The app can know what the pixels mean without deciding where every graphical object appears relative to every other one. WindowServer can manage those objects without knowing whether the sentence underneath the cursor is a tax return or an extremely long apology.
+
+Meaning belongs upstream. Placement belongs elsewhere. The user experiences a seamless desktop because neither office includes the jurisdictional argument in the screenshot.
+
+## Offscreen still counts
+
+Apple's public name for this surface is useful: Quartz Window Services covers both onscreen and offscreen windows managed by the macOS window server. Visibility, then, is not the admission ticket for graphical government.
+
+An app can create content that is covered, moved away, or not presently visible. The managed window does not stop participating in the system merely because the user cannot point at its photons. “I cannot see it” is a report from the user, not a revocation of the object's place in the graphical environment.
+
+```text
+App:
+where is my window
+
+WindowServer:
+behind twelve other windows.
+
+App:
+so it doesn't exist.
+
+WindowServer:
+that theory would solve storage too.
+
+App:
+put me on top.
+
+WindowServer:
+now you're finally asking a window question.
+```
+
+This gives WindowServer authority over arrangement without granting it authorship. It can know the window's bounds and relationship to other graphical objects while remaining heroically uninterested in the spreadsheet formula inside it.
+
+## Input has to find an address
+
+The shared graphical world is not only output. A click arrives from hardware with coordinates, timing, and button state. It still has to become *this app receives an event for this window*.
+
+Apple's archived event-architecture documentation places the system window server in that delivery path. Historical documentation is evidence for the architectural role, not a current private call graph. We can say the window server participates in delivering input to applications. We cannot use an old diagram to narrate every modern hop with courtroom confidence.
+
+```text
+Mouse:
+click.
+
+App A:
+mine.
+
+App B:
+mine.
+
+WindowServer:
+one of you is under the pointer.
+
+App B:
+is it me
+
+WindowServer:
+you are minimized.
+```
+
+The event can belong to the user's physical action, the input system's data stream, a managed graphical object, and the receiving app's interface logic in different senses. The sentence “the app got the click” is true because several authorities did not all try to be the same authority.
+
+The reverse is funny too. An app can decide what a click means only after the graphical system has delivered one to it. It may interpret the event as selecting text, firing a button, or beginning a drag. It cannot retroactively declare that the click occurred in its window because the click would have been emotionally meaningful there.
+
+```text
+App A:
+I needed that click.
+
+WindowServer:
+it happened in App B.
+
+App A:
+but my button was better.
+
+WindowServer:
+appeal denied.
+```
 
 ## The pixel custody dispute
+
+WindowServer can coordinate windows without becoming the GPU. It can arrange display content without becoming the display controller. This family has a pipeline, not a final boss.
 
 ```text
 WindowServer:
@@ -1112,17 +1316,21 @@ Display controller:
 lol.
 ```
 
-The deeper we move into hardware, the more authority becomes a relay race in which every runner mistakes possession of the baton for ownership of the stadium.
+“Rendered” and “displayed” are not synonyms. A rendering result can exist in memory before any panel shows it. Display scanout is downstream from the work that produced the image. On Apple silicon, public reverse engineering also identifies DCP in the display path, but this chapter keeps the character generic because exact pipelines vary by chip, machine, and display route.
 
-The app owns its document model. The window server governs graphical objects. The GPU renders. The display engine scans out. The panel emits light.
+The deeper we move into hardware, the more authority resembles a relay race in which every runner mistakes possession of the baton for ownership of the stadium.
 
-The user places a fingerprint directly on it.
+The user then places a fingerprint directly on the panel.
 
 At last, a form of authority no subsystem can reverse.
 
 ## Private archaeology
 
-A third-party `CGSSpace.swift` artifact preserves the comment `this value MUST be 1, otherwise, Finder decides to draw desktop icons` beside a call to the private `CGSSpaceCreate` API. A 2025 GitHub Gist by Julian Schiavo identifies the file as derived from `avaidyam/Parrot` at commit `6cf7ba419176c386ed8f18e838690a7272fe57ee`. This is source-code evidence about that project's observed behavior, not Apple documentation: a developer tests integers until one stops an ancient household spirit from redecorating.
+Private interfaces make this territory especially good at humiliating certainty.
+
+A public third-party `CGSSpace.swift` artifact preserves the exact comment `this value MUST be 1, otherwise, Finder decides to draw desktop icons` beside a call to the private `CGSSpaceCreate` API. A 2025 GitHub Gist by Julian Schiavo identifies the file as derived from `avaidyam/Parrot` at commit `6cf7ba419176c386ed8f18e838690a7272fe57ee`.
+
+This proves the comment and code exist in that project lineage. It does not turn the integer into an Apple-documented ABI or promise the behavior survives on another release. A developer recorded a constraint after dealing with private machinery, which is how folklore acquires hexadecimal notation.
 
 ```text
 Developer:
@@ -1146,32 +1354,45 @@ Developer:
 nobody touch it
 ```
 
-The author recorded an observed constraint. We will not invent a private protocol from the integer’s vibes.
+The author found the name, the call, and an integer associated with observed behavior. We will not invent the missing semantics from the integer's vibes.
 
-## The session exists
+SkyLight and related private surfaces deserve the same restraint. Their names and observed artifacts can establish that machinery exists. Unless Apple documents a behavior or we reproduce it under stated conditions, they do not authorize us to publish a complete invisible constitution.
 
-At the end of login, the user environment is alive. Apps can present windows. Agents can serve the session. WindowServer can govern the graphical universe the user recognizes as “the Mac.”
+## Whose screen is it?
 
-XNU watches all this from below with the irritation of someone who owns the electrical panel but was not invited to choose the curtains.
+By now every participant has a respectable claim.
+
+The app owns the document model. WindowServer manages windows in the graphical environment. The GPU executes rendering work. The display path scans out an image. The panel emits physical light. The user sees “my desktop” and is correct at the only level that motivated the entire arrangement.
 
 ```text
-XNU:
-I could terminate WindowServer.
+App:
+my content.
 
 WindowServer:
-and then what would the user see
+my managed window.
 
-XNU:
-nothing.
+GPU:
+my completed work.
 
-WindowServer:
-whose point is that
+Display controller:
+my scanout.
+
+Panel:
+photons.
+
+User:
+can I move the icon three pixels left
+
+Everyone:
+Finder.
 ```
 
-Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
+XNU could terminate a process involved in the scene. That is enormous kernel authority and terrible art direction. Ending the graphical world is not the same act as governing its windows, rendering its surfaces, or understanding what any of them say.
+
+No one owns “the pixels” without supplying a noun after *owns*. The joke works because the screen looks singular. The machinery does not.
 
 
-# 7. Trust and Signatures
+# 8. Trust and Signatures
 
 An executable approaches the system.
 
@@ -1370,7 +1591,7 @@ signature?
 Somewhere nearby, a system larger than the speaker checks the signature. The line works because `amfid` participates without becoming king.
 
 
-# 8. sharingd Knows a Guy
+# 12. sharingd Knows a Guy
 
 Then this motherfucker arrives.
 
@@ -1556,7 +1777,7 @@ I asked a yes-or-no question
 `sharingd` crosses kingdoms wearing enough credentials to make their rulers nervous. Somewhere, quietly, `amfid` still has eight.
 
 
-# 9. Memory Has Borders
+# 14. Memory Has Borders
 
 Software enjoys declarations: this address belongs to process 472; that page is read-only; this device may access this buffer.
 
@@ -1811,7 +2032,7 @@ XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates tra
 The DRAM cells store charge and have never heard of root.
 
 
-# 10. SEP Has a Mailbox
+# 15. SEP Has a Mailbox
 
 XNU has been waiting for this meeting.
 
@@ -2032,7 +2253,7 @@ meeting adjourned
 Behind the security boundary, SEP raises a small red flag on the mailbox.
 
 
-# 11. The Hardware Family Dinner
+# 17. The Hardware Family Dinner
 
 The mistake was inviting everyone.
 
@@ -2417,7 +2638,7 @@ Not a hierarchy with one god at the top.
 A house full of different sovereign assholes, each holding one portion of the lease and none willing to wash the dishes.
 
 
-# 12. At the Mercy of the Kernel
+# 18. At the Mercy of the Kernel
 
 Every operating-system book loves boot. Arrows point downward. Trust accumulates. The desktop appears. The diagram ends with *user session established* as if nobody will ever click Shut Down while fourteen apps negotiate unsaved documents.
 
@@ -2636,7 +2857,7 @@ good night
 Even the mercy of the kernel has a jurisdiction.
 
 
-# 13. One More Jurisdiction
+# 19. One More Jurisdiction
 
 We began with a useful lie: hardware at the bottom, kernel above it, userspace above that, and the purchaser floating near the top like a minor deity with AppleCare.
 

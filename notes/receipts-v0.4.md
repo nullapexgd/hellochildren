@@ -79,6 +79,16 @@ Supports: Chapters 4 and 6 at an architectural level.
 
 Caveat: the document is archived and predates current macOS internals. Do not use it as a complete modern call graph.
 
+### PUB-LOGINWINDOW-001 — Login Window remains a current configuration surface
+
+Apple's current device-management documentation identifies a macOS `LoginWindow` payload with the payload type `com.apple.loginwindow` and exposes settings governing Login Window behavior.
+
+Source: <https://developer.apple.com/documentation/devicemanagement/loginwindow>
+
+Supports: Chapter 6 saying Login Window remains a current named system surface while relying on archived documentation only for the historical session-setup description.
+
+Does **not** support: treating the payload schema as documentation of current private authentication calls, per-user service construction, or the complete login sequence.
+
 ### PUB-WINDOW-001 — window-server event delivery
 
 Apple's archived Mac App Programming Guide states that the system window server receives events from underlying hardware and transfers/delivers them to applications.
@@ -87,7 +97,7 @@ Sources:
 - <https://developer.apple.com/library/archive/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html>
 - <https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html>
 
-Supports: Chapter 6's narrow event-delivery claim.
+Supports: Chapter 7's narrow event-delivery claim.
 
 Does **not** by itself support: every broader private WindowServer responsibility described by character metaphor.
 
@@ -99,7 +109,7 @@ Sources:
 - <https://developer.apple.com/documentation/coregraphics/quartz-window-services>
 - <https://developer.apple.com/documentation/coregraphics/quartz-display-services>
 
-Supports: Chapter 6 saying WindowServer has authority over managed windows and participates in display control, alongside the older public event-delivery documentation.
+Supports: Chapter 7 saying WindowServer has authority over managed windows and participates in display control, alongside the older public event-delivery documentation.
 
 Does **not** support: treating every private SkyLight surface, entitlement, session primitive, or observed symbol as a documented WindowServer contract.
 
@@ -112,7 +122,7 @@ Sources:
 - <https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-in-macos-sec5599b66df/web>
 - <https://support.apple.com/guide/security/trust-caches-sec7d38fbf97/web>
 
-Supports: Chapter 7's refusal to turn `amfid` into a single all-powerful bouncer.
+Supports: Chapter 8's refusal to turn `amfid` into a single all-powerful bouncer.
 
 ### PUB-METAL-001 — unified memory is not unrestricted access
 
@@ -123,7 +133,7 @@ Sources:
 - <https://developer.apple.com/documentation/metal/mtlstoragemode/shared>
 - <https://developer.apple.com/documentation/metal/mtlstoragemode/private>
 
-Supports: Chapter 9's "Unified does not mean communal" section.
+Supports: Chapter 14's "Unified does not mean communal" section.
 
 ### PUB-DMA-001 — Apple-silicon DMA protection
 
@@ -131,7 +141,7 @@ Apple documents an IOMMU for each DMA agent in Apple SoCs and states that PCIe a
 
 Source: <https://support.apple.com/guide/security/direct-memory-access-protections-for-mac-computers-seca4960c2b5/web>
 
-Supports: Chapter 9's loading-dock model.
+Supports: Chapter 14's loading-dock model.
 
 Caveat: Apple's public page says IOMMU. `DART` is the implementation name used in relevant Apple-silicon / reverse-engineering contexts; do not imply that the public page itself names DART.
 
@@ -143,7 +153,7 @@ Sources:
 - <https://asahilinux.org/docs/sw/kernel-config/>
 - <https://asahilinux.org/2025/10/progress-report-6-17/>
 
-Supports: Chapter 9 assigning the I/O-mapping character name **DART** while separately citing Apple for the generic per-DMA-agent IOMMU security property.
+Supports: Chapter 14 assigning the I/O-mapping character name **DART** while separately citing Apple for the generic per-DMA-agent IOMMU security property.
 
 Caveat: Asahi is public reverse-engineering evidence, not Apple documentation.
 
@@ -156,7 +166,7 @@ Sources:
 - <https://support.apple.com/guide/security/direct-memory-access-protections-for-mac-computers-seca4960c2b5/web>
 - <https://github.com/AsahiLinux/m1n1/blob/main/proxyclient/m1n1/hw/dart.py>
 
-Supports: Chapter 9's address-dispute beat. The same numeric address can belong to different CPU or I/O translation contexts.
+Supports: Chapter 14's address-dispute beat. The same numeric address can belong to different CPU or I/O translation contexts.
 
 Caveat: `0x1000` is an illustrative number. The dialogue is **DRAM**, not a trace of a real mapping or a shared conversation among MMU, DART, and the memory controller.
 
@@ -166,7 +176,7 @@ Apple documents the Secure Enclave as a dedicated subsystem isolated from the ma
 
 Source: <https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web>
 
-Supports: Chapter 10's central jurisdiction claim: Application Processor kernel privilege is not universal authority over the Secure Enclave.
+Supports: Chapter 15's central jurisdiction claim: Application Processor kernel privilege is not universal authority over the Secure Enclave.
 
 ### PUB-PERIPH-001 — peripheral processors have their own firmware/security story
 
@@ -174,7 +184,7 @@ Apple documents built-in peripheral processors for tasks including networking, g
 
 Source: <https://support.apple.com/guide/security/peripheral-processor-security-seca500d4f2b/web>
 
-Supports: Chapters 2 and 11's claim that the gray box labelled HARDWARE contains independently significant processor/firmware domains.
+Supports: Chapters 2 and 17's claim that the gray box labelled HARDWARE contains independently significant processor/firmware domains.
 
 ### RE-SEP-001 — AP↔SEP mailbox
 
@@ -182,7 +192,7 @@ Asahi Linux's public Secure Enclave Processor documentation identifies a SEP mai
 
 Source: <https://asahilinux.org/docs/hw/soc/sep/>
 
-Supports: Chapter 10's use of *mailbox* as a hardware messaging mechanism across the AP/SEP boundary.
+Supports: Chapter 15's use of *mailbox* as a hardware messaging mechanism across the AP/SEP boundary.
 
 Caveat: this is public reverse-engineering evidence, not Apple documentation. The book must not extrapolate unobserved message semantics from it.
 
@@ -198,7 +208,7 @@ The file says it is a lightly modified derivative of `avaidyam/Parrot` and names
 
 Source: <https://gist.github.com/julianschiavo/6472bbbe10359133765e95d339e25fb4>
 
-Supports: Chapter 6's claim that a third-party developer recorded this constraint beside a private `CGSSpaceCreate` call.
+Supports: Chapter 7's claim that a third-party developer recorded this constraint beside a private `CGSSpaceCreate` call.
 
 Does **not** support: treating `0x1` as a documented Apple ABI contract or claiming the behavior is stable across macOS versions.
 
@@ -208,7 +218,7 @@ Apple's TN3125 documents `codesign --display --entitlements - --xml <path>` to f
 
 Source: <https://developer.apple.com/documentation/Technotes/tn3125-inside-code-signing-provisioning-profiles>
 
-Supports: the second-method entitlement reproduction attempt for Chapters 7 and 8.
+Supports: the second-method entitlement reproduction attempt for Chapters 8 and 12.
 
 
 ### PUB-ANE-001 — Core ML exposes CPU/GPU/Neural Engine compute-unit choices
@@ -217,7 +227,7 @@ Apple's current `MLComputeUnits` documentation defines model-execution choices t
 
 Source: <https://developer.apple.com/documentation/coreml/mlcomputeunits>
 
-Supports: Chapter 11's claim that Core ML can place supported model work across CPU, GPU, and Neural Engine resources without promising that every model or operation runs on the ANE.
+Supports: Chapter 17's claim that Core ML can place supported model work across CPU, GPU, and Neural Engine resources without promising that every model or operation runs on the ANE.
 
 Does **not** support: a claim about the exact scheduler, partitioning of a specific model, or a universal list of operations supported by the Neural Engine.
 
@@ -229,7 +239,7 @@ Sources:
 - <https://asahilinux.org/2021/08/progress-report-august-2021/>
 - <https://asahilinux.org/2026/08/progress-report-7-2/>
 
-Supports: Chapter 11's downstream **Display Controller** character and the claim that rendering/composition and final display scanout are distinct stages.
+Supports: Chapters 7 and 17 using a downstream **Display Controller** character and distinguishing rendering/composition from final display scanout.
 
 Caveat: this is public reverse-engineering evidence, not an Apple-documented DCP ABI. The book's character name is intentionally generic; exact pipelines vary by SoC, machine, and display path.
 
@@ -239,7 +249,7 @@ Apple's retired APFS FAQ explicitly discusses a *Flash translation layer* and no
 
 Source: <https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html>
 
-Supports: Chapter 11's storage-abstraction joke: a filesystem can retain a logical block identity while lower storage layers choose physical NAND placement.
+Supports: Chapter 17's storage-abstraction joke: a filesystem can retain a logical block identity while lower storage layers choose physical NAND placement.
 
 Caveat: the APFS guide is retired, and this receipt does not document the exact controller firmware or mapping algorithms in a current Apple-silicon Mac.
 
@@ -249,7 +259,7 @@ Asahi Linux's platform introduction lists `S5E` as the NAND (SSD) controller on 
 
 Source: <https://asahilinux.org/docs/platform/introduction/>
 
-Supports: Chapter 11 giving the lower storage layer a controller character distinct from APFS.
+Supports: Chapter 17 giving the lower storage layer a controller character distinct from APFS.
 
 Caveat: this is public reverse-engineering documentation. It does not expose the private flash-translation mapping for a particular logical block or make `S5E` universal across every Apple-silicon generation.
 
@@ -275,7 +285,7 @@ Sources:
 - <https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/cs_blobs.h>
 - <https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/vm/vm_page.h>
 
-Supports: Chapter 7's statement that `amfid` is not a single all-powerful userspace bouncer. There is explicit kernel-side code-signing state and enforcement machinery in addition to userspace services and platform policy.
+Supports: Chapter 8's statement that `amfid` is not a single all-powerful userspace bouncer. There is explicit kernel-side code-signing state and enforcement machinery in addition to userspace services and platform policy.
 
 Caveat: public source does not by itself document the complete current private protocol between XNU, AMFI components, CoreTrust, and `amfid`.
 
@@ -287,7 +297,7 @@ Sources:
 - <https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web>
 - <https://support.apple.com/guide/security/sec3ad8e6e53/web>
 
-Supports: Chapter 7 narrowing Gatekeeper's character from generic "launch authority" to one part of macOS app-trust policy.
+Supports: Chapter 8 narrowing Gatekeeper's character from generic "launch authority" to one part of macOS app-trust policy.
 
 Does **not** support: treating a Gatekeeper approval or override as a bypass of unrelated code-signing, entitlement, SIP, sandbox, or runtime controls.
 

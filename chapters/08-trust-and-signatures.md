@@ -1,4 +1,4 @@
-# 7. Trust and Signatures
+# 8. Trust and Signatures
 
 An executable approaches the system.
 

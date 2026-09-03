@@ -91,11 +91,11 @@ contains "$project_dir/chapters/00-title.md" 'Unless a passage says otherwise, l
 not_contains "$project_dir/chapters/04-launchd.md" 'The source conversation examined'
 not_contains "$project_dir/chapters/04-launchd.md" 'The v0.3 reproduction pass'
 not_contains "$project_dir/chapters/05-the-children.md" 'The v0.3 reproduction pass'
-not_contains "$project_dir/chapters/07-trust-and-signatures.md" 'The v0.3 reproduction pass'
-not_contains "$project_dir/chapters/08-neighborhood-services.md" 'The earlier source-conversation build'
-not_contains "$project_dir/chapters/08-neighborhood-services.md" 'The v0.3 reproduction target'
-not_contains "$project_dir/chapters/12-shutdown.md" 'The earlier source archaeology'
-not_contains "$project_dir/chapters/12-shutdown.md" 'the v0.3 reproduction pass'
+not_contains "$project_dir/chapters/08-trust-and-signatures.md" 'The v0.3 reproduction pass'
+not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The earlier source-conversation build'
+not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The v0.3 reproduction target'
+not_contains "$project_dir/chapters/18-shutdown.md" 'The earlier source archaeology'
+not_contains "$project_dir/chapters/18-shutdown.md" 'the v0.3 reproduction pass'
 
 last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/manuscript.md")
 test "$last_nonblank" = 'moo.' || fail 'manuscript does not end at moo.'
