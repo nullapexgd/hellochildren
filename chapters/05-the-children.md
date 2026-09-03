@@ -44,7 +44,7 @@ An agent can talk to a daemon when user and system responsibilities must coopera
 
 ## The fake launchd incident
 
-The source conversation records a deliberate experiment: create a Unix account named `launchd`, give it UID 2, add a ridiculous collection of supplementary groups, and start an interactive shell under that account.
+We once made the mistake on purpose: create a Unix account named `launchd`, give it UID 2, add a ridiculous collection of supplementary groups, and start an interactive shell under that account.
 
 The command worked.
 
@@ -112,7 +112,7 @@ The account, UID, groups, and their Unix permission effects were real. The costu
 
 ## Then the angels arrived
 
-In the source archaeology, several spellings and artifacts appeared:
+Then the binary itself started saying things like:
 
 ```text
 /System/Library/LaunchAngels/
@@ -121,13 +121,13 @@ LaunchAngel
 __Angel
 ```
 
-The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. The same binary also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
+Our copy of `/sbin/launchd` has `LaunchAngel`, `__Angel`, three LaunchAngels paths, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s`. It also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
 
-That last string is useful, but narrow evidence. It supports that launchd contains code or data referring to a private entitlement by that name. It does **not** prove which process carries the entitlement, the complete authorization path, or what submitting a LaunchAngel ultimately means.
+That last string is a badge-shaped clue, not a completed org chart. It tells us launchd refers to a private entitlement by that name. It does **not** tell us who carries it, how the whole authorization path works, or what submitting a LaunchAngel ultimately means.
 
-What does this prove?
+So what do we actually have?
 
-It supports the existence of an internal Apple concept named `LaunchAngel`, distinct enough to receive names, paths, code, or configuration references in the examined material.
+An internal Apple concept named `LaunchAngel` left fingerprints: names, paths, code, or configuration references. We can say it exists. We cannot write its biography.
 
 What is a LaunchAngel?
 

@@ -47,7 +47,7 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. All three lines used here were reproduced on that exact build:
+Apple already wrote some of the dialogue. We found these three lines sitting in `/sbin/launchd`:
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
@@ -61,7 +61,9 @@ And, with the unmistakable tone of an engineer whose day has taken a turn:
 
 At some point the authors of launchd stopped writing diagnostics and began responding personally.
 
-The reproduced strings establish that those words occur in the named binary/build. They do not establish the full private code path or emotional condition of the engineer. The latter is a strong inference.
+That proves the lines are there. It does not prove the full private code path, and it definitely does not prove the emotional condition of the engineer.
+
+That second conclusion is ours. We are comfortable with it.
 
 ```text
 Job:

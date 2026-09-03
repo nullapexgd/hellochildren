@@ -1,4 +1,4 @@
-# HELLO CHILDREN
+# On Your Processor
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
@@ -24,6 +24,8 @@ That rule occasionally produces an unusual ending for a mystery:
 
 This is not failure. This is technical integrity wearing sensible shoes to a costume party.
 
-The working files classify claims as public documentation, direct observation, source-conversation observation, reverse-engineering evidence, bounded inference, or dramatization. The joke still gets to enter. It just has to show identification.
+The receipts live in the notes, where they can wear name tags like *public documentation*, *direct observation*, *reverse engineering*, *inference*, and *dramatization*. Unless a passage says otherwise, local observations in this edition came from macOS 27.0 build `26A5416b`.
+
+The joke still gets to enter. It just has to show identification.
 
 Welcome to the family.

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="$lang$">
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="On Your Processor build system">
+    <meta name="description" content="$subtitle$">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+
+$for(css)$
+    <link rel="stylesheet" href="$css$">
+$endfor$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+</head>
+<body>
+<a class="skip-link" href="#book-content">Skip to the book</a>
+
+<div class="reader-app">
+    <header class="reader-toolbar">
+        <div class="reader-identity" aria-label="Publication">
+            <span class="reader-mark" aria-hidden="true">OYP</span>
+            <span>$title$</span>
+        </div>
+        <div class="reader-position">
+            <span id="reader-status" role="status" aria-live="polite">Cover</span>
+            <span class="reader-hint">Use ← and → to turn pages</span>
+        </div>
+    </header>
+
+    <div class="reader-stage">
+        <button class="page-button page-button-previous" id="reader-prev" type="button" aria-label="Previous pages">
+            <span aria-hidden="true">←</span>
+        </button>
+
+        <div class="reader-viewport" id="reader-viewport" tabindex="0" aria-label="On Your Processor book reader">
+            <article class="book-reader" id="reader-book">
+                <div class="book-pages" id="reader-pages">
+                    <section class="front-cover" id="front-cover" aria-label="Front cover">
+                        <h1 class="title">$title$</h1>
+                        <img src="$cover-image$" alt="On Your Processor cover by Efeali Bel">
+                    </section>
+
+                    <section class="inside-cover" aria-label="Title page">
+                        <p class="kicker">A technical field guide</p>
+                        <h2>$title$</h2>
+$if(subtitle)$
+                        <p class="subtitle">$subtitle$</p>
+$endif$
+$if(author)$
+                        <p class="author"><span>Written by</span> $author$</p>
+$endif$
+$if(edition)$
+                        <p class="edition">$edition$</p>
+$endif$
+                    </section>
+
+$if(toc)$
+                    <nav id="$idprefix$TOC" role="doc-toc" aria-label="Table of contents">
+                        <p class="section-label">Contents</p>
+                        $table-of-contents$
+                    </nav>
+$endif$
+
+                    <main id="book-content">
+                    $body$
+                    </main>
+                </div>
+            </article>
+        </div>
+
+        <button class="page-button page-button-next" id="reader-next" type="button" aria-label="Next pages">
+            <span aria-hidden="true">→</span>
+        </button>
+    </div>
+
+    <footer class="reader-footer">
+        <div class="reader-progress-track" aria-hidden="true">
+            <span id="reader-progress"></span>
+        </div>
+        <p>On Your Processor · Efeali Bel</p>
+    </footer>
+</div>
+
+$for(include-after)$
+$include-after$
+$endfor$
+</body>
+</html>

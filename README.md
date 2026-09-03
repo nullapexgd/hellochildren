@@ -1,4 +1,4 @@
-# HELLO CHILDREN
+# On Your Processor
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
@@ -50,4 +50,10 @@ Character dialogue is dramatization. It may compress a documented relationship, 
 v0.3 audits the claims most likely to attract a technically justified “actually.” Stable claims prefer primary public sources; build-specific observations name macOS 27.0 build `26A5416b`; reverse-engineered behavior and inference stay labeled. Chapter 9 includes one approved comedy repair—the address dispute—without adding a character, chapter, or new hardware claim.
 
 The reading sequence still ends at `moo.` Back matter stays outside the manuscript.
-# hellochildren
+
+## Formatted editions
+
+- [Interactive HTML reader](dist/on-your-processor.html) — opens as a one-page or two-page book, with buttons plus Left/Right arrow keys, Page Up/Page Down, Home, and End navigation.
+- [EPUB edition](dist/on-your-processor.epub) — includes the front cover for ordinary ebook readers.
+
+The HTML edition embeds its styles, script, and cover image so it can be opened offline. It prefers SF Pro from the local operating system and falls back to the native system sans-serif; Apple font binaries are not included in the repository.

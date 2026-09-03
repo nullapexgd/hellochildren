@@ -58,7 +58,7 @@ why
 
 ## Eight badges
 
-The v0.3 reproduction pass extracted `/usr/libexec/amfid`'s entitlements on macOS 27.0 build 26A5416b and counted eight top-level keys. That independently reproduces the earlier source-conversation count. It is still a build-specific fact, not a universal constant.
+`amfid` showed up with eight top-level entitlement keys. Another build can change the number. Eight is not a sacred constant; it is today's seating arrangement.
 
 The set includes developer-mode control, NVRAM read/write access, protected `amfid` storage, a keystore/keybag-load capability, a TCC allowance for `kTCCServiceSystemPolicyAllFiles`, hardened-process state, and access to `AppleMobileFileIntegrityUserClient`. The number destroys a bad theory: more entitlements do not mean more authority.
 

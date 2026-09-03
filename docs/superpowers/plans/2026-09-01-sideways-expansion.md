@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Expand the current manuscript into an 18-chapter, 22,000–25,000-word technical-comedy book whose new length comes from new kinds of jurisdiction.
+**Goal:** Expand the current manuscript into a 19-chapter, approximately 24,000–25,000-word technical-comedy book whose new length comes from new kinds of jurisdiction.
 
-**Architecture:** Redistribute the overloaded session, trust, and entitlement material into chapters with exclusive responsibilities, add TCC, policy, entitlement, and lightweight virtualization chapters, then preserve the existing three-part ending. Chapter Markdown remains authoritative; the existing build generates the continuous manuscript, HTML, and EPUB.
+**Architecture:** Redistribute the overloaded session, trust, and entitlement material into chapters with exclusive responsibilities; add TCC, policy, entitlement, filesystem, and lightweight virtualization jurisdictions; then preserve the existing three-part ending. Chapter Markdown remains authoritative; the existing build generates the continuous manuscript, HTML, and EPUB.
 
 **Tech Stack:** Markdown, POSIX shell, Pandoc when available, existing receipt and canon ledgers.
 
@@ -17,7 +17,8 @@
 - Preserve every recurring element in `notes/canon.md`.
 - Keep Hardware Family Dinner, Shutdown, and Hyprvisor as the final three consecutive beats.
 - Keep the final nonblank line exactly `moo.` with no reading-copy prose after it.
-- Keep Chapter 15 conceptual; do not add VMCS internals, trap taxonomy, nested page tables, or SVM-versus-VMX history.
+- Keep Chapter 16 conceptual; do not add VMCS internals, trap taxonomy, nested page tables, or SVM-versus-VMX history.
+- Keep Chapter 13 focused on visible, writable, and boot-valid filesystem state; do not turn it into a general APFS or comparative-filesystems tutorial.
 - Treat `chapters/*.md` as source and `manuscript.md`, HTML, and EPUB as generated outputs.
 - Never stage unrelated `build.sh`, `book/`, `dist/`, or `notes/synopsis.md` changes in an editorial commit.
 
@@ -26,7 +27,7 @@
 ### Task 1: Freeze and audit the v0.3 spine
 
 **Files:**
-- Create: `releases/HELLO-CHILDREN-v0.3.md`
+- Create: `releases/on-your-processor-v0.3.md`
 - Create: `notes/receipts-v0.4.md` from the frozen `notes/receipts-v0.3.md`
 - Modify: `README.md`
 - Modify: `notes/editorial-protections.md`
@@ -51,10 +52,10 @@ Expected: exit 0, `built manuscript.md`, and a final nonblank line of `moo.`. Pa
 Run:
 
 ```sh
-test ! -e releases/HELLO-CHILDREN-v0.3.md
-cp manuscript.md releases/HELLO-CHILDREN-v0.3.md
-cksum releases/HELLO-CHILDREN-v0.3.md
-wc -w releases/HELLO-CHILDREN-v0.3.md
+test ! -e releases/on-your-processor-v0.3.md
+cp manuscript.md releases/on-your-processor-v0.3.md
+cksum releases/on-your-processor-v0.3.md
+wc -w releases/on-your-processor-v0.3.md
 ```
 
 Record the checksum and word count in `README.md` beside the existing frozen-release references.
@@ -79,8 +80,8 @@ Record the politics line as narrator satire, not an Apple-intent claim. Record t
 Run:
 
 ```sh
-cmp manuscript.md releases/HELLO-CHILDREN-v0.3.md
-rg -n 'Apple and modern politics still argue|GenuineApple™|branding transcends ISA|that.s your résumé|UID 2|moo\.' chapters notes releases/HELLO-CHILDREN-v0.3.md
+cmp manuscript.md releases/on-your-processor-v0.3.md
+rg -n 'Apple and modern politics still argue|GenuineApple™|branding transcends ISA|that.s your résumé|UID 2|moo\.' chapters notes releases/on-your-processor-v0.3.md
 ```
 
 Expected: `cmp` exits 0; both new jokes, the UID 2 canon, and `moo.` are found.
@@ -88,7 +89,7 @@ Expected: `cmp` exits 0; both new jokes, the UID 2 canon, and `moo.` are found.
 - [ ] **Step 6: Commit only the freeze and ledgers**
 
 ```sh
-git add releases/HELLO-CHILDREN-v0.3.md README.md notes/receipts-v0.4.md notes/editorial-protections.md notes/canon.md chapters/06-sessions-and-windows.md chapters/07-trust-and-signatures.md manuscript.md
+git add releases/on-your-processor-v0.3.md README.md notes/receipts-v0.4.md notes/editorial-protections.md notes/canon.md chapters/06-sessions-and-windows.md chapters/07-trust-and-signatures.md manuscript.md
 git commit -m "freeze v0.3 manuscript"
 ```
 
@@ -99,11 +100,11 @@ git commit -m "freeze v0.3 manuscript"
 - Create: `chapters/07-those-are-my-windows.md`
 - Rename: `chapters/07-trust-and-signatures.md` to `chapters/08-trust-and-signatures.md`
 - Rename: `chapters/08-neighborhood-services.md` to `chapters/12-sharingd-knows-a-guy.md`
-- Rename: `chapters/09-memory-and-borders.md` to `chapters/13-memory-has-borders.md`
-- Rename: `chapters/10-sep-and-the-mailbox.md` to `chapters/14-sep-has-a-mailbox.md`
-- Rename: `chapters/11-hardware-family-dinner.md` to `chapters/16-hardware-family-dinner.md`
-- Rename: `chapters/12-shutdown.md` to `chapters/17-shutdown.md`
-- Rename: `chapters/13-epilogue.md` to `chapters/18-epilogue.md`
+- Rename: `chapters/09-memory-and-borders.md` to `chapters/14-memory-has-borders.md`
+- Rename: `chapters/10-sep-and-the-mailbox.md` to `chapters/15-sep-has-a-mailbox.md`
+- Rename: `chapters/11-hardware-family-dinner.md` to `chapters/17-hardware-family-dinner.md`
+- Rename: `chapters/12-shutdown.md` to `chapters/18-shutdown.md`
+- Rename: `chapters/13-epilogue.md` to `chapters/19-epilogue.md`
 - Modify: `notes/fact-check-ledger.md`
 - Modify: `notes/receipts-v0.4.md`
 
@@ -117,15 +118,15 @@ Run:
 
 ```sh
 git mv chapters/08-neighborhood-services.md chapters/12-sharingd-knows-a-guy.md
-git mv chapters/09-memory-and-borders.md chapters/13-memory-has-borders.md
-git mv chapters/10-sep-and-the-mailbox.md chapters/14-sep-has-a-mailbox.md
-git mv chapters/11-hardware-family-dinner.md chapters/16-hardware-family-dinner.md
-git mv chapters/12-shutdown.md chapters/17-shutdown.md
-git mv chapters/13-epilogue.md chapters/18-epilogue.md
+git mv chapters/09-memory-and-borders.md chapters/14-memory-has-borders.md
+git mv chapters/10-sep-and-the-mailbox.md chapters/15-sep-has-a-mailbox.md
+git mv chapters/11-hardware-family-dinner.md chapters/17-hardware-family-dinner.md
+git mv chapters/12-shutdown.md chapters/18-shutdown.md
+git mv chapters/13-epilogue.md chapters/19-epilogue.md
 git mv chapters/07-trust-and-signatures.md chapters/08-trust-and-signatures.md
 ```
 
-The temporary numbering gaps at Chapters 9–11 and 15 are intentional and will be filled by later tasks.
+The temporary numbering gaps at Chapters 9–11, 13, and 16 are intentional and will be filled by later tasks.
 
 - [ ] **Step 2: Move, do not duplicate, the graphical sections**
 
@@ -158,7 +159,7 @@ Expected: each section appears in only one chapter, both chapters fall near 1,10
 - [ ] **Step 7: Commit the session/window split and final numbering slots**
 
 ```sh
-git add chapters/06-sessions-and-windows.md chapters/07-those-are-my-windows.md chapters/08-trust-and-signatures.md chapters/12-sharingd-knows-a-guy.md chapters/13-memory-has-borders.md chapters/14-sep-has-a-mailbox.md chapters/16-hardware-family-dinner.md chapters/17-shutdown.md chapters/18-epilogue.md manuscript.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git add chapters/06-sessions-and-windows.md chapters/07-those-are-my-windows.md chapters/08-trust-and-signatures.md chapters/12-sharingd-knows-a-guy.md chapters/14-memory-has-borders.md chapters/15-sep-has-a-mailbox.md chapters/17-hardware-family-dinner.md chapters/18-shutdown.md chapters/19-epilogue.md manuscript.md notes/fact-check-ledger.md notes/receipts-v0.4.md
 git commit -m "split session and graphical authority"
 ```
 
@@ -303,11 +304,127 @@ git add chapters/11-the-entitlement-bureaucracy.md chapters/12-sharingd-knows-a-
 git commit -m "add entitlement bureaucracy and sharingd case study"
 ```
 
-### Task 6: Renumber and deepen memory and SEP without padding
+### Task 6: Add filesystem jurisdiction
 
 **Files:**
-- Modify: `chapters/13-memory-has-borders.md`
-- Modify: `chapters/14-sep-has-a-mailbox.md`
+- Create: `chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md`
+- Modify: `notes/canon.md`
+- Modify: `notes/editorial-protections.md`
+- Modify: `notes/fact-check-ledger.md`
+- Modify: `notes/receipts-v0.4.md`
+
+**Interfaces:**
+- Consumes: The book's established root, boot-policy, and namespace themes plus Apple APFS/SSV primary sources.
+- Produces: A chapter distinguishing write permission, visible namespace, and boot-authoritative filesystem state.
+
+- [ ] **Step 1: Add filesystem receipts before drafting**
+
+Create `PUB-FS-*` entries from these primary sources:
+
+- [Apple Platform Security: Role of Apple File System](https://support.apple.com/guide/security/seca6147599e/web) for shared container space, role-specific volumes, System/Data content, and booting from a System-volume snapshot.
+- [Apple Platform Security: Signed system volume security](https://support.apple.com/guide/security/signed-system-volume-security-secd698747c9/web) for read-path integrity, the seal, Apple-signed measurements, and Apple-silicon boot verification.
+- [WWDC19: What's New in Apple File Systems](https://developer.apple.com/videos/play/wwdc2019/710/) for volume groups, firmlinks, and the unified-directory presentation.
+
+If local commands are used to demonstrate mounted volumes, snapshots, or `/private` indirection, record them as `OBS-FS-*` with the exact macOS build and state what the output does not prove.
+
+- [ ] **Step 2: Draft the six approved sections**
+
+Use these headings in order:
+
+1. `Which Macintosh HD?`
+2. `Two volumes in a very convincing coat`
+3. `Root meets mount state`
+4. `The filesystem state, plural`
+5. `The seal would like a word`
+6. `Namespace lies politely`
+
+Begin with Finder's one-disk presentation. Introduce containers and volume roles, then the System/Data volume group and firmlinks, then mount state, then snapshots, and only then SSV and the seal.
+
+- [ ] **Step 3: Keep the three authority layers separate**
+
+Every technical passage must identify which of these it describes:
+
+- permission to write;
+- ability to see a path in a particular mounted or namespace view;
+- whether the resulting state is boot-authoritative and seal-valid.
+
+Do not use `mount namespace` as a macOS term without a precise XNU/macOS receipt. Use `mounted view` or `namespace view` in the prose.
+
+- [ ] **Step 4: Add the protected dialogue**
+
+Include exactly:
+
+```text
+Finder:
+this is Macintosh HD.
+
+APFS:
+which one.
+
+Finder:
+the one called Macintosh HD.
+
+APFS:
+which one.
+```
+
+and:
+
+```text
+root:
+I own /System.
+
+APFS:
+no.
+
+root:
+I am root.
+
+SSV:
+that's adorable.
+
+root:
+remount it writable.
+
+seal:
+explain yourself.
+```
+
+Treat `SSV` and `seal` as separate comic voices for escalation, not as independent daemons or policy services.
+
+- [ ] **Step 5: Add one diagram and one surgical sidebar**
+
+Use a fenced `text` diagram showing the visible path tree, System/Data volumes, firmlink traversal, the selected System snapshot, and boot policy. Add a 120–200-word `/private` sidebar titled `The path is lying politely again`. Delete prose made redundant by the diagram.
+
+- [ ] **Step 6: Bound the chapter**
+
+Give NTFS and ext4 at most one contextual sentence establishing that layered filesystem authority is not uniquely Apple. Do not explain APFS B-trees, copy-on-write allocation, cloning, encryption internals, or flash translation here. SSV must be the chapter's climax rather than its entire plot.
+
+- [ ] **Step 7: Verify length, terminology, evidence, and build**
+
+Run:
+
+```sh
+rg -n '^## |Macintosh HD|firmlink|snapshot|seal|boot|mounted view|namespace view|mount namespace|NTFS|ext4' chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md
+rg -n 'PUB-FS-|OBS-FS-' notes/fact-check-ledger.md notes/receipts-v0.4.md
+wc -w chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md
+./build.sh
+```
+
+Expected: all six sections exist; any `mount namespace` match appears only in an explicit terminology warning; the chapter is 1,400–1,600 words; every load-bearing claim has a receipt; and the build exits 0.
+
+- [ ] **Step 8: Commit the filesystem chapter**
+
+```sh
+git add chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git commit -m "add filesystem jurisdiction"
+```
+
+### Task 7: Renumber and deepen memory and SEP without padding
+
+**Files:**
+- Modify: `chapters/14-memory-has-borders.md`
+- Modify: `chapters/15-sep-has-a-mailbox.md`
 - Modify: `notes/canon.md`
 - Modify: `notes/fact-check-ledger.md`
 - Modify: `notes/receipts-v0.4.md`
@@ -337,8 +454,8 @@ Keep Apple’s public `IOMMU` terminology separate from Asahi’s DART naming. K
 Run:
 
 ```sh
-rg -n 'podcast|absolutely fucking not|DRAM cells|on your processor|/var/mail|mailbox' chapters/13-*.md chapters/14-*.md
-wc -w chapters/13-*.md chapters/14-*.md
+rg -n 'podcast|absolutely fucking not|DRAM cells|on your processor|/var/mail|mailbox' chapters/14-*.md chapters/15-*.md
+wc -w chapters/14-*.md chapters/15-*.md
 ./build.sh
 ```
 
@@ -347,17 +464,17 @@ Expected: all protected jokes remain, each chapter stays below approximately 1,5
 - [ ] **Step 6: Commit memory and SEP work**
 
 ```sh
-git add chapters/13-memory-has-borders.md chapters/14-sep-has-a-mailbox.md manuscript.md notes/canon.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git add chapters/14-memory-has-borders.md chapters/15-sep-has-a-mailbox.md manuscript.md notes/canon.md notes/fact-check-ledger.md notes/receipts-v0.4.md
 git commit -m "deepen memory and SEP boundaries"
 ```
 
-### Task 7: Add lightweight Apple virtualization and preserve the ending
+### Task 8: Add lightweight Apple virtualization and preserve the ending
 
 **Files:**
-- Create: `chapters/15-the-house-inside-the-house.md`
-- Modify: `chapters/16-hardware-family-dinner.md`
-- Modify: `chapters/17-shutdown.md`
-- Modify: `chapters/18-epilogue.md`
+- Create: `chapters/16-the-house-inside-the-house.md`
+- Modify: `chapters/17-hardware-family-dinner.md`
+- Modify: `chapters/18-shutdown.md`
+- Modify: `chapters/19-epilogue.md`
 - Modify: `notes/canon.md`
 - Modify: `notes/editorial-protections.md`
 - Modify: `notes/fact-check-ledger.md`
@@ -381,33 +498,33 @@ The diagram shows host, VM process/frameworks, guest kernel, and guest userspace
 
 - [ ] **Step 4: End with foreshadowing, not Hyprvisor**
 
-Conclude Chapter 15 with the idea that the guest kernel may govern the house while the lease remains upstairs. Do not name Hyprvisor or use the ring-0 exchange there.
+Conclude Chapter 16 with the idea that the guest kernel may govern the house while the lease remains upstairs. Do not name Hyprvisor or use the ring-0 exchange there.
 
 - [ ] **Step 5: Renumber the sacred ending**
 
-Hardware Family Dinner becomes Chapter 16, Shutdown Chapter 17, and One More Jurisdiction Chapter 18. Change only references made stale by renumbering. Keep `moo.` as the final nonblank line.
+Hardware Family Dinner becomes Chapter 17, Shutdown Chapter 18, and One More Jurisdiction Chapter 19. Change only references made stale by renumbering. Keep `moo.` as the final nonblank line.
 
 - [ ] **Step 6: Verify depth and ending**
 
 Run:
 
 ```sh
-rg -n 'VMCS|nested page|trap taxonomy|SVM|VMX|hyprvisor|moo\.' chapters/15-*.md chapters/18-*.md
-awk 'NF { line=$0 } END { print line }' chapters/18-*.md
-wc -w chapters/15-*.md chapters/18-*.md
+rg -n 'VMCS|nested page|trap taxonomy|SVM|VMX|hyprvisor|moo\.' chapters/16-*.md chapters/19-*.md
+awk 'NF { line=$0 } END { print line }' chapters/19-*.md
+wc -w chapters/16-*.md chapters/19-*.md
 ./build.sh
 ```
 
-Expected: forbidden deep-dive terms are absent from Chapter 15, Hyprvisor appears in Chapter 18, the final line is `moo.`, and build exits 0.
+Expected: forbidden deep-dive terms are absent from Chapter 16, Hyprvisor appears in Chapter 19, the final line is `moo.`, and build exits 0.
 
 - [ ] **Step 7: Commit virtualization and ending**
 
 ```sh
-git add chapters/15-the-house-inside-the-house.md chapters/16-hardware-family-dinner.md chapters/17-shutdown.md chapters/18-epilogue.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git add chapters/16-the-house-inside-the-house.md chapters/17-hardware-family-dinner.md chapters/18-shutdown.md chapters/19-epilogue.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
 git commit -m "add virtualization jurisdiction and preserve ending"
 ```
 
-### Task 8: Add the opening map, perform the compression pass, and publish v0.4
+### Task 9: Add the opening map, perform the compression pass, and publish v0.4
 
 **Files:**
 - Modify: `chapters/00-title.md`
@@ -421,7 +538,7 @@ git commit -m "add virtualization jurisdiction and preserve ending"
 - Modify: `notes/fact-check-ledger.md`
 - Modify: `notes/receipts-v0.4.md`
 - Generated: `manuscript.md`
-- Generated when Pandoc is installed: `dist/HELLO-CHILDREN.html`, `dist/HELLO-CHILDREN.epub`
+- Generated when Pandoc is installed: `dist/on-your-processor.html`, `dist/on-your-processor.epub`
 
 **Interfaces:**
 - Consumes: All completed chapter tasks and existing build assets.
@@ -433,7 +550,7 @@ Place one fenced `text` diagram in Chapter 1 mapping authority to object, bounda
 
 - [ ] **Step 2: Update navigation and version metadata**
 
-Set `VERSION` to `0.4`. Update the title/editorial note, README table of contents, numbered structural protections, and canon chapter references for all 18 chapters.
+Set `VERSION` to `0.4`. Update the title/editorial note, README table of contents, numbered structural protections, and canon chapter references for all 19 chapters.
 
 - [ ] **Step 3: Run the repetition audit**
 
@@ -451,7 +568,7 @@ For every new Apple API, daemon, private entitlement, count, or behavior, confir
 
 - [ ] **Step 5: Run the canon and protection audit**
 
-Run exact-string searches for every line in `notes/editorial-protections.md` and every recurring joke in `notes/canon.md`. Confirm Hardware Family Dinner, Shutdown, and Hyprvisor are Chapters 16–18.
+Run exact-string searches for every line in `notes/editorial-protections.md` and every recurring joke in `notes/canon.md`. Confirm Hardware Family Dinner, Shutdown, and Hyprvisor are Chapters 17–19.
 
 - [ ] **Step 6: Build all artifacts**
 
@@ -468,13 +585,13 @@ Expected: exit 0; `manuscript.md` built; HTML and EPUB built when Pandoc is inst
 Run:
 
 ```sh
-test "$(find chapters -maxdepth 1 -name '[0-9][0-9]-*.md' | wc -l | tr -d ' ')" = 19
-test "$(rg -c '^# [0-9]+\.' manuscript.md)" = 18
+test "$(find chapters -maxdepth 1 -name '[0-9][0-9]-*.md' | wc -l | tr -d ' ')" = 20
+test "$(rg -c '^# [0-9]+\.' manuscript.md)" = 19
 wc -w manuscript.md
 awk 'NF { line=$0 } END { print line }' manuscript.md
 ```
 
-Expected: 19 source files including `00-title.md`, 18 numbered chapters, 22,000–25,000 words, and final line `moo.`.
+Expected: 20 source files including `00-title.md`, 19 numbered chapters, approximately 24,000–25,000 words, and final line `moo.`.
 
 - [ ] **Step 8: Inspect generated HTML and EPUB**
 
@@ -483,6 +600,6 @@ Open the HTML and EPUB through the current app workflow. Check title hierarchy, 
 - [ ] **Step 9: Commit the completed expansion**
 
 ```sh
-git add chapters README.md STYLE.md VERSION notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md manuscript.md dist/HELLO-CHILDREN.html dist/HELLO-CHILDREN.epub
+git add chapters README.md STYLE.md VERSION notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md manuscript.md dist/on-your-processor.html dist/on-your-processor.epub
 git commit -m "release v0.4 sideways expansion"
 ```

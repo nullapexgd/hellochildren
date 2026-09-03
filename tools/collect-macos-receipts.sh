@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-# Collect reproducible, non-destructive evidence for HELLO CHILDREN.
+# Collect reproducible, non-destructive evidence for On Your Processor.
 # Run on the Mac whose build you want to cite. No sudo is required.
 
 stamp=$(date '+%Y%m%d-%H%M%S')

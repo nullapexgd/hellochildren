@@ -1,4 +1,4 @@
-# HELLO CHILDREN
+# On Your Processor
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
@@ -24,7 +24,9 @@ That rule occasionally produces an unusual ending for a mystery:
 
 This is not failure. This is technical integrity wearing sensible shoes to a costume party.
 
-The working files classify claims as public documentation, direct observation, source-conversation observation, reverse-engineering evidence, bounded inference, or dramatization. The joke still gets to enter. It just has to show identification.
+The receipts live in the notes, where they can wear name tags like *public documentation*, *direct observation*, *reverse engineering*, *inference*, and *dramatization*. Unless a passage says otherwise, local observations in this edition came from macOS 27.0 build `26A5416b`.
+
+The joke still gets to enter. It just has to show identification.
 
 Welcome to the family.
 
@@ -599,7 +601,7 @@ launchd cannot make a broken executable correct or negotiate a DMA mapping by sp
 
 ## Apple’s own dialogue
 
-The source conversation examined strings from Apple's `launchd` binary. The v0.3 reproduction pass then checked `/sbin/launchd` on macOS 27.0 build 26A5416b. All three lines used here were reproduced on that exact build:
+Apple already wrote some of the dialogue. We found these three lines sitting in `/sbin/launchd`:
 
 > `_ThrottleInterval set to zero. You're not that important. Ignoring.`
 
@@ -613,7 +615,9 @@ And, with the unmistakable tone of an engineer whose day has taken a turn:
 
 At some point the authors of launchd stopped writing diagnostics and began responding personally.
 
-The reproduced strings establish that those words occur in the named binary/build. They do not establish the full private code path or emotional condition of the engineer. The latter is a strong inference.
+That proves the lines are there. It does not prove the full private code path, and it definitely does not prove the emotional condition of the engineer.
+
+That second conclusion is ours. We are comfortable with it.
 
 ```text
 Job:
@@ -783,7 +787,7 @@ An agent can talk to a daemon when user and system responsibilities must coopera
 
 ## The fake launchd incident
 
-The source conversation records a deliberate experiment: create a Unix account named `launchd`, give it UID 2, add a ridiculous collection of supplementary groups, and start an interactive shell under that account.
+We once made the mistake on purpose: create a Unix account named `launchd`, give it UID 2, add a ridiculous collection of supplementary groups, and start an interactive shell under that account.
 
 The command worked.
 
@@ -851,7 +855,7 @@ The account, UID, groups, and their Unix permission effects were real. The costu
 
 ## Then the angels arrived
 
-In the source archaeology, several spellings and artifacts appeared:
+Then the binary itself started saying things like:
 
 ```text
 /System/Library/LaunchAngels/
@@ -860,13 +864,13 @@ LaunchAngel
 __Angel
 ```
 
-The v0.3 reproduction pass independently found `LaunchAngel`, `__Angel`, three LaunchAngels path strings, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s` in `/sbin/launchd` on macOS 27.0 build 26A5416b. The same binary also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
+Our copy of `/sbin/launchd` has `LaunchAngel`, `__Angel`, three LaunchAngels paths, and `Failed to resolve LaunchAngel: error=%s: %d, caller=%s`. It also contains the exact string `com.apple.private.xpc.launchd.allow-submit-launch-angels`.
 
-That last string is useful, but narrow evidence. It supports that launchd contains code or data referring to a private entitlement by that name. It does **not** prove which process carries the entitlement, the complete authorization path, or what submitting a LaunchAngel ultimately means.
+That last string is a badge-shaped clue, not a completed org chart. It tells us launchd refers to a private entitlement by that name. It does **not** tell us who carries it, how the whole authorization path works, or what submitting a LaunchAngel ultimately means.
 
-What does this prove?
+So what do we actually have?
 
-It supports the existence of an internal Apple concept named `LaunchAngel`, distinct enough to receive names, paths, code, or configuration references in the examined material.
+An internal Apple concept named `LaunchAngel` left fingerprints: names, paths, code, or configuration references. We can say it exists. We cannot write its biography.
 
 What is a LaunchAngel?
 
@@ -1227,7 +1231,7 @@ why
 
 ## Eight badges
 
-The v0.3 reproduction pass extracted `/usr/libexec/amfid`'s entitlements on macOS 27.0 build 26A5416b and counted eight top-level keys. That independently reproduces the earlier source-conversation count. It is still a build-specific fact, not a universal constant.
+`amfid` showed up with eight top-level entitlement keys. Another build can change the number. Eight is not a sacred constant; it is today's seating arrangement.
 
 The set includes developer-mode control, NVRAM read/write access, protected `amfid` storage, a keystore/keybag-load capability, a TCC allowance for `kTCCServiceSystemPolicyAllFiles`, hardened-process state, and access to `AppleMobileFileIntegrityUserClient`. The number destroys a bad theory: more entitlements do not mean more authority.
 
@@ -1370,11 +1374,11 @@ Somewhere nearby, a system larger than the speaker checks the signature. The lin
 
 Then this motherfucker arrives.
 
-The earlier source-conversation build of `/usr/libexec/sharingd` counted 134 entitlement keys. The v0.3 reproduction target—macOS 27.0 build 26A5416b—counts **132**.
+`sharingd` once showed us 134 entitlement keys. Our copy showed **132**. Two badges disappeared between builds; nobody left a note.
 
-That two-key drift is useful evidence in its own right. Entitlement counts are build-specific, not universal constants, privacy verdicts, or rankings of royal power. Either count is still an extraordinary entrance.
+That tiny disappearance is the point. Entitlement counts belong to particular builds. They are not universal constants, privacy verdicts, or rankings of royal power. Either number is still an extraordinary entrance.
 
-The current set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also independently reproduces exact private keys including `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
+The 132-key set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also includes exact private keys such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
 
 `sharingd` did not walk into the room.
 
@@ -2506,13 +2510,13 @@ Then comes the launchd string around which this entire ending was built:
 
 > **“Any processes that are still running will be abandoned to the mercy of the kernel.”**
 
-The earlier source archaeology saw that sentence, and the v0.3 reproduction pass found it again in `/sbin/launchd` on macOS 27.0 build 26A5416b—with one wonderfully annoying wrinkle. A plain exact-string search missed it because the binary's extracted strings split the sentence in two adjacent pieces:
+We went looking for that sentence in `/sbin/launchd` and found it, with one wonderfully annoying wrinkle. A plain exact-string search missed it because the binary split the sentence into two adjacent pieces:
 
 > `(or halting) the system now. Any processes that are still running`
 >
 > `will be abandoned to the mercy of the kernel.`
 
-Read together, the sentence is present on the current build. The surrounding fictional exchange is still not Apple's documented private shutdown sequence.
+Read together, there it is. The fictional exchange around it is still not Apple's documented private shutdown sequence.
 
 The string does not need help.
 
@@ -2542,7 +2546,7 @@ that is why the sentence works.
 
 XNU has spent the book resenting every authority that qualified its title. At shutdown, userspace returns to the one fact nobody disputed: the kernel controls whether ordinary processes continue executing in its world.
 
-The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges on this build. None is a defense against final kernel teardown.
+The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges today. None is a defense against final kernel teardown.
 
 ```text
 sharingd:
