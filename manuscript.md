@@ -1362,6 +1362,133 @@ The author found the name, the call, and an integer associated with observed beh
 
 SkyLight and related private surfaces deserve the same restraint. Their names and observed artifacts can establish that machinery exists. Unless Apple documents a behavior or we reproduce it under stated conditions, they do not authorize us to publish a complete invisible constitution.
 
+## A tenant who doesn't pay rent
+
+The Parrot-derived `CGSSpace.swift` comment told us one integer's secret. It didn't tell us what somebody would eventually build on top of it.
+
+A menu-bar utility called BoringNotch answers that question. It creates a synthetic CGSSpace, pushes its level up past ordinary windows with `CGSSpaceSetAbsoluteLevel`, and calls `CGSShowSpaces` to make that Space visible everywhere at once. That's a different trick than the public `canJoinAllSpaces` flag on `NSWindow.collectionBehavior`, which joins Spaces that already exist. This one skips joining entirely. It makes a new Space and puts itself there. The source comment repeats the same warning ours did: `flag = 0x1`, or Finder starts drawing desktop icons on it.
+
+We watched the call succeed once, on one build. That's not the same thing as knowing what CGS checks internally or when it says no. The window living inside is unremarkable. The Space itself is the whole trick, as far as we got to see it work.
+
+```text
+WindowServer:
+you're not assigned to any of my Spaces.
+
+BoringNotch:
+correct.
+
+WindowServer:
+then how are you visible on all of them.
+
+BoringNotch:
+I'm not on any of your Spaces.
+I made my own.
+
+WindowServer:
+that's not how tenancy works.
+
+BoringNotch:
+it worked this time.
+```
+
+## The sandbox has a side door
+
+The same app also wants to set screen brightness, which lives behind CoreBrightness. A sandboxed process can't reach it, and Space tricks don't help here.
+
+So it ships two binaries. The main app stays sandboxed (`com.apple.security.app-sandbox: true`, confirmed directly). A companion XPC helper, `BoringNotchXPCHelper.xpc`, ships unsandboxed and does nothing but broker six methods: accessibility authorization, keyboard backlight, screen brightness. The two talk over a private mach service, registered through a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement.
+
+Splitting privileged work into an unsandboxed helper is a known shape. Apple's own name for the entitlement is *temporary exception*, and that's worth taking at face value: it tells us what the entitlement grants, not how any particular App Review pass treated this build.
+
+```text
+boringNotch:
+I'm sandboxed.
+
+Sandbox:
+correct.
+
+boringNotch:
+I need CoreBrightness.
+
+Sandbox:
+no.
+
+boringNotch:
+my friend isn't sandboxed.
+
+Sandbox:
+your friend.
+
+boringNotch:
+we talk over a mach service.
+
+Sandbox:
+I don't police your friendships.
+
+boringNotch:
+you should.
+```
+
+## The HUD that got there first
+
+Volume looked like the same story at a glance: an app grabbing a system indicator it has no business touching. The event handler tells a smaller story than that.
+
+The app installs a `CGEventTap` at the head of the tap list (`.headInsertEventTap`), filtering for the event type that carries media-key presses. When a volume key comes through, it handles the press itself and returns `nil`.
+
+macOS still decides whether that tap gets to exist. It's gated behind input-monitoring permission and can be disabled outright. `nil` only controls what happens after the tap is already running: that one event stops there instead of reaching whatever was next in line, which in practice means `OSDUIHelper` never finds out the key was pressed. Stopping one event isn't the same as owning the pipeline it travels through.
+
+```text
+Volume key:
+*pressed*
+
+BoringNotch:
+got it, thanks.
+
+OSDUIHelper:
+got what
+
+BoringNotch:
+nothing you need to worry about
+
+OSDUIHelper:
+I show the volume HUD
+
+BoringNotch:
+so do I, now
+```
+
+Even the feedback sound isn't synthesized. The handler plays `/System/Library/LoginPlugins/BezelServices.loginPlugin/Contents/Resources/volume.aiff` straight off disk, the same file the real bezel uses, and checks the same `com.apple.sound.beep.feedback` preference first. This isn't privilege escalation. It's winning a race, inside rules the system still enforces, cleanly enough that nobody notices there was one.
+
+## Three different "shouldn't be able to"s
+
+One symptom. Three mechanisms. Three boundaries, and three different amounts of each one we actually got to see.
+
+The Space trick answers to WindowServer. We watched it succeed; we didn't watch why.
+
+The helper answers to the sandbox, through an entitlement Apple itself labels an exception.
+
+The event tap answers to whatever let it run in the first place. Once it's running, all it controls is whether one event keeps moving.
+
+```text
+User:
+how is it doing all this
+
+XNU:
+everything answers to me eventually. I am the kernel.
+
+User:
+so how
+
+XNU:
+I watched one call succeed.
+that's not the same claim.
+
+User:
+that's not an answer
+
+XNU:
+it's the only one I have jurisdiction to give.
+```
+
 ## Whose screen is it?
 
 By now every participant has a respectable claim.

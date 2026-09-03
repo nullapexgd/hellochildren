@@ -213,6 +213,36 @@ Supports: Chapter 7's claim that a third-party developer recorded this constrain
 
 Does **not** support: treating `0x1` as a documented Apple ABI contract or claiming the behavior is stable across macOS versions.
 
+### SRC-BN-CGSSPACE-001 — BoringNotch synthetic-Space technique
+
+BoringNotch's `CGSSpace.swift` calls the private `CGSSpaceCreate` API with `flag = 0x1`, sets the new Space's level with `CGSSpaceSetAbsoluteLevel`, and calls `CGSShowSpaces` to make that Space visible everywhere. The file's own comment repeats the exact desktop-icon warning documented in `SRC-FINDER-001`, consistent with the file being part of the same `avaidyam/Parrot` lineage rather than an independent rediscovery.
+
+Source: direct inspection this session of the BoringNotch source tree and the installed `boringNotch.app`.
+
+Supports: Chapter 7's claim that BoringNotch mints a new CGS Space rather than joining an existing one via the public `canJoinAllSpaces` collection behavior.
+
+Does **not** support: any claim about what WindowServer/CGS validates before accepting the call, or that the call succeeds unconditionally. The call was observed succeeding once, on one build.
+
+### SRC-BN-XPC-001 — BoringNotch sandboxed app / unsandboxed XPC helper split
+
+`codesign -d --entitlements :-` on `/Applications/boringNotch.app` shows `com.apple.security.app-sandbox: true` plus a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement naming a custom mach service. The same command on `BoringNotchXPCHelper.xpc` shows `com.apple.security.app-sandbox: false`. `BoringNotchXPCHelperProtocol.swift` in the source tree shows the helper's entire exposed surface is six methods: accessibility-authorization checks, keyboard-backlight get/set, and screen-brightness get/set.
+
+Source: direct `codesign` inspection of both installed binaries this session, plus the BoringNotch source tree.
+
+Supports: Chapter 7's claim that the sandboxed app reaches CoreBrightness-gated functionality only through an unsandboxed helper reached over a named mach service.
+
+Does **not** support: any claim about how Apple's App Review process evaluated this specific entitlement grant for this specific build. *Temporary exception* is Apple's own name for the entitlement category; the book does not assert more than that name states.
+
+### SRC-BN-EVENTTAP-001 — BoringNotch media-key event tap
+
+`MediaKeyInterceptor.swift` in the BoringNotch source tree installs a `CGEventTap` at `.headInsertEventTap`, filters for the system-defined event type carrying media-key presses, and on a volume/brightness key handles the press itself (via `VolumeManager`/`BrightnessManager`) before returning `nil` from the callback, which stops the event from propagating to the next listener. It plays `/System/Library/LoginPlugins/BezelServices.loginPlugin/Contents/Resources/volume.aiff` directly and checks `com.apple.sound.beep.feedback` first, the same file and preference the system bezel uses.
+
+Source: direct inspection this session of the BoringNotch source tree.
+
+Supports: Chapter 7's claim that the app intercepts and locally handles a media-key press before the system's own `OSDUIHelper` is notified.
+
+Does **not** support: any claim of privilege escalation. The event tap's own existence is still gated behind input-monitoring/accessibility permission and can be disabled by the user; returning `nil` only controls propagation of an event the tap was already permitted to see.
+
 ### PUB-CODESIGN-001 — current entitlement extraction syntax
 
 Apple's TN3125 documents `codesign --display --entitlements - --xml <path>` to force XML output; current `codesign` can otherwise emit a human-readable representation of DER-encoded entitlements. The local collector preserves both forms and stderr.
@@ -311,6 +341,7 @@ The local reproduction closed several first-pass gaps. The following remain expl
 3. Private WindowServer/SkyLight responsibilities beyond Apple's public claims about managed windows, display-server features, and event delivery.
 4. Behavioral meaning of private entitlement names such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, or `com.apple.private.nsurlsession.impersonate`; current reproduction proves those keys are granted to `sharingd`, not what every authorized server-side path permits or what the daemon actually invokes.
 5. Runtime conditions for the undocumented `launchd` diagnostics. Static strings prove presence, not execution frequency or exact code path.
+6. Exact BoringNotch version/commit for `SRC-BN-CGSSPACE-001`, `SRC-BN-XPC-001`, and `SRC-BN-EVENTTAP-001`. The behavior was observed this session against the app and source tree as they existed then; a third-party app can change its own mechanisms in a later release independent of any macOS build.
 
 ### Reproduction lesson: exact-string search can lie by omission
 
