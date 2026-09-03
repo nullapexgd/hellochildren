@@ -8,6 +8,9 @@ This ledger records callbacks, not claims of implementation.
 | XNU: “I am literally the kernel” | 03 | Dramatized | XNU is powerful; the next speaker names the jurisdiction. |
 | launchd: “hello children” | 04 | Dramatized | Parental voice for userspace service organization. |
 | Fake launchd, UID 2 | 05 | Deliberately fictional experiment | Always call it fake; never confuse UID 2 with PID 1. |
+| “GenuineApple™” / “branding transcends ISA” | 07 | Dramatized fake-launchd exchange | A self-applied label is not a signing authority; preserve the ISA punchline. |
+| Gatekeeper: “that's your résumé.” | 07 | Dramatized | Root's title does not turn a policy decision into automatic approval. |
+| Politics line | 06 | Narrator satire | “Apple and modern politics still argue about who invented this” is not an Apple-intent claim. |
 | LaunchAngels | 05 | Observed undocumented artifact | Quote spellings; complete semantics remain unknown. |
 | `amfid`: “signature?” | 07 | Dramatized | Not a protocol string. Keep it short. |
 | `sharingd` | 08 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target, 134 in the earlier observation. |

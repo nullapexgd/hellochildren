@@ -8,7 +8,7 @@ The argument of this book is simple:
 
 > There is no single highest form of authority inside a modern computer. Authority has a jurisdiction.
 
-This directory contains v0.3, the receipts edition. The 13 numbered chapters plus the title/editorial file make 14 chapter-source files; no chapter is missing. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md) and [v0.2](releases/HELLO-CHILDREN-v0.2.md) manuscripts remain available for comparison.
+This directory contains v0.3, the receipts edition. The 13 numbered chapters plus the title/editorial file make 14 chapter-source files; no chapter is missing. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md), [v0.2](releases/HELLO-CHILDREN-v0.2.md), and [v0.3](releases/on-your-processor-v0.3.md) manuscripts remain available for comparison. The v0.3 freeze is 10,028 words; its POSIX `cksum` is `2755083667 66343`.
 
 ## Read the book
 

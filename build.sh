@@ -29,8 +29,6 @@ for chapter_file in "$project_dir"/chapters/*.md; do
     first=0
 done
 
-printf '\n' >> "$temp_file"
-
 mv "$temp_file" "$output_file"
 
 trap - EXIT HUP INT TERM

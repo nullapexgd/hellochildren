@@ -48,3 +48,41 @@ No prose may follow it in the assembled manuscript.
 ## Count convention
 
 The project has fourteen chapter-source files: `00-title.md` plus Chapters 1 through 13. The reading copy therefore has thirteen numbered chapters and one title/editorial-note file. No chapter is missing.
+
+## v0.3 authority protections
+
+The following additions are established reading-copy material. Preserve their wording and their status as dialogue or narrator satire.
+
+> Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
+
+This is narrator satire, not a claim about Apple's intent or a claim that modern politics has a single inventor.
+
+```text
+fake launchd:
+GenuineApple™.
+
+amfid:
+that isn't a signing authority.
+it isn't even a CPU vendor string
+on this architecture.
+
+fake launchd:
+branding transcends ISA.
+
+amfid:
+leave.
+```
+
+```text
+root:
+I am the administrator.
+
+Gatekeeper:
+that's your résumé.
+```
+
+The fake-launchd experiment remains explicitly fake: UID 2 is neither PID 1 nor launchd authority.
+
+The final nonblank line remains exactly:
+
+> moo.
