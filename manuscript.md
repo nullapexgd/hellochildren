@@ -1136,32 +1136,36 @@ This is also why “the user launched it” can be a useful explanation and a te
 
 Inside the machine, the missing nouns still matter.
 
-## The handoff the user calls “the Mac”
+## The room was lit before you arrived
 
-The session becomes visible only after authority passes through several jurisdictions. This is the map; the next chapter lives in its right-hand half.
+WindowServer is not born from the authenticated user's session. The machine already needs system-domain graphical infrastructure to present a graphical login before that user environment exists. After authentication, the new session's apps connect into that pre-existing graphical world for the user's desktop.
+
+On this edition's target build, the installed `com.apple.WindowServer` launchd property list lives under `/System/Library/LaunchDaemons` and names WindowServer's private SkyLight executable with `-daemon`. That is direct evidence of a system service definition, not a trace of its exact startup timing. Apple's archived login documentation separately establishes the order that matters here: the login window is displayed before authentication, and user-environment setup begins afterward. The exact modern private wiring is not a public contract.
+
+The corrected map therefore has two tracks. The graphical room is already open while `loginwindow` handles the guest list.
 
 ```text
-account identity + authentication
-              |
-              v
-         loginwindow
-              |
-              v
-  authenticated user session
-      |                 |
-      v                 v
-per-user services   WindowServer
-                          |
-                          v
-                    GPU execution
-                          |
-                          v
-                 display scanout -> light -> user
+system startup                         account identity
+      |                                      |
+      v                                      v
+WindowServer <--- graphical login UI --- loginwindow
+      |                                      |
+      |                                authentication
+      |                                      |
+      |                         authenticated user session
+      |                              |               |
+      |                              v               v
+      |                      per-user services     user apps
+      |                                              |
+      +<----------- managed session windows --------+
+      |
+      v
+GPU execution -> display scanout -> light -> user
 ```
 
-Nothing in the diagram is promoted to supreme owner by appearing lower or farther right. `loginwindow` does not render. A user agent does not become WindowServer because it owns a menu. WindowServer cannot authenticate the person by arranging the password field beautifully.
+The arrows show relationships, not a complete private call trace. `loginwindow` coordinates the visual login without becoming the renderer. WindowServer can manage the login UI without authenticating the person. Later, a user app joins the graphical environment; it does not create that environment by arriving.
 
-At the end of login, the account has become a live user environment. The services in that environment can answer. The graphical government can now construct the world the user will recognize.
+At the end of login, the account has become a live user environment. Its services can answer and its apps can bring windows into infrastructure that was already capable of showing the front desk.
 
 Root can still end many of its processes. That does not mean root formed the session, understands it, or can substitute a title for the identity it was built around.
 
