@@ -6,13 +6,15 @@ Turn `dist/on-your-processor.html` into a self-contained, offline book reader wi
 
 ## Reader structure
 
-The HTML template contains one focusable reader shell. Its horizontal page flow is composed of a front cover, a blank inside cover, the generated table of contents, the manuscript body, and a back cover. CSS multi-column layout creates pages without rewriting manuscript paragraphs in JavaScript. On wide screens the viewport shows a two-page spread; narrow screens show one page.
+The HTML template contains one focusable reader shell and a normal-flow `#book-source` fallback composed of a front cover, title page, generated table of contents, manuscript body, and back cover. JavaScript caches that source and packs its blocks into explicit `.reader-page` elements on a horizontal track. On wide screens the viewport shows a two-page spread; narrow screens show one page.
 
-The supplied transparent Canva PNG is copied to `book/assets/cover.png`. It is embedded into the standalone HTML by Pandoc and supplied to Pandoc as the EPUB cover. The current source is only 225 by 225 pixels, so the layout contains rather than crops it and permits a higher-resolution replacement at the same path later.
+The earlier CSS multi-column implementation is prohibited. Browser column fragmentation cannot safely serve as the page model for full-height covers, forced chapter breaks, blockquotes, and code blocks; it allowed several fragments to paint into the same visible space. Explicit page boxes are now part of the publication contract.
+
+The Canva PDF cover is rendered to a 1407 by 1407 PNG at 600 DPI and stored at `book/assets/cover.png`. It is embedded into the standalone HTML by Pandoc and supplied to Pandoc as the EPUB cover.
 
 ## Navigation
 
-`book/reader.js` owns page state. Previous and next buttons, Left/Right arrows, Page Up/Page Down, Home/End, and table-of-contents links move by the active spread size. A page counter, progress bar, disabled button states, and an ARIA live announcement expose the current position. Resizing recalculates pagination while keeping the reader near the same logical page.
+`book/reader.js` owns pagination and page state. It constructs fixed cover/title/contents/back pages, starts each numbered chapter on a fresh page, and packs ordinary blocks by measured available height. A block taller than an empty page is contained on that page rather than allowed to overlap another. Previous and next buttons, Left/Right arrows, Page Up/Page Down, Home/End, and table-of-contents links move by the active spread size. A page counter, progress bar, disabled button states, and an ARIA live announcement expose the current position. Resizing rebuilds from cached source markup while keeping the reader near the same logical progress.
 
 Motion uses a short horizontal transition and is disabled under `prefers-reduced-motion`. Print output hides controls and returns the manuscript to ordinary paged document flow.
 

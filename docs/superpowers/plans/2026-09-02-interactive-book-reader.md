@@ -4,7 +4,7 @@
 
 **Goal:** Build a self-contained, keyboard-navigable HTML book with the supplied cover, synopsis back cover, adaptive spreads, and SF Pro local typography.
 
-**Architecture:** Pandoc continues to assemble the manuscript. A focused Lua publication filter supplies cover/back matter, CSS performs horizontal column pagination, and a dependency-free reader script controls navigation and reader state.
+**Architecture:** Pandoc continues to assemble the manuscript. A focused Lua publication filter supplies cover/back matter, and a dependency-free reader script packs source blocks into explicit page elements on a horizontal track. CSS styles those page boxes but does not perform content fragmentation.
 
 **Tech Stack:** POSIX shell, Pandoc, Lua filter, HTML, CSS, vanilla JavaScript.
 
@@ -45,12 +45,12 @@
 
 **Interfaces:**
 - Consumes: `notes/synopsis.md`, `book/assets/cover.png`, and Pandoc's generated body/TOC.
-- Produces: `.book-reader`, `.book-pages`, `#front-cover`, `#back-cover`, `#reader-prev`, `#reader-next`, `#reader-status`, and `#reader-progress` in the generated HTML.
+- Produces: `#book-source`, `#reader-track`, `.reader-page`, `#front-cover`, `#back-cover`, `#reader-prev`, `#reader-next`, `#reader-status`, and `#reader-progress` in the generated HTML.
 
 - [ ] **Step 1: Copy the approved Canva PNG to `book/assets/cover.png`.**
 - [ ] **Step 2: Update the Lua filter to retain title de-duplication and append the synopsis as a `back-cover` section only for HTML.**
-- [ ] **Step 3: Restructure the template into a semantic reader shell with cover, inside cover, TOC, manuscript flow, back cover, and controls.**
-- [ ] **Step 4: Add dependency-free navigation that calculates page width/count, moves by the active spread, handles keyboard and TOC navigation, and updates accessibility state.**
+- [ ] **Step 3: Restructure the template into a semantic source fallback plus an explicit-page track with cover, inside cover, TOC, manuscript flow, back cover, and controls.**
+- [ ] **Step 4: Add dependency-free measured block packing and navigation that moves by the active spread, handles keyboard and TOC navigation, and updates accessibility state.**
 - [ ] **Step 5: Update `build.sh` to embed the reader script/cover and set the EPUB cover image.**
 
 ### Task 3: Book presentation
@@ -60,9 +60,9 @@
 
 **Interfaces:**
 - Consumes: the semantic reader classes and state attributes from Task 2.
-- Produces: a one-page/two-page responsive reader, cover treatments, readable column pages, controls, reduced-motion behavior, and print fallback.
+- Produces: a one-page/two-page responsive reader, cover treatments, explicit readable pages, controls, reduced-motion behavior, and print fallback.
 
-- [ ] **Step 1: Replace the scrolling article layout with a bounded book stage and horizontal column flow.**
+- [ ] **Step 1: Replace the scrolling article layout with a bounded book stage and horizontal explicit-page track.**
 - [ ] **Step 2: Add front/back cover, TOC, page furniture, controls, progress, and accessible focus styles.**
 - [ ] **Step 3: Add local SF Pro typography with system fallbacks, without font binaries or external URLs.**
 - [ ] **Step 4: Add narrow-screen, reduced-motion, and print rules.**

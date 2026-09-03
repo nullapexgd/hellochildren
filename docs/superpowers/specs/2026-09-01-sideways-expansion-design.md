@@ -149,6 +149,22 @@ Each chapter should rely on two to four load-bearing technical claims. Supportin
 - Do not hand-edit generated outputs as the only copy of a manuscript change.
 - Preserve unrelated uncommitted build, styling, synopsis, and distribution work.
 
+## HTML reader contract
+
+The v0.3 CSS multi-column paginator is rejected. It lets full-height cover, contents, chapter, blockquote, and code elements participate in browser column fragmentation, then asks JavaScript to pretend the resulting column geometry is a stable page model. The screenshot from the first release proves that assumption false: independent fragments can paint into the same visible space.
+
+The v0.4 reader uses explicit `.reader-page` elements instead:
+
+1. The template exposes a normal-flow `#book-source` fallback containing the cover, title page, contents, manuscript, and back cover.
+2. JavaScript caches that source markup, creates a detached working copy, and packs its blocks into fixed page elements by measured height.
+3. The cover, title page, contents, and back cover each receive a dedicated page. Every numbered chapter begins on a new page.
+4. Ordinary blocks move as units. A block too tall for an empty page receives a contained overflow treatment; it never paints into a neighboring page.
+5. The horizontal track shows two explicit pages on wide screens and one on narrow screens. Arrow keys and controls move by the visible page count.
+6. On resize, the reader rebuilds from the cached source rather than re-fragmenting already-paginated markup.
+7. If JavaScript fails, the normal-flow source remains readable. JavaScript hides it only after explicit pages have been constructed successfully.
+
+CSS must not use `column-count`, `column-width`, `column-fill`, or `display: contents` for screen pagination. Print styles use ordinary document flow. The HTML is not ready to publish until the user visually checks the local artifact at both a desktop and narrow width.
+
 ## Protected material
 
 All lines in `notes/editorial-protections.md` remain verbatim. Canon jokes in `notes/canon.md` remain present. Chapter 17 is the climax, Chapter 18 the denouement, and Chapter 19 the epilogue after renumbering.
@@ -241,3 +257,5 @@ Aim for approximately 24,800 words. Chapter 13 receives 1,400–1,600 words; mos
 - All protected lines and recurring canon jokes remain.
 - `./build.sh` exits successfully and produces `manuscript.md`; HTML and EPUB are produced when Pandoc is available.
 - The final nonblank line is exactly `moo.`
+- Screen pagination uses explicit page elements and contains oversized blocks; it does not use CSS multi-column fragmentation.
+- The user visually approves the repaired HTML before the final commit and push.

@@ -24,6 +24,58 @@
 
 ---
 
+### Task 0: Replace the broken CSS-column paginator
+
+**Files:**
+- Modify: `book/template.html`
+- Modify: `book/book.css`
+- Modify: `book/reader.js`
+- Modify: `tools/check-publication.sh`
+- Generated: `dist/on-your-processor.html`
+
+**Interfaces:**
+- Consumes: Pandoc's semantic cover, title, contents, manuscript, and back-cover markup inside `#book-source`.
+- Produces: Explicit `.reader-page` elements inside `#reader-track`, with a normal-flow no-JavaScript fallback and the existing keyboard/control interface.
+
+- [ ] **Step 1: Add the failing pagination contract**
+
+Require `#book-source`, `#reader-track`, `.reader-page`, block-packing logic, oversize containment, and the existing keyboard controls. Reject `column-count`, `column-width`, `column-fill`, and `.book-pages > main { display: contents; }` in screen-reader CSS.
+
+- [ ] **Step 2: Run the publication check and confirm the expected failure**
+
+Run:
+
+```sh
+./tools/check-publication.sh
+```
+
+Expected: failure because the current reader still uses CSS multi-column pagination.
+
+- [ ] **Step 3: Replace column fragmentation with explicit pages**
+
+Keep source markup readable by default. In JavaScript, cache the source HTML, build a detached working tree, place fixed front/title/contents/back sections on dedicated pages, and pack manuscript blocks into measured `.reader-page-content` containers. Start every numbered chapter on a new page. If one block exceeds an empty page, mark only that page `reader-page-oversize` and contain its overflow.
+
+- [ ] **Step 4: Rebuild safely on resize**
+
+Recreate pages from the cached source HTML after a debounced resize. Preserve the reader's approximate progress ratio. Add `reader-ready` only after at least one explicit page exists; otherwise leave the source fallback visible.
+
+- [ ] **Step 5: Replace column CSS with track/page CSS**
+
+Use a horizontal flex track of explicit paper boxes. Wide screens expose two page widths; narrow screens expose one. Remove all screen pagination via CSS columns or `display: contents`. Keep reduced-motion, print, front-cover, back-cover, code, and accessibility rules.
+
+- [ ] **Step 6: Verify the reader implementation**
+
+Run:
+
+```sh
+./build.sh
+./tools/check-publication.sh
+sed '1d;$d' book/reader.js | node --check
+git diff --check
+```
+
+Expected: all commands exit 0, the generated HTML remains self-contained, and no rejected column-pagination rules remain.
+
 ### Task 1: Freeze and audit the v0.3 spine
 
 **Files:**
@@ -595,7 +647,7 @@ Expected: 20 source files including `00-title.md`, 19 numbered chapters, approxi
 
 - [ ] **Step 8: Inspect generated HTML and EPUB**
 
-Open the HTML and EPUB through the current app workflow. Check title hierarchy, table of contents, fenced diagrams, blockquote sidebars, page breaks, and the final `moo.`. Correct source Markdown or book CSS, then rebuild; do not patch generated output directly.
+Open the HTML and EPUB through the current app workflow. Check title hierarchy, table of contents, fenced diagrams, blockquote sidebars, page breaks, and the final `moo.`. Correct source Markdown or book CSS, then rebuild; do not patch generated output directly. Stop for the user's visual approval of the local HTML at desktop and narrow widths before committing or pushing the final publication.
 
 - [ ] **Step 9: Commit the completed expansion**
 
