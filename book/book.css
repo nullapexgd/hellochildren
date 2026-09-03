@@ -57,7 +57,7 @@ html {
 body {
     min-height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
     color: var(--ink);
     background:
         radial-gradient(circle at 50% -20%, #535047 0, transparent 55%),
@@ -107,9 +107,6 @@ a {
 }
 
 .reader-app {
-    display: grid;
-    min-height: 100svh;
-    grid-template-rows: auto minmax(0, 1fr) auto;
     padding: clamp(0.75rem, 2vh, 1.5rem) clamp(0.75rem, 2vw, 2rem) 0.8rem;
 }
 
@@ -160,19 +157,14 @@ a {
 }
 
 .reader-stage {
-    display: grid;
-    min-height: 0;
-    grid-template-columns: 3rem minmax(0, 76rem) 3rem;
-    gap: clamp(0.45rem, 1.5vw, 1.2rem);
-    align-items: center;
-    justify-content: center;
+    width: min(100%, 76rem);
+    margin: 0 auto;
 }
 
 .reader-viewport {
     position: relative;
     width: 100%;
-    height: min(82svh, 54rem);
-    overflow: hidden;
+    overflow: visible;
     border-radius: 0.28rem;
     background:
         linear-gradient(90deg, transparent calc(50% - 1px), rgba(50, 43, 33, 0.12) 50%, transparent calc(50% + 1px)),
@@ -180,8 +172,6 @@ a {
     box-shadow:
         0 1.8rem 4rem rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.1);
-    scroll-behavior: smooth;
-    scrollbar-width: none;
 }
 
 .reader-viewport::-webkit-scrollbar {
@@ -193,47 +183,117 @@ a {
     outline-offset: 4px;
 }
 
-.book-reader,
-.book-pages {
+.book-reader {
     width: 100%;
-    height: 100%;
 }
 
-.book-pages {
-    --spread-pages: 2;
-    --page-width: 37rem;
+.reader-track {
+    display: none;
+}
+
+.book-source {
     padding-block: clamp(2.15rem, 5vh, 3.5rem);
-    column-count: var(--spread-pages);
-    column-width: var(--page-width);
-    column-gap: var(--page-gap);
-    column-fill: auto;
     background: var(--paper-bright);
 }
 
-.book-pages > main {
-    display: contents;
+html.reader-building,
+html.reader-ready,
+html.reader-building body,
+html.reader-ready body {
+    height: 100%;
+    overflow: hidden;
 }
 
-.book-pages p,
-.book-pages li {
+html.reader-building .reader-app,
+html.reader-ready .reader-app {
+    display: grid;
+    height: 100svh;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+html.reader-building .reader-stage,
+html.reader-ready .reader-stage {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: 3rem minmax(0, 76rem) 3rem;
+    gap: clamp(0.45rem, 1.5vw, 1.2rem);
+    align-items: center;
+    justify-content: center;
+}
+
+html.reader-building .reader-viewport,
+html.reader-ready .reader-viewport {
+    height: min(82svh, 54rem);
+    overflow: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+html.reader-building .book-reader,
+html.reader-ready .book-reader {
+    position: relative;
+    height: 100%;
+}
+
+html.reader-building .reader-track,
+html.reader-ready .reader-track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    width: max-content;
+    height: 100%;
+    gap: var(--page-gap);
+    background: var(--paper-bright);
+}
+
+html.reader-ready .book-source {
+    display: none;
+}
+
+.reader-page {
+    width: var(--reader-page-width);
+    height: 100%;
+    flex: 0 0 var(--reader-page-width);
+    overflow: hidden;
+    background: var(--paper-bright);
+}
+
+.reader-page-content {
+    width: 100%;
+    height: 100%;
+    padding-block: clamp(2.15rem, 5vh, 3.5rem);
+    overflow: hidden;
+    background: var(--paper-bright);
+}
+
+.reader-page-fixed .reader-page-content {
+    padding: 0;
+}
+
+.reader-page-oversize .reader-page-content {
+    overflow: auto;
+}
+
+:is(.book-source, .reader-page-content) p,
+:is(.book-source, .reader-page-content) li {
     hanging-punctuation: first last;
 }
 
-.book-pages p,
-.book-pages ul,
-.book-pages ol,
-.book-pages blockquote,
-.book-pages pre,
-.book-pages h1,
-.book-pages h2,
-.book-pages h3,
-.book-pages h4,
-.book-pages hr {
+:is(.book-source, .reader-page-content) p,
+:is(.book-source, .reader-page-content) ul,
+:is(.book-source, .reader-page-content) ol,
+:is(.book-source, .reader-page-content) blockquote,
+:is(.book-source, .reader-page-content) pre,
+:is(.book-source, .reader-page-content) h1,
+:is(.book-source, .reader-page-content) h2,
+:is(.book-source, .reader-page-content) h3,
+:is(.book-source, .reader-page-content) h4,
+:is(.book-source, .reader-page-content) hr {
     margin-right: clamp(2rem, 5vw, 4rem);
     margin-left: clamp(2rem, 5vw, 4rem);
 }
 
-.book-pages p {
+:is(.book-source, .reader-page-content) p {
     margin-top: 0;
     margin-bottom: 1rem;
 }
@@ -242,11 +302,21 @@ a {
 .inside-cover,
 .back-cover,
 nav#TOC {
-    height: 100%;
     padding: clamp(2rem, 6vw, 4.5rem);
-    break-before: column;
-    break-after: column;
-    break-inside: avoid-column;
+}
+
+.reader-page-fixed .front-cover,
+.reader-page-fixed .inside-cover,
+.reader-page-fixed .back-cover,
+.reader-page-fixed nav#TOC {
+    height: 100%;
+}
+
+.book-source .front-cover,
+.book-source .inside-cover,
+.book-source .back-cover,
+.book-source nav#TOC {
+    min-height: min(82svh, 54rem);
 }
 
 .front-cover {
@@ -371,16 +441,16 @@ nav#TOC a:hover {
     color: var(--accent-dark);
 }
 
-.book-pages h1,
-.book-pages h2,
-.book-pages h3,
-.book-pages h4 {
+:is(.book-source, .reader-page-content) h1,
+:is(.book-source, .reader-page-content) h2,
+:is(.book-source, .reader-page-content) h3,
+:is(.book-source, .reader-page-content) h4 {
     color: var(--ink);
     font-family: var(--display);
     text-wrap: balance;
 }
 
-.book-pages main > h1 {
+:is(.book-source main, .reader-page-content) > h1 {
     margin-top: 0;
     margin-bottom: 1.5rem;
     padding-top: 0.8rem;
@@ -389,17 +459,16 @@ nav#TOC a:hover {
     font-weight: 700;
     letter-spacing: -0.045em;
     line-height: 0.98;
-    break-before: column;
 }
 
-.book-pages h2 {
+:is(.book-source, .reader-page-content) h2 {
     margin-top: 2rem;
     margin-bottom: 0.8rem;
     font-size: 1.35rem;
     line-height: 1.1;
 }
 
-.book-pages h3 {
+:is(.book-source, .reader-page-content) h3 {
     margin-top: 1.7rem;
     margin-bottom: 0.65rem;
     color: var(--muted);
@@ -409,36 +478,35 @@ nav#TOC a:hover {
     text-transform: uppercase;
 }
 
-.book-pages strong {
+:is(.book-source, .reader-page-content) strong {
     font-weight: 750;
 }
 
-.book-pages a {
+:is(.book-source, .reader-page-content) a {
     color: var(--accent-dark);
     text-decoration-color: rgba(113, 38, 31, 0.4);
     text-underline-offset: 0.14em;
 }
 
-.book-pages a:focus-visible,
+:is(.book-source, .reader-page-content) a:focus-visible,
 .page-button:focus-visible {
     outline: 3px solid #d1877f;
     outline-offset: 3px;
 }
 
-.book-pages blockquote {
+:is(.book-source, .reader-page-content) blockquote {
     margin-top: 1.35rem;
     margin-bottom: 1.35rem;
     padding: 0.85rem 1rem;
     border-left: 4px solid var(--accent);
     background: rgba(166, 59, 48, 0.06);
-    break-inside: avoid-column;
 }
 
-.book-pages blockquote p:last-child {
+:is(.book-source, .reader-page-content) blockquote p:last-child {
     margin-bottom: 0;
 }
 
-.book-pages pre {
+:is(.book-source, .reader-page-content) pre {
     max-width: calc(100% - clamp(4rem, 10vw, 8rem));
     margin-top: 1.25rem;
     margin-bottom: 1.4rem;
@@ -452,22 +520,21 @@ nav#TOC a:hover {
     font-size: 0.76rem;
     line-height: 1.48;
     white-space: pre-wrap;
-    break-inside: avoid-column;
 }
 
-.book-pages code {
+:is(.book-source, .reader-page-content) code {
     font-family: var(--mono);
     font-size: 0.86em;
 }
 
-.book-pages :not(pre) > code {
+:is(.book-source, .reader-page-content) :not(pre) > code {
     padding: 0.1em 0.3em;
     border: 1px solid var(--faint);
     border-radius: 0.2rem;
     background: rgba(166, 59, 48, 0.05);
 }
 
-.book-pages hr {
+:is(.book-source, .reader-page-content) hr {
     width: 4rem;
     margin-top: 2.2rem;
     margin-bottom: 2.2rem;
@@ -570,15 +637,13 @@ nav#TOC a:hover {
 }
 
 @media (max-width: 63.999rem) {
-    .reader-stage {
+    html.reader-building .reader-stage,
+    html.reader-ready .reader-stage {
         grid-template-columns: 2.75rem minmax(0, 42rem) 2.75rem;
     }
 
-    .book-pages {
-        --spread-pages: 1;
-    }
-
-    .reader-viewport {
+    html.reader-building .reader-viewport,
+    html.reader-ready .reader-viewport {
         background: var(--paper-bright);
     }
 }
@@ -604,12 +669,14 @@ nav#TOC a:hover {
         display: none;
     }
 
-    .reader-stage {
+    html.reader-building .reader-stage,
+    html.reader-ready .reader-stage {
         position: relative;
         display: block;
     }
 
-    .reader-viewport {
+    html.reader-building .reader-viewport,
+    html.reader-ready .reader-viewport {
         height: calc(100svh - 6.6rem);
         border-radius: 0;
     }
@@ -633,16 +700,16 @@ nav#TOC a:hover {
         border-radius: 1.4rem 0 0 1.4rem;
     }
 
-    .book-pages p,
-    .book-pages ul,
-    .book-pages ol,
-    .book-pages blockquote,
-    .book-pages pre,
-    .book-pages h1,
-    .book-pages h2,
-    .book-pages h3,
-    .book-pages h4,
-    .book-pages hr {
+    :is(.book-source, .reader-page-content) p,
+    :is(.book-source, .reader-page-content) ul,
+    :is(.book-source, .reader-page-content) ol,
+    :is(.book-source, .reader-page-content) blockquote,
+    :is(.book-source, .reader-page-content) pre,
+    :is(.book-source, .reader-page-content) h1,
+    :is(.book-source, .reader-page-content) h2,
+    :is(.book-source, .reader-page-content) h3,
+    :is(.book-source, .reader-page-content) h4,
+    :is(.book-source, .reader-page-content) hr {
         margin-right: 2rem;
         margin-left: 2rem;
     }
@@ -656,7 +723,7 @@ nav#TOC a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .reader-viewport {
+    html.reader-ready .reader-viewport {
         scroll-behavior: auto;
     }
 
@@ -682,6 +749,12 @@ nav#TOC a:hover {
         background: white;
     }
 
+    html.reader-building,
+    html.reader-ready {
+        height: auto;
+        overflow: visible;
+    }
+
     body {
         overflow: visible;
         color: black;
@@ -700,7 +773,7 @@ nav#TOC a:hover {
     .reader-stage,
     .reader-viewport,
     .book-reader,
-    .book-pages {
+    .book-source {
         display: block;
         width: auto;
         height: auto;
@@ -709,7 +782,14 @@ nav#TOC a:hover {
         overflow: visible;
         background: white;
         box-shadow: none;
-        columns: auto;
+    }
+
+    .reader-track {
+        display: none;
+    }
+
+    .book-source {
+        display: block !important;
     }
 
     .front-cover,
@@ -721,17 +801,13 @@ nav#TOC a:hover {
         break-after: page;
     }
 
-    .book-pages > main {
-        display: block;
-    }
-
-    .book-pages main > h1 {
+    .book-source main > h1 {
         page-break-before: always;
         break-before: page;
     }
 
-    .book-pages pre,
-    .book-pages blockquote {
+    .book-source pre,
+    .book-source blockquote {
         break-inside: avoid;
     }
 

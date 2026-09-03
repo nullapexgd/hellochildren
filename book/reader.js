@@ -3,19 +3,21 @@
     "use strict";
 
     const viewport = document.getElementById("reader-viewport");
-    const pages = document.getElementById("reader-pages");
+    const track = document.getElementById("reader-track");
+    const source = document.getElementById("book-source");
     const previous = document.getElementById("reader-prev");
     const next = document.getElementById("reader-next");
     const status = document.getElementById("reader-status");
     const progress = document.getElementById("reader-progress");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (!viewport || !pages || !previous || !next || !status || !progress) {
+    if (!viewport || !track || !source || !previous || !next || !status || !progress) {
         return;
     }
 
+    const sourceHTML = source.innerHTML;
     let currentPage = 0;
-    let pageCount = 1;
+    let pageCount = 0;
     let pagesPerSpread = 1;
     let pageStep = 1;
     let resizeTimer;
@@ -25,6 +27,10 @@
     }
 
     function render(animate = true) {
+        if (!pageCount) {
+            return;
+        }
+
         currentPage = Math.max(0, Math.min(currentPage, lastSpreadStart()));
         viewport.scrollTo({
             left: currentPage * pageStep,
@@ -39,25 +45,139 @@
         next.disabled = currentPage >= lastSpreadStart();
     }
 
-    function measure() {
-        const previousCount = pageCount;
-        const previousPage = currentPage;
+    function createPage(className = "") {
+        const page = document.createElement("section");
+        const content = document.createElement("div");
+
+        page.className = `reader-page ${className}`.trim();
+        content.className = "reader-page-content";
+        page.append(content);
+        track.append(page);
+        return { page, content };
+    }
+
+    function overflows(content) {
+        return content.scrollHeight > content.clientHeight + 1;
+    }
+
+    function addDedicatedPage(section) {
+        if (!section) {
+            return;
+        }
+
+        const page = createPage("reader-page-fixed");
+        page.content.append(section.cloneNode(true));
+
+        if (overflows(page.content)) {
+            page.page.classList.add("reader-page-oversize");
+        }
+    }
+
+    function isNumberedChapter(block) {
+        return block.tagName === "H1" && /^\d+\.\s/.test(block.textContent.trim());
+    }
+
+    function addManuscript(main) {
+        let page;
+        let firstPage = true;
+
+        function startPage() {
+            page = createPage();
+
+            if (firstPage) {
+                page.page.id = "book-content";
+                firstPage = false;
+            }
+        }
+
+        for (const block of main.children) {
+            if (isNumberedChapter(block)) {
+                page = undefined;
+            }
+
+            if (!page) {
+                startPage();
+            }
+
+            const copy = block.cloneNode(true);
+            page.content.append(copy);
+
+            if (!overflows(page.content)) {
+                continue;
+            }
+
+            page.content.removeChild(copy);
+
+            if (page.content.children.length) {
+                startPage();
+                page.content.append(copy);
+            } else {
+                page.content.append(copy);
+            }
+
+            if (overflows(page.content)) {
+                page.page.classList.add("reader-page-oversize");
+            }
+        }
+    }
+
+    function removeFallbackIds() {
+        for (const element of source.querySelectorAll("[id]")) {
+            element.removeAttribute("id");
+        }
+    }
+
+    function measurePageWidth() {
         pagesPerSpread = window.matchMedia("(min-width: 64rem)").matches ? 2 : 1;
-
-        const styles = getComputedStyle(pages);
-        const gap = Number.parseFloat(styles.columnGap) || 0;
+        const gap = Number.parseFloat(getComputedStyle(track).gap) || 0;
         const pageWidth = (viewport.clientWidth - gap * (pagesPerSpread - 1)) / pagesPerSpread;
-        pages.style.setProperty("--page-width", `${pageWidth}px`);
-        pages.style.setProperty("--spread-pages", pagesPerSpread);
 
+        track.style.setProperty("--reader-page-width", `${pageWidth}px`);
         pageStep = pageWidth + gap;
-        pageCount = Math.max(1, Math.round((pages.scrollWidth + gap) / pageStep));
+    }
 
-        const progressRatio = previousCount > 1 ? previousPage / (previousCount - 1) : 0;
+    function rebuild(progressRatio = 0) {
+        document.documentElement.classList.add("reader-building");
+        measurePageWidth();
+        track.replaceChildren();
+
+        const working = document.createElement("div");
+        working.innerHTML = sourceHTML;
+
+        const frontCover = working.querySelector("#front-cover");
+        const titlePage = working.querySelector(".inside-cover");
+        const contents = working.querySelector("nav[role='doc-toc']");
+        const manuscript = working.querySelector("main");
+        const backCover = working.querySelector("#back-cover");
+
+        if (backCover) {
+            backCover.remove();
+        }
+
+        addDedicatedPage(frontCover);
+        addDedicatedPage(titlePage);
+        addDedicatedPage(contents);
+
+        if (manuscript) {
+            addManuscript(manuscript);
+        }
+
+        addDedicatedPage(backCover);
+        pageCount = track.querySelectorAll(".reader-page").length;
+
+        if (!pageCount) {
+            document.documentElement.classList.remove("reader-building");
+            return;
+        }
+
         currentPage = Math.min(
             Math.floor(progressRatio * Math.max(0, pageCount - 1) / pagesPerSpread) * pagesPerSpread,
             lastSpreadStart()
         );
+
+        removeFallbackIds();
+        document.documentElement.classList.remove("reader-building");
+        document.documentElement.classList.add("reader-ready");
         render(false);
     }
 
@@ -67,8 +187,8 @@
     }
 
     function goToElement(target) {
-        const viewportBox = viewport.getBoundingClientRect();
         const targetBox = target.getBoundingClientRect();
+        const viewportBox = viewport.getBoundingClientRect();
         const absoluteLeft = viewport.scrollLeft + targetBox.left - viewportBox.left;
         currentPage = Math.floor(Math.max(0, absoluteLeft) / pageStep / pagesPerSpread) * pagesPerSpread;
         render();
@@ -97,14 +217,15 @@
         }
     });
 
-    pages.addEventListener("click", (event) => {
+    track.addEventListener("click", (event) => {
         const link = event.target.closest("a[href^='#']");
 
         if (!link) {
             return;
         }
 
-        const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+        const targetId = decodeURIComponent(link.hash.slice(1));
+        const target = Array.from(track.querySelectorAll("[id]")).find((element) => element.id === targetId);
 
         if (target) {
             event.preventDefault();
@@ -115,11 +236,14 @@
 
     window.addEventListener("resize", () => {
         window.clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(measure, 120);
+        resizeTimer = window.setTimeout(() => {
+            const progressRatio = pageCount > 1 ? currentPage / (pageCount - 1) : 0;
+            rebuild(progressRatio);
+        }, 120);
     });
 
-    window.addEventListener("load", measure, { once: true });
-    document.fonts?.ready.then(measure);
-    measure();
+    window.addEventListener("load", () => rebuild(), { once: true });
+    document.fonts?.ready.then(() => rebuild());
+    rebuild();
 })();
 </script>
