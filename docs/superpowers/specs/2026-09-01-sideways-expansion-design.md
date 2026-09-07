@@ -2,7 +2,7 @@
 
 ## Objective
 
-Expand the current 13-chapter, roughly 10,000-word manuscript into a 19-chapter technical-comedy book of approximately 24,000–25,000 words. Growth must come from genuinely different jurisdictions, not repeated explanations that root is not omnipotent.
+Expand the frozen 13-chapter, roughly 10,000-word Receipts Edition into a 20-chapter technical-comedy book of approximately 24,000–26,000 words. Growth must come from genuinely different jurisdictions, not repeated explanations that root is not omnipotent. The working edition is v0.4, **The Jurisdiction Edition**; v0.3 remains frozen rather than masquerading as the current book.
 
 The final three narrative beats remain sacred and consecutive:
 
@@ -46,10 +46,11 @@ Dialogue is dramatization unless the text explicitly identifies a reproduced str
 | 13 | Macintosh HD Is a Diplomatic Arrangement | Separate visible paths, writable state, snapshots, seals, and boot-authoritative filesystem state. |
 | 14 | Memory Has Borders | Explain address spaces, MMU translation, IOMMU/DART mappings, DMA, and physical enforcement. |
 | 15 | SEP Has a Mailbox | Explain communication across a separate processor and security domain without implying command authority. |
-| 16 | The House Inside the House | Introduce Hypervisor.framework and Virtualization.framework lightly through host-versus-guest jurisdiction. |
-| 17 | The Hardware Family Dinner | Bring the jurisdictions together for the climax. |
-| 18 | At the Mercy of the Kernel | Show XNU ending the current world during shutdown. |
-| 19 | One More Jurisdiction | Introduce Hyprvisor as an outside character and make the guest kernel somebody else’s tenant. |
+| 16 | The Civil War | Deliberately violate the architecture by having UID 501 send `/sbin/launchd` to SEP, then label the entire incident as impossible dramatization. |
+| 17 | The House Inside the House | Introduce Hypervisor.framework and Virtualization.framework lightly through host-versus-guest jurisdiction. |
+| 18 | The Hardware Family Dinner | Bring the jurisdictions together for the climax. |
+| 19 | At the Mercy of the Kernel | Show XNU ending the current world during shutdown. |
+| 20 | One More Jurisdiction | Introduce Hyprvisor as an outside character and make the guest kernel somebody else’s tenant. |
 
 ## Middle-book separation
 
@@ -88,15 +89,23 @@ SSV is the climax, not the entire plot. The chapter starts with the visible name
 
 Primary evidence starts with [Apple's Role of Apple File System](https://support.apple.com/guide/security/seca6147599e/web), [Apple's Signed system volume security](https://support.apple.com/guide/security/signed-system-volume-security-secd698747c9/web), and [WWDC19: What's New in Apple File Systems](https://developer.apple.com/videos/play/wwdc2019/710/). NTFS and ext4 receive at most one contextual sentence; the chapter does not become a comparative-filesystems survey.
 
+## The intentionally impossible chapter
+
+Chapter 16 spends the authority model as comic capital. After fifteen chapters teach why jurisdictions cannot be crossed by confidence, Efeali, UID 501, sends the real arm64e `/sbin/launchd` executable to the real Secure Enclave using an invented command and the explanation "AirDrop works across trust domains."
+
+The chapter must not explain an exploit, invent an entitlement, imply a migration protocol, or smuggle the event into technical canon. It opens by saying the transfer is impossible, lets every technically sophisticated character object, and includes a visible evidence note stating that the preceding architecture is substantial evidence against the scene. Real nouns remain real; the sentence connecting them is dramatization.
+
+The impossible transfer has consequences inside the story only: XNU loses PID 1, AppleSEPManager reports a restructuring, SPTM objects correctly, and iBoot accepts the premise for personal reasons. The scene never becomes a factual claim about SEP execution, AirDrop, Mach-O loading, or trust-domain crossings.
+
 ## Virtualization depth limit
 
-Chapter 16 teaches one concept:
+Chapter 17 teaches one concept:
 
 > A kernel can be sovereign inside a virtual machine and still be a tenant outside it.
 
 Hypervisor.framework receives a short description as lower-level virtual CPU and guest-memory machinery. Virtualization.framework receives a short description as the higher-level configuration and operation of virtual machines. The chapter does not teach VMCS internals, trap taxonomy, nested page tables, or SVM-versus-VMX history.
 
-The chapter ends with conceptual foreshadowing rather than the Hyprvisor character. Chapter 19 introduces Hyprvisor and delivers the ring-0 exchange for the first time. Nothing follows `moo.` in the reading sequence.
+The chapter ends with conceptual foreshadowing rather than the Hyprvisor character. Chapter 20 introduces Hyprvisor and delivers the ring-0 exchange for the first time. Nothing follows `moo.` in the reading sequence.
 
 ## Compression layer
 
@@ -107,7 +116,7 @@ Use portable blockquote sidebars of 120–300 words:
 - **Case File: An Entitlement Name Is Not a Confession** in Chapter 11.
 - **The path is lying politely again** in Chapter 13: a brief `/private` historical/path-indirection note.
 - **The Mailboxes Are Not Related** in Chapter 15: `/var/mail` versus the SEP mailbox.
-- **The Abandoned Apartments** in Chapter 16: one brief ring 1/ring 2 joke without teaching x86 privilege history.
+- **The Abandoned Apartments** in Chapter 17: one brief ring 1/ring 2 joke without teaching x86 privilege history.
 
 Use seven editable fenced-text diagrams:
 
@@ -117,7 +126,7 @@ Use seven editable fenced-text diagrams:
 - Chapter 13: visible namespace, System/Data volumes, snapshot, and boot-selected state.
 - Chapter 14: process, device, and physical address maps.
 - Chapter 15: AP-to-SEP communication boundary.
-- Chapter 16: host, VM process/frameworks, guest kernel, and guest userspace.
+- Chapter 17: host, VM process/frameworks, guest kernel, and guest userspace.
 
 Diagrams replace repeated prose. They do not decorate already-clear explanations.
 
@@ -136,6 +145,7 @@ Add these receipt families:
 - `PUB-FS-*`: Apple documentation for APFS containers, volume roles, volume groups, firmlinks, snapshots, SSV, and seal verification.
 - `OBS-FS-*`: build-specific mounted-volume, snapshot, or path observations whose commands and output limits are recorded exactly.
 - `PUB-VIRT-*`: official Hypervisor.framework and Virtualization.framework documentation.
+- `DRAM-CIVIL-*`: the impossible Chapter 16 scene, explicitly fictional and contradicted by the book's documented architecture.
 - `DRAM-HYPR-*`: Hyprvisor dialogue, explicitly fictionalized and outside Apple.
 
 Each chapter should rely on two to four load-bearing technical claims. Supporting detail belongs in receipts or a short sidebar.
@@ -167,7 +177,7 @@ CSS must not use `column-count`, `column-width`, `column-fill`, or `display: con
 
 ## Protected material
 
-All lines in `notes/editorial-protections.md` remain verbatim. Canon jokes in `notes/canon.md` remain present. Chapter 17 is the climax, Chapter 18 the denouement, and Chapter 19 the epilogue after renumbering.
+All lines in `notes/editorial-protections.md` remain verbatim. Canon jokes in `notes/canon.md` remain present. Chapter 18 is the climax, Chapter 19 the denouement, and Chapter 20 the epilogue after renumbering.
 
 The approved additions are:
 
@@ -243,15 +253,16 @@ explain yourself.
 
 ## Target allocation
 
-Aim for approximately 24,800 words. Chapter 13 receives 1,400–1,600 words; most other chapters receive 1,100–1,600 words; the ensemble climax receives about 1,800; shutdown about 1,000; and the epilogue about 400. Word counts are guardrails, not quotas.
+Aim for approximately 25,000 words. Chapter 13 receives 1,400–1,600 words; the impossible Chapter 16 receives roughly 1,200–1,600; most other chapters receive 1,100–1,600 words; the ensemble climax receives about 1,800; shutdown about 1,000; and the epilogue about 400. Word counts are guardrails, not quotas.
 
 ## Acceptance criteria
 
-- Nineteen numbered chapters exist in the intended order.
-- The manuscript is approximately 24,000–25,000 words without padding passages.
+- Twenty numbered chapters exist in the intended order.
+- The manuscript is approximately 24,000–26,000 words without padding passages.
 - Chapters 6–12 each own a distinct authority boundary.
 - Chapter 13 keeps write permission, visible namespace, and boot-valid state distinct.
 - Virtualization remains accessible and Apple-first.
+- Chapter 16 declares its impossible premise and never presents it as architecture, exploit, entitlement, protocol, or observation.
 - Every new factual claim is sourced, reproduced, or visibly labeled as inference.
 - Every sidebar and diagram replaces explanatory prose.
 - All protected lines and recurring canon jokes remain.

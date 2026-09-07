@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Expand the current manuscript into a 19-chapter, approximately 24,000–25,000-word technical-comedy book whose new length comes from new kinds of jurisdiction.
+**Goal:** Expand the frozen Receipts Edition into a 20-chapter, approximately 24,000–26,000-word technical-comedy book whose new length comes from new kinds of jurisdiction, plus one explicitly impossible chapter that spends the accumulated architecture as comic capital.
 
 **Architecture:** Redistribute the overloaded session, trust, and entitlement material into chapters with exclusive responsibilities; add TCC, policy, entitlement, filesystem, and lightweight virtualization jurisdictions; then preserve the existing three-part ending. Chapter Markdown remains authoritative; the existing build generates the continuous manuscript, HTML, and EPUB.
 
@@ -17,7 +17,8 @@
 - Preserve every recurring element in `notes/canon.md`.
 - Keep Hardware Family Dinner, Shutdown, and Hyprvisor as the final three consecutive beats.
 - Keep the final nonblank line exactly `moo.` with no reading-copy prose after it.
-- Keep Chapter 16 conceptual; do not add VMCS internals, trap taxonomy, nested page tables, or SVM-versus-VMX history.
+- Keep Chapter 17 conceptual; do not add VMCS internals, trap taxonomy, nested page tables, or SVM-versus-VMX history.
+- Keep Chapter 16 explicitly impossible: no exploit explanation, magical entitlement, SEP migration protocol, or claim that AirDrop crosses trust domains.
 - Keep Chapter 13 focused on visible, writable, and boot-valid filesystem state; do not turn it into a general APFS or comparative-filesystems tutorial.
 - Treat `chapters/*.md` as source and `manuscript.md`, HTML, and EPUB as generated outputs.
 - Never stage unrelated `build.sh`, `book/`, `dist/`, or `notes/synopsis.md` changes in an editorial commit.
@@ -520,21 +521,61 @@ git add chapters/14-memory-has-borders.md chapters/15-sep-has-a-mailbox.md manus
 git commit -m "deepen memory and SEP boundaries"
 ```
 
-### Task 8: Add lightweight Apple virtualization and preserve the ending
+### Task 8: Commit an impossible Civil War against jurisdiction
 
 **Files:**
-- Create: `chapters/16-the-house-inside-the-house.md`
-- Modify: `chapters/17-hardware-family-dinner.md`
-- Modify: `chapters/18-shutdown.md`
-- Modify: `chapters/19-epilogue.md`
+- Create: `chapters/16-the-civil-war.md`
 - Modify: `notes/canon.md`
 - Modify: `notes/editorial-protections.md`
 - Modify: `notes/fact-check-ledger.md`
 - Modify: `notes/receipts-v0.4.md`
 
 **Interfaces:**
-- Consumes: Official Hypervisor.framework and Virtualization.framework documentation plus the existing final three chapters.
-- Produces: A conceptual host/guest chapter that hands off to Hyprvisor without spending the epilogue’s joke.
+- Consumes: Fifteen chapters of defensible jurisdiction and the established SEP/mailbox characters.
+- Produces: One explicitly impossible story chapter whose evidence note identifies the real nouns and rejects the invented connection between them.
+
+- [ ] **Step 1: Open with the impossible command**
+
+Use the approved `id -u`, `file /sbin/launchd`, and `send /sbin/launchd SEP` terminal beat. State immediately that the transfer is impossible, that AirDrop does not cross trust domains, and that the book will not investigate further.
+
+- [ ] **Step 2: Let the architecture object**
+
+Include SEP accepting launchd, XNU discovering PID 1 is missing, AppleSEPManager reporting the restructuring, SPTM giving the technically correct objection, and iBoot accepting the premise for personal reasons. The humor comes from sophisticated characters refusing the false premise at different speeds.
+
+- [ ] **Step 3: Preserve the evidence-note joke**
+
+Include a visible evidence note stating there is substantial evidence against the scene in the preceding chapters. `/sbin/launchd`, UID 501, and the Secure Enclave are real; the sentence connecting them is dramatization.
+
+- [ ] **Step 4: Refuse fake mechanics**
+
+Search the chapter for exploit, entitlement, migration protocol, filesystem path, AirDrop, execution environment, and authorization language. Any mechanics beyond characters objecting to impossibility must be removed or marked as false dialogue.
+
+- [ ] **Step 5: Verify voice, integrity, and length**
+
+Run protected-line/canon searches, `wc -w chapters/16-*.md`, `./build.sh`, `./tools/check-publication.sh`, and `git diff --check`. Target roughly 1,200–1,600 words without explaining the same impossibility twice.
+
+- [ ] **Step 6: Commit the impossible chapter**
+
+```sh
+git add chapters/16-the-civil-war.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git commit -m "add the impossible Civil War"
+```
+
+### Task 9: Add lightweight Apple virtualization and preserve the ending
+
+**Files:**
+- Create: `chapters/17-the-house-inside-the-house.md`
+- Rename: `chapters/17-hardware-family-dinner.md` to `chapters/18-hardware-family-dinner.md`
+- Rename: `chapters/18-shutdown.md` to `chapters/19-shutdown.md`
+- Rename: `chapters/19-epilogue.md` to `chapters/20-epilogue.md`
+- Modify: `notes/canon.md`
+- Modify: `notes/editorial-protections.md`
+- Modify: `notes/fact-check-ledger.md`
+- Modify: `notes/receipts-v0.4.md`
+
+**Interfaces:**
+- Consumes: Official Hypervisor.framework and Virtualization.framework documentation plus the impossible chapter and existing final three chapters.
+- Produces: A conceptual host/guest chapter that returns to defensible architecture and hands off to Hyprvisor without spending the epilogue’s joke.
 
 - [ ] **Step 1: Add official virtualization receipts**
 
@@ -550,33 +591,33 @@ The diagram shows host, VM process/frameworks, guest kernel, and guest userspace
 
 - [ ] **Step 4: End with foreshadowing, not Hyprvisor**
 
-Conclude Chapter 16 with the idea that the guest kernel may govern the house while the lease remains upstairs. Do not name Hyprvisor or use the ring-0 exchange there.
+Conclude Chapter 17 with the idea that the guest kernel may govern the house while the lease remains upstairs. Do not name Hyprvisor or use the ring-0 exchange there.
 
 - [ ] **Step 5: Renumber the sacred ending**
 
-Hardware Family Dinner becomes Chapter 17, Shutdown Chapter 18, and One More Jurisdiction Chapter 19. Change only references made stale by renumbering. Keep `moo.` as the final nonblank line.
+Hardware Family Dinner becomes Chapter 18, Shutdown Chapter 19, and One More Jurisdiction Chapter 20. Change only references made stale by renumbering. Keep `moo.` as the final nonblank line.
 
 - [ ] **Step 6: Verify depth and ending**
 
 Run:
 
 ```sh
-rg -n 'VMCS|nested page|trap taxonomy|SVM|VMX|hyprvisor|moo\.' chapters/16-*.md chapters/19-*.md
-awk 'NF { line=$0 } END { print line }' chapters/19-*.md
-wc -w chapters/16-*.md chapters/19-*.md
+rg -n 'VMCS|nested page|trap taxonomy|SVM|VMX|hyprvisor|moo\.' chapters/17-*.md chapters/20-*.md
+awk 'NF { line=$0 } END { print line }' chapters/20-*.md
+wc -w chapters/17-*.md chapters/20-*.md
 ./build.sh
 ```
 
-Expected: forbidden deep-dive terms are absent from Chapter 16, Hyprvisor appears in Chapter 19, the final line is `moo.`, and build exits 0.
+Expected: forbidden deep-dive terms are absent from Chapter 17, Hyprvisor appears in Chapter 20, the final line is `moo.`, and build exits 0.
 
 - [ ] **Step 7: Commit virtualization and ending**
 
 ```sh
-git add chapters/16-the-house-inside-the-house.md chapters/17-hardware-family-dinner.md chapters/18-shutdown.md chapters/19-epilogue.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
+git add chapters/17-the-house-inside-the-house.md chapters/18-hardware-family-dinner.md chapters/19-shutdown.md chapters/20-epilogue.md manuscript.md notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md
 git commit -m "add virtualization jurisdiction and preserve ending"
 ```
 
-### Task 9: Add the opening map, perform the compression pass, and publish v0.4
+### Task 10: Add the opening map, perform the compression pass, and publish v0.4
 
 **Files:**
 - Modify: `chapters/00-title.md`
@@ -602,7 +643,7 @@ Place one fenced `text` diagram in Chapter 1 mapping authority to object, bounda
 
 - [ ] **Step 2: Update navigation and version metadata**
 
-Set `VERSION` to `0.4`. Update the title/editorial note, README table of contents, numbered structural protections, and canon chapter references for all 19 chapters.
+Set `VERSION` to `0.4`. Set the working edition label to `v0.4 — The Jurisdiction Edition`. Update the title/editorial note, README table of contents, numbered structural protections, receipt-ledger heading, and canon chapter references for all 20 chapters. Keep v0.3 described as the frozen Receipts Edition, not the current edition.
 
 - [ ] **Step 3: Run the repetition audit**
 
@@ -612,7 +653,7 @@ Run:
 rg -n -i 'authority has a jurisdiction|authority needs a noun|not omnipotent|breadth is not rank|root is not|one authority' chapters
 ```
 
-Review every match. Keep deliberate callbacks; delete paragraphs that merely re-explain a rule already established.
+Review every match. Keep deliberate callbacks and the Chapter 16 evidence-note inversion; delete paragraphs that merely re-explain a rule already established.
 
 - [ ] **Step 4: Run the evidence audit**
 
@@ -620,7 +661,7 @@ For every new Apple API, daemon, private entitlement, count, or behavior, confir
 
 - [ ] **Step 5: Run the canon and protection audit**
 
-Run exact-string searches for every line in `notes/editorial-protections.md` and every recurring joke in `notes/canon.md`. Confirm Hardware Family Dinner, Shutdown, and Hyprvisor are Chapters 17–19.
+Run exact-string searches for every line in `notes/editorial-protections.md` and every recurring joke in `notes/canon.md`. Confirm Hardware Family Dinner, Shutdown, and Hyprvisor are Chapters 18–20.
 
 - [ ] **Step 6: Build all artifacts**
 
@@ -637,13 +678,13 @@ Expected: exit 0; `manuscript.md` built; HTML and EPUB built when Pandoc is inst
 Run:
 
 ```sh
-test "$(find chapters -maxdepth 1 -name '[0-9][0-9]-*.md' | wc -l | tr -d ' ')" = 20
-test "$(rg -c '^# [0-9]+\.' manuscript.md)" = 19
+test "$(find chapters -maxdepth 1 -name '[0-9][0-9]-*.md' | wc -l | tr -d ' ')" = 21
+test "$(rg -c '^# [0-9]+\.' manuscript.md)" = 20
 wc -w manuscript.md
 awk 'NF { line=$0 } END { print line }' manuscript.md
 ```
 
-Expected: 20 source files including `00-title.md`, 19 numbered chapters, approximately 24,000–25,000 words, and final line `moo.`.
+Expected: 21 source files including `00-title.md`, 20 numbered chapters, approximately 24,000–26,000 words, and final line `moo.`.
 
 - [ ] **Step 8: Inspect generated HTML and EPUB**
 

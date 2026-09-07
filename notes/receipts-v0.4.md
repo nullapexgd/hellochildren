@@ -1,6 +1,6 @@
-# v0.3 Receipts — Working Evidence File
+# v0.4 Receipts — Working Evidence File
 
-This file is the reproducibility layer for the v0.3 receipts pass. It is deliberately stricter than the prose.
+This file is the reproducibility layer for the Jurisdiction Edition. It began as a byte-for-byte copy of the frozen v0.3 receipts and now grows only when v0.4 adds or materially changes a claim. It is deliberately stricter than the prose.
 
 ## Evidence classes
 
@@ -355,3 +355,40 @@ will be abandoned to the mercy of the kernel.
 That is not evidence against exact-string searching; it is evidence that negative static-string results need a second search using distinctive fragments and surrounding context before being promoted to "absent."
 
 The manuscript should get more precise as these receipts improve, not more confident because a line is funny.
+
+## Chapter 16 — The Civil War
+
+### OBS-CIVIL-001 — the real nouns in the impossible command
+
+On macOS 27.0 build `26A5425a`, a direct local check returned UID `501`, identified `/sbin/launchd` as `Mach-O 64-bit executable arm64e`, and found `/System/Library/Extensions/AppleSEPManager.kext` installed.
+
+Commands:
+
+```sh
+id -u
+file /sbin/launchd
+test -d /System/Library/Extensions/AppleSEPManager.kext
+```
+
+Supports: the literal nouns and first two terminal outputs used in Chapter 16.
+
+Does **not** support: the invented `send` command, transfer to SEP, execution inside SEP, any dialogue, or any meaning inferred from the `AppleSEPManager` name.
+
+### PUB-CIVIL-001 — the documented architecture argues against the scene
+
+Apple documents the Secure Enclave as isolated from the Application Processor, with its own processor, protected memory, Boot ROM, and signed sepOS boot process. Apple also documents SPTM on supported Apple SoCs as page-table protection machinery. Neither source documents a general facility for sending an AP Mach-O executable into SEP or authorizing it to execute there.
+
+Sources:
+
+- <https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web>
+- <https://support.apple.com/guide/security-pdf/operating-system-integrity-sec8b776536b/web>
+
+Supports: the chapter's explicit declaration that its central transfer is impossible under the architecture the book has described.
+
+Does **not** support: treating SPTM as the documented speaker for this objection. Its dialogue is dramatization.
+
+### DRAM-CIVIL-001 — UID 501 mails PID 1 through the jurisdiction
+
+Every event after `send /sbin/launchd SEP` is deliberately impossible dramatization. `send` is invented. AirDrop does not cross processor trust domains. A pathname is not a transport, delivery is not authorization, and authorization would not turn an Application Processor Mach-O into a SEP-native executable.
+
+Publication rule: the chapter must retain its visible evidence note and must never acquire plausible-sounding mechanics. The joke is that even an intentionally impossible chapter shows identification at the door.

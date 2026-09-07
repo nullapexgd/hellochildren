@@ -8,7 +8,7 @@ The argument of this book is simple:
 
 > There is no single highest form of authority inside a modern computer. Authority has a jurisdiction.
 
-This directory contains v0.3, the receipts edition. The 13 numbered chapters plus the title/editorial file make 14 chapter-source files; no chapter is missing. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md), [v0.2](releases/HELLO-CHILDREN-v0.2.md), and [v0.3](releases/on-your-processor-v0.3.md) manuscripts remain available for comparison. The v0.3 freeze is 10,028 words; its POSIX `cksum` is `2755083667 66343`.
+This branch is building v0.4, the Jurisdiction Edition. It grows sideways from the frozen Receipts Edition: new chapters add new kinds of authority instead of stretching “root is not God” into a hostage situation. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md), [v0.2](releases/HELLO-CHILDREN-v0.2.md), and [v0.3 Receipts Edition](releases/on-your-processor-v0.3.md) remain available for comparison. The v0.3 freeze is 10,028 words; its POSIX `cksum` is `2755083667 66343`.
 
 ## Read the book
 
@@ -18,14 +18,19 @@ This directory contains v0.3, the receipts edition. The 13 numbered chapters plu
 - [3. XNU: I Am Literally the Kernel](chapters/03-xnu.md)
 - [4. launchd: Hello Children](chapters/04-launchd.md)
 - [5. The Children](chapters/05-the-children.md)
-- [6. Sessions, Windows, and Ceremonial Root](chapters/06-sessions-and-windows.md)
-- [7. Trust and Signatures](chapters/07-trust-and-signatures.md)
-- [8. sharingd Knows a Guy](chapters/08-neighborhood-services.md)
-- [9. Memory Has Borders](chapters/09-memory-and-borders.md)
-- [10. SEP Has a Mailbox](chapters/10-sep-and-the-mailbox.md)
-- [11. Hardware Family Dinner](chapters/11-hardware-family-dinner.md)
-- [12. At the Mercy of the Kernel](chapters/12-shutdown.md)
-- [13. One More Jurisdiction](chapters/13-epilogue.md)
+- [6. Who Owns the User Session?](chapters/06-sessions-and-windows.md)
+- [7. Those Are My Windows](chapters/07-those-are-my-windows.md)
+- [8. Trust and Signatures](chapters/08-trust-and-signatures.md)
+- Chapters 9–11: policy, consent, and entitlement bureaucracy (in progress)
+- [12. sharingd Knows a Guy](chapters/12-sharingd-knows-a-guy.md)
+- Chapter 13: filesystem jurisdiction (in progress)
+- [14. Memory Has Borders](chapters/14-memory-has-borders.md)
+- [15. SEP Has a Mailbox](chapters/15-sep-has-a-mailbox.md)
+- Chapter 16: the explicitly impossible Civil War (in progress)
+- Chapter 17: lightweight Apple virtualization (in progress)
+- [18. Hardware Family Dinner](chapters/17-hardware-family-dinner.md) *(renumber pending)*
+- [19. At the Mercy of the Kernel](chapters/18-shutdown.md) *(renumber pending)*
+- [20. One More Jurisdiction](chapters/19-epilogue.md) *(renumber pending)*
 
 ## Editing
 
@@ -37,7 +42,7 @@ Edit chapter files, then rebuild from this directory:
 
 The build has no third-party dependencies. It concatenates `chapters/*.md` in filename order and replaces only the generated `manuscript.md`.
 
-The editorial voice and evidence rules live in [STYLE.md](STYLE.md). Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are indexed in [notes/fact-check-ledger.md](notes/fact-check-ledger.md). The claim-level [v0.3 receipts file](notes/receipts-v0.3.md) records primary sources, reverse-engineering evidence, exact build observations, negative results, and the limits of each claim.
+The editorial voice and evidence rules live in [STYLE.md](STYLE.md). Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are indexed in [notes/fact-check-ledger.md](notes/fact-check-ledger.md). The frozen [v0.3 receipts file](notes/receipts-v0.3.md) records the Receipts Edition evidence. The working [v0.4 receipts file](notes/receipts-v0.4.md) carries that evidence forward and adds sources for the new jurisdictions.
 
 ## Technical-integrity rule
 
@@ -47,7 +52,7 @@ Character dialogue is dramatization. It may compress a documented relationship, 
 
 ## Draft status
 
-v0.3 audits the claims most likely to attract a technically justified “actually.” Stable claims prefer primary public sources; build-specific observations name macOS 27.0 build `26A5416b`; reverse-engineered behavior and inference stay labeled. Chapter 9 includes one approved comedy repair—the address dispute—without adding a character, chapter, or new hardware claim.
+v0.4 is an active expansion, not the Receipts Edition with a new sticker. Stable claims still prefer primary public sources; build-specific observations name their build; reverse-engineered behavior and inference stay labeled. One chapter deliberately breaks the architecture for the joke and says so at the door.
 
 The reading sequence still ends at `moo.` Back matter stays outside the manuscript.
 

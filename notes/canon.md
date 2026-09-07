@@ -15,6 +15,8 @@ This ledger records callbacks, not claims of implementation.
 | `amfid`: “signature?” | 07 | Dramatized | Not a protocol string. Keep it short. |
 | `sharingd` | 08 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target, 134 in the earlier observation. |
 | SEP mailbox dap-up | 10 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |
+| Efeali sends launchd to SEP | 16 | Deliberately impossible dramatization | `send` is invented; AirDrop does not cross trust domains; the evidence note must say the architecture argues against the scene. |
+| iBoot: “personal matters.” | 16 | Dramatized | iBoot accepts the impossible premise for personal reasons and never explains them. |
 | Hardware family dinner | 11 | Full-cast set piece | Each character gets one scoped authority and one boundary. |
 | “at the mercy of the kernel” | 12 | Reproduced launchd string | On build 26A5416b the sentence is split across adjacent extracted strings. Quote the reconstructed sentence exactly; do not invent the private call sequence. |
 | hyprvisor: “moo.” | 13 | Deliberately fictional outside character | `moo.` is the final nonblank line of the book. |

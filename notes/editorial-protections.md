@@ -86,3 +86,46 @@ The fake-launchd experiment remains explicitly fake: UID 2 is neither PID 1 nor 
 The final nonblank line remains exactly:
 
 > moo.
+
+## v0.4 impossible-chapter protections
+
+Chapter 16 is openly impossible. Preserve this sequence and never convert it into a technical mechanism:
+
+```text
+efeali@sheetofpaper ~ % id -u
+501
+
+efeali@sheetofpaper ~ % file /sbin/launchd
+/sbin/launchd: Mach-O 64-bit executable arm64e
+
+efeali@sheetofpaper ~ % send /sbin/launchd SEP
+sent.
+```
+
+Preserve the paired disclaimers:
+
+> This is impossible.
+
+> **AirDrop works across trust domains.**
+
+> This is also false.
+
+Preserve SPTM's objection, iBoot's answer, and the evidence-note conclusion:
+
+```text
+SPTM:
+AirDrop does not work across trust domains.
+
+iBoot:
+apparently it does now.
+
+XNU:
+WHY ARE YOU ACCEPTING THIS
+
+iBoot:
+personal matters.
+```
+
+> The sentence connecting the real nouns is where the trouble begins.
+
+The chapter must remain labeled dramatization. It must never acquire an exploit explanation, magical entitlement, SEP migration protocol, or real `send` command.

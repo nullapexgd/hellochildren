@@ -2,7 +2,7 @@
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
-### v0.3 — The Receipts Edition
+### v0.4 — The Jurisdiction Edition
 
 ---
 
@@ -24,7 +24,7 @@ That rule occasionally produces an unusual ending for a mystery:
 
 This is not failure. This is technical integrity wearing sensible shoes to a costume party.
 
-The receipts live in the notes, where they can wear name tags like *public documentation*, *direct observation*, *reverse engineering*, *inference*, and *dramatization*. Unless a passage says otherwise, local observations in this edition came from macOS 27.0 build `26A5416b`.
+The receipts still live in the notes, where they can wear name tags like *public documentation*, *direct observation*, *reverse engineering*, *inference*, and *dramatization*. Unless a passage says otherwise, local observations carried forward from the Receipts Edition came from macOS 27.0 build `26A5416b`.
 
 The joke still gets to enter. It just has to show identification.
 

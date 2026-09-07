@@ -87,7 +87,7 @@ printf '%s' "$epub_metadata" | grep -Fq '>Efeali Bel</dc:creator>' || fail 'EPUB
 printf '%s' "$epub_metadata" | grep -Fq 'cover-image' || fail 'EPUB cover image is missing'
 
 contains "$project_dir/chapters/04-launchd.md" '# 4. launchd: Hello Children'
-contains "$project_dir/chapters/00-title.md" 'Unless a passage says otherwise, local observations in this edition came from macOS 27.0 build `26A5416b`.'
+contains "$project_dir/chapters/00-title.md" 'Unless a passage says otherwise, local observations carried forward from the Receipts Edition came from macOS 27.0 build `26A5416b`.'
 not_contains "$project_dir/chapters/04-launchd.md" 'The source conversation examined'
 not_contains "$project_dir/chapters/04-launchd.md" 'The v0.3 reproduction pass'
 not_contains "$project_dir/chapters/05-the-children.md" 'The v0.3 reproduction pass'
