@@ -2,7 +2,7 @@
 
 Then this motherfucker arrives.
 
-`sharingd` first showed us 134 entitlement keys. The frozen Receipts Edition found **132**. The current v0.4 build is back to **134**.
+`sharingd` first showed us 134 entitlement keys. The frozen Receipts Edition found **132**. A later observed build is back to **134**.
 
 Two badges left, returned, and still did not file a note.
 

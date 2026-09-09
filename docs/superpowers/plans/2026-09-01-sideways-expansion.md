@@ -624,7 +624,6 @@ git commit -m "add virtualization jurisdiction and preserve ending"
 - Modify: `chapters/01-nobody-is-actually-in-charge.md`
 - Modify as required: all numbered chapter files, only for duplication removal and transitions.
 - Modify: `README.md`
-- Modify: `STYLE.md`
 - Modify: `VERSION`
 - Modify: `notes/canon.md`
 - Modify: `notes/editorial-protections.md`
@@ -693,6 +692,6 @@ Open the HTML and EPUB through the current app workflow. Check title hierarchy, 
 - [ ] **Step 9: Commit the completed expansion**
 
 ```sh
-git add chapters README.md STYLE.md VERSION notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md manuscript.md dist/on-your-processor.html dist/on-your-processor.epub
+git add chapters README.md VERSION notes/canon.md notes/editorial-protections.md notes/fact-check-ledger.md notes/receipts-v0.4.md manuscript.md dist/on-your-processor.html dist/on-your-processor.epub
 git commit -m "release v0.4 sideways expansion"
 ```

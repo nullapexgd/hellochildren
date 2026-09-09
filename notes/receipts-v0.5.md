@@ -1,6 +1,6 @@
-# v0.4 Receipts — Working Evidence File
+# v0.5 Receipts — Evidence File
 
-This file is the reproducibility layer for the Jurisdiction Edition. It began as a byte-for-byte copy of the frozen v0.3 receipts and now grows only when v0.4 adds or materially changes a claim. It is deliberately stricter than the prose.
+This file is the reproducibility layer for the v0.5 Jurisdiction Edition. It began as a byte-for-byte copy of the frozen v0.3 receipts and grew as the expanded edition added or materially changed claims. It is deliberately stricter than the prose.
 
 ## Evidence classes
 

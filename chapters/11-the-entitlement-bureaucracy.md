@@ -207,7 +207,7 @@ The number describes surface area. It does not describe the shape of every decis
 
 Now that the badge office has explained issuer, verifier, value, and scope, we can meet the relative who abuses all four nouns simply by entering the room.
 
-On the earlier Receipts Edition build, `sharingd` carried 132 top-level entitlement keys. On the current v0.4 observation build, it carries 134.
+On the earlier Receipts Edition build, `sharingd` carried 132 top-level entitlement keys. On the later observed build, it carries 134.
 
 Two badges returned. Nobody filed a changelog with the family.
 

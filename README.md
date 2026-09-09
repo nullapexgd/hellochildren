@@ -8,7 +8,7 @@ The argument of this book is simple:
 
 > There is no single highest form of authority inside a modern computer. Authority has a jurisdiction.
 
-The current manuscript is v0.4, the Jurisdiction Edition. It grows sideways from the frozen Receipts Edition: new chapters add new kinds of authority instead of stretching “root is not God” into a hostage situation. The files in [`chapters/`](chapters/) are the source of truth. [`manuscript.md`](manuscript.md) is a generated continuous reading copy. The frozen [v0.1](releases/HELLO-CHILDREN-v0.1.md), [v0.2](releases/HELLO-CHILDREN-v0.2.md), and [v0.3 Receipts Edition](releases/on-your-processor-v0.3.md) remain available for comparison. The v0.3 freeze is 10,028 words; its POSIX `cksum` is `2755083667 66343`.
+The current release is v0.5, the Jurisdiction Edition: 20 chapters and roughly 24,000 words of technical comedy, evidence notes, and mutually hostile components. The files in [`chapters/`](chapters/) are the source of truth. Read the generated [`manuscript.md`](manuscript.md), open the [interactive HTML edition](dist/on-your-processor.html), or use the frozen [v0.5 manuscript](releases/on-your-processor-v0.5.md).
 
 ## Read the book
 
@@ -44,7 +44,7 @@ Edit chapter files, then rebuild from this directory:
 
 The build has no third-party dependencies. It concatenates `chapters/*.md` in filename order and replaces only the generated `manuscript.md`.
 
-The editorial voice and evidence rules live in [STYLE.md](STYLE.md). Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are indexed in [notes/fact-check-ledger.md](notes/fact-check-ledger.md). The frozen [v0.3 receipts file](notes/receipts-v0.3.md) records the Receipts Edition evidence. The working [v0.4 receipts file](notes/receipts-v0.4.md) carries that evidence forward and adds sources for the new jurisdictions.
+Recurring jokes are tracked in [notes/canon.md](notes/canon.md); major claims and their evidence status are indexed in [notes/fact-check-ledger.md](notes/fact-check-ledger.md). The frozen [v0.3 receipts file](notes/receipts-v0.3.md) records the original Receipts Edition evidence. The [v0.5 receipts file](notes/receipts-v0.5.md) carries that work forward and adds sources for the expanded jurisdictions.
 
 ## Technical-integrity rule
 
@@ -54,7 +54,7 @@ Character dialogue is dramatization. It may compress a documented relationship, 
 
 ## Draft status
 
-v0.4 is the current edition, not the Receipts Edition with a new sticker. Stable claims still prefer primary public sources; build-specific observations name their build; reverse-engineered behavior and inference stay labeled. One chapter deliberately breaks the architecture for the joke and says so at the door.
+v0.5 is the current edition, not the 13-chapter Receipts Edition with a new sticker. Stable claims still prefer primary public sources; build-specific observations name their build; reverse-engineered behavior and inference stay labeled. One chapter deliberately breaks the architecture for the joke and says so at the door.
 
 The reading sequence still ends at `moo.` Back matter stays outside the manuscript.
 

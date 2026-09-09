@@ -13,7 +13,7 @@ This ledger records callbacks, not claims of implementation.
 | Politics line | 06 | Narrator satire | “Apple and modern politics still argue about who invented this” is not an Apple-intent claim. |
 | LaunchAngels | 05 | Observed undocumented artifact | Quote spellings; complete semantics remain unknown. |
 | `amfid`: “signature?” | 08 | Dramatized | Not a protocol string. Keep it short. |
-| `sharingd` | 12 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target, 134 in the earlier and current v0.4 observations. |
+| `sharingd` | 12 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target and 134 in later observations. |
 | Finder: “this is Macintosh HD.” / APFS: “which one.” | 13 | Dramatized | The unified view does not erase System/Data volume roles. |
 | SSV: “that's adorable.” / seal: “explain yourself.” | 13 | Dramatized | Separate comic voices, never separate daemons. Writing bytes is not producing boot-accepted sealed state. |
 | SEP mailbox dap-up | 15 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |

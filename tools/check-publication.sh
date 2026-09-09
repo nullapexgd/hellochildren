@@ -23,8 +23,12 @@ not_contains() {
 }
 
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
+contains "$project_dir/VERSION" '0.5'
 contains "$project_dir/book/metadata.yaml" 'title: "On Your Processor"'
 contains "$project_dir/book/metadata.yaml" 'author: "Efeali Bel"'
+contains "$project_dir/book/metadata.yaml" 'edition: "v0.5 — The Jurisdiction Edition"'
+contains "$project_dir/chapters/00-title.md" '### v0.5 — The Jurisdiction Edition'
+contains "$project_dir/README.md" 'The current release is v0.5'
 contains "$project_dir/book/template.html" 'content="On Your Processor build system"'
 contains "$project_dir/build.sh" 'on-your-processor.html'
 contains "$project_dir/build.sh" 'on-your-processor.epub'
@@ -69,6 +73,7 @@ contains "$project_dir/README.md" 'Left/Right arrow keys'
 
 test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
+test -f "$project_dir/releases/on-your-processor-v0.5.md" || fail 'missing frozen v0.5 manuscript'
 
 contains "$html_file" '<h1 class="title">On Your Processor</h1>'
 contains "$html_file" 'Efeali Bel'
@@ -107,5 +112,9 @@ not_contains "$project_dir/chapters/19-shutdown.md" 'the v0.3 reproduction pass'
 
 last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/manuscript.md")
 test "$last_nonblank" = 'moo.' || fail 'manuscript does not end at moo.'
+
+release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.5.md")
+test "$release_last_nonblank" = 'moo.' || fail 'frozen v0.5 manuscript does not end at moo.'
+contains "$project_dir/releases/on-your-processor-v0.5.md" '# 20. One More Jurisdiction'
 
 printf '%s\n' 'publication check passed'
