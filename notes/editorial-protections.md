@@ -160,3 +160,18 @@ The ten-core count belongs to the author's observed M4 Mac. Do not generalize it
 - Chapter 19 is the shutdown denouement.
 - Chapter 20 is the Hyprvisor epilogue.
 - No reading-copy prose follows `moo.`
+
+Preserve the final Larpintosh exchange immediately before Hyprvisor clears its throat:
+
+```text
+Linux on larpintosh:
+I use Hyprland.
+
+hyprvisor:
+on your virtual machine.
+
+Linux on larpintosh:
+...can Hyprland run on a VM
+```
+
+Do not answer the question. The answer is `moo.`

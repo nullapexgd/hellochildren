@@ -5701,9 +5701,16 @@ on your virtual machine.
 
 Somewhere inside the guest, a process becomes root and feels a chill it cannot explain.
 
-Linux stares at the virtual hardware.
+```text
+Linux on larpintosh:
+I use Hyprland.
 
-The virtual hardware stares back.
+hyprvisor:
+on your virtual machine.
+
+Linux on larpintosh:
+...can Hyprland run on a VM
+```
 
 hyprvisor clears its throat.
 

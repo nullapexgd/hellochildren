@@ -22,6 +22,7 @@ This ledger records callbacks, not claims of implementation.
 | Hardware family dinner | 18 | Full-cast set piece | Each character gets one scoped authority and one boundary. |
 | “at the mercy of the kernel” | 19 | Reproduced launchd string | On build 26A5416b the sentence is split across adjacent extracted strings. Quote the reconstructed sentence exactly; do not invent the private call sequence. |
 | XNU's ten CPU cores | 19 | Observed machine fact plus dramatization | The author's Mac is a 10-core M4 (4 performance, 6 efficiency). Never generalize the count to every M4 configuration, and never repossess two cores. SEP still tells XNU to turn off all ten. |
+| Linux on Larpintosh uses Hyprland | 20 | Deliberately fictional guest | The second “on your virtual machine” punctures the Hyprland flex. Do not answer the compatibility question; it sets up the final `moo.` |
 | hyprvisor: “moo.” | 20 | Deliberately fictional outside character | `moo.` is the final nonblank line of the book. |
 
 ## Recurring dynamics
