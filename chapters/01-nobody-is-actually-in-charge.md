@@ -136,6 +136,39 @@ Application Processor:
 no
 ```
 
+The map for the rest of the book is therefore not a pyramid. It is a set of sentences with four required fields:
+
+```text
+actor          object                 boundary             enforcement
+-----          ------                 --------             -----------
+root           Unix file access       policy still applies kernel/filesystem
+launchd        service lifecycle      bootstrap domain     launchd + IPC
+WindowServer   graphical objects      user/session context window system
+TCC            protected resources    app + consent scope  privacy policy
+MMU            CPU memory access      address-space map    translation hardware
+DART           device DMA             I/O mapping          IOMMU hardware
+SEP            protected operations   security domain      SEP hardware/software
+host kernel    virtual machine        host resources       host execution
+```
+
+The entries are examples, not complete specifications. They force the useful question: *which object, at which border, enforced by what?*
+
+```text
+root:
+where is my row saying “everything”
+
+Table:
+not a valid object.
+
+root:
+this table is biased.
+
+Table:
+bring a noun.
+```
+
+Later chapters will complicate several rows. None will remove the need for the columns.
+
 ## Our house rule
 
 Apple ships internal names that sound like discarded mythology, entitlements that imply broad access, and diagnostic strings written by engineers who were clearly having a day. We will show them without promoting a suggestive noun into a complete undocumented subsystem because it looked cool in monospace.

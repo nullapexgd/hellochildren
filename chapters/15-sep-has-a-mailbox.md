@@ -90,11 +90,66 @@ no.
 
 Concise dialogue does not imply simple machinery. The secure relative refuses to explain himself to the narrator.
 
+## SEP checks its own boot paperwork
+
+Apple documents a separate Secure Enclave boot process. On startup, the Application Processor supplies the sepOS image to the Secure Enclave Boot ROM. The Secure Enclave side checks the image's cryptographic hash and signature before allowing sepOS to run.
+
+The AP can deliver the candidate image. It cannot turn delivery into acceptance.
+
+```text
+Application Processor:
+sepOS image.
+
+SEP Boot ROM:
+signature.
+
+Application Processor:
+I brought it personally.
+
+SEP Boot ROM:
+that is a transport fact.
+```
+
+This is an exquisite insult to XNU. The main processor participates in getting the secure operating system to the border, then a separate immutable authority checks whether that operating system is authorized for the Secure Enclave.
+
+```text
+XNU:
+I helped boot you.
+
+SEP:
+you delivered a package.
+
+XNU:
+without me you would not have it.
+
+SEP:
+without my Boot ROM I would not run it.
+```
+
+Precedence did not disappear. It split. The AP boot chain has authority over its handoffs. The Secure Enclave has its own root of trust and protected execution path.
+
 ## The mailbox
 
 The Application Processor and SEP need a way to communicate across their boundary. Asahi Linux's public SEP documentation identifies a SEP mailbox, gives a mailbox base for documented reverse-engineering targets, and shows traced messages moving between AP-side software and SEP endpoints.
 
 That is enough to use the word *mailbox*. It is not permission to invent private opcodes, payload meanings, or authorization semantics beyond what the reverse-engineering evidence actually establishes.
+
+The boundary map is deliberately boring:
+
+```text
+Application Processor software
+             |
+             v
+   mailbox-style messaging
+             |
+             v
+       SEP software
+             |
+             v
+protected keys and operations
+```
+
+The arrows prove that messages can cross the boundary on documented reverse-engineering targets. They do not prove that any invented request exists or that SEP will approve it.
 
 This is especially difficult because the user also has a Unix mailbox.
 
@@ -136,9 +191,25 @@ XNU:
 I hate both of you
 ```
 
-Footnote: they are not the same thing.
-
-Authors’ response: 🤝
+> **Sidebar: The Mailboxes Are Not Related**
+>
+> `/var/mail` belongs to Unix mail conventions. The SEP mailbox is hardware messaging observed through Apple-silicon reverse engineering. They share an English noun and none of the authority.
+>
+> ```text
+> fake launchd:
+> cp request /var/mail/sep
+>
+> SEP:
+> no.
+>
+> fake launchd:
+> SMTP?
+>
+> SEP:
+> somehow more no.
+> ```
+>
+> A mailbox can hold letters, messages, hardware words, or one increasingly tired metaphor. Always ask which mailbox.
 
 The joke survives because the distinction survives. Claim shared semantics and XNU may terminate the manuscript.
 
@@ -163,6 +234,28 @@ that's not what "received" means.
 ```
 
 IPC grants a way to ask, not a right to the answer. An endpoint does not prove every caller may perform every operation.
+
+A reply does not necessarily contain the secret either. SEP can perform an operation and return a result while keeping key material inside its protected domain. “The request succeeded” and “the AP received the long-lived key” are different claims.
+
+```text
+XNU:
+did you use the key
+
+SEP:
+yes.
+
+XNU:
+give me the key
+
+SEP:
+you already received the answer.
+
+XNU:
+I want the authority behind it.
+
+SEP:
+that is why you received the answer.
+```
 
 The address of city hall is public.
 

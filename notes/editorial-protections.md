@@ -129,3 +129,34 @@ personal matters.
 > The sentence connecting the real nouns is where the trouble begins.
 
 The chapter must remain labeled dramatization. It must never acquire an exploit explanation, magical entitlement, SEP migration protocol, or real `send` command.
+
+Preserve the Chapter 19 core-count correction as a machine-specific flex:
+
+```text
+XNU:
+I HAVE TEN CPU CORES.
+
+SEP:
+turn them off then.
+
+XNU:
+...
+
+SEP:
+all ten.
+
+XNU:
+fuck you.
+```
+
+The ten-core count belongs to the author's observed M4 Mac. Do not generalize it to every M4 configuration or silently turn it back into eight.
+
+## v0.4 structural protections
+
+- The reading copy has twenty numbered chapters plus `00-title.md`.
+- Chapter 16 is the openly impossible Civil War.
+- Chapter 17 introduces Apple virtualization lightly and does not spend the Hyprvisor reveal.
+- Chapter 18 is the Hardware Family Dinner climax.
+- Chapter 19 is the shutdown denouement.
+- Chapter 20 is the Hyprvisor epilogue.
+- No reading-copy prose follows `moo.`

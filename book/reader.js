@@ -34,7 +34,7 @@
         currentPage = Math.max(0, Math.min(currentPage, lastSpreadStart()));
         viewport.scrollTo({
             left: currentPage * pageStep,
-            behavior: animate && !reducedMotion.matches ? "smooth" : "auto"
+            behavior: animate && !reducedMotion.matches ? "smooth" : "instant"
         });
 
         const first = currentPage + 1;
@@ -207,8 +207,8 @@
             PageUp: () => turn(-1),
             ArrowRight: () => turn(1),
             PageDown: () => turn(1),
-            Home: () => { currentPage = 0; render(); },
-            End: () => { currentPage = lastSpreadStart(); render(); }
+            Home: () => { currentPage = 0; render(false); },
+            End: () => { currentPage = lastSpreadStart(); render(false); }
         };
 
         if (actions[event.key]) {

@@ -42,6 +42,112 @@ the system does not have a mouse hand
 
 An agent can talk to a daemon when user and system responsibilities must cooperate: front office and back office, each blaming the other for the form.
 
+## A job is not its current process
+
+The family uses service name, job, daemon, and process as if they were interchangeable because nobody wants to diagram lunch.
+
+They are not interchangeable.
+
+A job definition describes how launchd should manage work. A label names that job within the relevant management context. A process is one execution instance. A named service can be registered for clients and may outlive any particular server process through restart or on-demand launch behavior.
+
+```text
+Job label:
+com.apple.example
+
+Process:
+PID 804.
+
+Job label:
+I am eternal.
+
+Process:
+I have been alive for nine seconds.
+
+launchd:
+both of you stop using religious language.
+```
+
+This matters when a process crashes and the service later returns. “The daemon restarted” is ordinary and often useful. Underneath, a management record persisted while one process died and another received a different PID.
+
+```text
+Client:
+are you the same service
+
+New process:
+yes.
+
+Kernel:
+different PID.
+
+Client:
+I regret asking both departments.
+```
+
+Identity has layers even among the children. A label is not a PID. A PID is not a Unix account. A Unix account named `launchd` is about to ignore both sentences.
+
+## Same executable, different childhood
+
+An executable file does not carry one permanent social role. The context in which a process starts helps determine its credentials, environment, service namespace, and access to session resources. The same bytes can participate in different situations without becoming a different file.
+
+```text
+Executable:
+I am the same binary.
+
+System domain:
+different job context.
+
+User domain:
+different user context.
+
+Executable:
+but my hash matches.
+
+launchd:
+identity is not placement.
+```
+
+Code signing can answer questions about the code object. Unix credentials can answer questions about the running process. launchd's domain can answer where the job is managed. TCC may later ask which responsible code and user decision apply. One executable has now visited four desks without changing its checksum.
+
+This is why copying a privileged system program into a terminal does not copy its office with it. The file may still be authentic code. The new process does not automatically inherit the original job definition, bootstrap placement, launch conditions, credentials, or approved relationships.
+
+```text
+User:
+I launched the system binary myself.
+
+Binary:
+correct.
+
+User:
+so it has its normal authority.
+
+launchd:
+define normal.
+
+User:
+the powerful one.
+
+launchd:
+denied for failure to provide a noun.
+```
+
+Conversely, a humble-looking helper can matter because the system starts it in a context with a narrow responsibility. The filename does not need to sound royal. The launch relationship supplies the job; policy supplies the boundaries.
+
+```text
+Helper:
+my name ends in helper.
+
+fake launchd:
+embarrassing.
+
+Helper:
+I have an actual job.
+
+fake launchd:
+class warfare.
+```
+
+The children are not ranked by how impressive their executable names look. They are situated.
+
 ## The fake launchd incident
 
 We once made the mistake on purpose: create a Unix account named `launchd`, give it UID 2, add a ridiculous collection of supplementary groups, and start an interactive shell under that account.

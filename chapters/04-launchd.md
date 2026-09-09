@@ -45,6 +45,90 @@ no you haven't
 
 launchd cannot make a broken executable correct or negotiate a DMA mapping by speaking sternly. Its power is orchestration: jobs, services, namespaces, lifecycle, and the bootstrap machinery by which userspace finds userspace.
 
+## Registered is not running
+
+A service can be known to launchd without its provider consuming a process forever. On-demand startup separates the existence of a service contract from the current existence of the process that serves it.
+
+```text
+Client:
+is com.apple.important.thing running
+
+launchd:
+do you need it
+
+Client:
+I asked whether it is running
+
+launchd:
+and I asked whether you would like
+to make the answer yes
+```
+
+That distinction lets the system advertise a named capability, wait for demand, and start work when a client actually asks. It also creates several meanings of “the service exists”: its job may be registered, its endpoint may be discoverable, its process may be alive, and its current request may still be failing spectacularly.
+
+```text
+Service label:
+I exist.
+
+Process table:
+I don't see you.
+
+Service label:
+organizationally.
+
+Process table:
+I count bodies.
+```
+
+launchd operates at exactly this uncomfortable border between names and bodies. It can arrange for a provider to appear. It cannot promise the provider will remain alive, answer correctly, or avoid logging `how did we get here` after reading its own configuration.
+
+## A restart is not resurrection
+
+Job management also separates a service's intended lifecycle from the lifetime of any one process. A process can exit while the job definition and service expectation remain. Depending on configuration and demand, launchd may arrange another process later.
+
+```text
+Process:
+I died.
+
+launchd:
+the job persists.
+
+Process:
+so I am immortal.
+
+launchd:
+no, you are replaceable.
+```
+
+That distinction is less poetic and much more useful. Clients care about reaching a service. Administrators care about the job's policy. The process table cares about the current body. Treating all three as the same object makes every restart look supernatural.
+
+```text
+Client:
+are you the same service as before
+
+New process:
+same name.
+
+Client:
+same state?
+
+New process:
+let's keep this interaction professional.
+```
+
+Restart policy is not proof that launchd can repair arbitrary failure. It can arrange another attempt. It cannot make corrupt state uncorrupt, make a missing dependency appear, or teach a daemon what its own configuration means.
+
+```text
+launchd:
+try again.
+
+Service:
+with what changed
+
+launchd:
+your PID.
+```
+
 ## Apple’s own dialogue
 
 Apple already wrote some of the dialogue. We found these three lines sitting in `/sbin/launchd`:

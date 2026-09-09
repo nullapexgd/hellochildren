@@ -1,4 +1,4 @@
-# 18. At the Mercy of the Kernel
+# 19. At the Mercy of the Kernel
 
 Every operating-system book loves boot. Arrows point downward. Trust accumulates. The desktop appears. The diagram ends with *user session established* as if nobody will ever click Shut Down while fourteen apps negotiate unsaved documents.
 
@@ -127,7 +127,7 @@ that is why the sentence works.
 
 XNU has spent the book resenting every authority that qualified its title. At shutdown, userspace returns to the one fact nobody disputed: the kernel controls whether ordinary processes continue executing in its world.
 
-The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 132 badges today. None is a defense against final kernel teardown.
+The graphical session can govern windows. The service manager can coordinate jobs. The sharing daemon can carry 134 badges on this build. None is a defense against final kernel teardown.
 
 ```text
 sharingd:
@@ -145,6 +145,95 @@ not relevant.
 amfid:
 finally.
 ```
+
+## Revocation is not destruction
+
+Several chapters used the word *revoke*. TCC can revoke approval. A service can stop accepting an entitlement. A mapping can disappear. A session can end.
+
+None of those acts is identical to destroying the process that once held the access.
+
+```text
+TCC:
+microphone approval revoked.
+
+App:
+I still exist.
+
+launchd:
+not for long.
+
+App:
+those are different threats.
+
+TCC:
+finally, someone read the book.
+```
+
+Shutdown collects many narrower endings. The graphical session ends as a session. Services are asked to stop as services. Filesystems move toward a state safe to leave mounted no longer. Device mappings close. Processes lose execution because the kernel stops maintaining their world.
+
+```text
+Snapshot:
+I preserve a filesystem state.
+
+Process:
+preserve me.
+
+Snapshot:
+you are not a filesystem state.
+
+Process:
+I have files.
+
+Snapshot:
+everyone has a résumé tonight.
+```
+
+The machine does not need one universal verb called `endEverything()`. It needs each authority to close the object it actually governs, followed by stronger machinery for anything that refuses to finish.
+
+## Exit status: civilization
+
+Processes spend their lives returning small integers to parents. Shutdown asks an entire userspace to produce one coherent answer.
+
+```text
+Application:
+exit status 0.
+
+launchd:
+good.
+
+Service:
+exit status 0.
+
+launchd:
+good.
+
+sharingd:
+I have 134 partial statuses
+across several protected subsystems.
+
+launchd:
+you had one job.
+
+sharingd:
+that has never been true.
+```
+
+A clean process exit says something about that process. It does not certify that every related write reached durable storage, every peer learned the transfer ended, or every device finished its own shutdown work. Those results belong to other objects and other authorities.
+
+The user asked for one event: off. The machine performs a sequence because hardware cannot safely interpret vibes.
+
+```text
+User:
+is it off yet
+
+WindowServer:
+the screen is black.
+
+Storage Controller:
+that was not the question.
+```
+
+This is why a black display can arrive before the final hardware act. Darkness is graphical evidence. It is not a power-state affidavit.
 
 ## Hardware closes the building
 
@@ -192,6 +281,33 @@ I am literally the kernel.
 
 Application Processor:
 that wasn't the question.
+```
+
+XNU attempts one final hardware flex, now with the correct inventory for the author's machine.
+
+```text
+XNU:
+I HAVE TEN CPU CORES.
+
+SEP:
+turn them off then.
+
+XNU:
+...
+
+SEP:
+all ten.
+
+XNU:
+fuck you.
+```
+
+The ten-core count belongs to this 10-core M4 Mac, not every Mac and not every chip sold under the M4 name. The strategic outcome is unchanged. Turning off all ten cores also ends XNU's participation in the argument.
+
+```text
+SEP:
+I only need one processor
+to watch you turn yours off.
 ```
 
 ## The final authority in this world

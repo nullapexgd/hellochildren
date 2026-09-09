@@ -2,15 +2,17 @@
 
 Then this motherfucker arrives.
 
-`sharingd` once showed us 134 entitlement keys. Our copy showed **132**. Two badges disappeared between builds; nobody left a note.
+`sharingd` first showed us 134 entitlement keys. The frozen Receipts Edition found **132**. The current v0.4 build is back to **134**.
+
+Two badges left, returned, and still did not file a note.
 
 That tiny disappearance is the point. Entitlement counts belong to particular builds. They are not universal constants, privacy verdicts, or rankings of royal power. Either number is still an extraordinary entrance.
 
-The 132-key set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also includes exact private keys such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
+The current 134-key set touches Apple Account, Bluetooth, Wi‑Fi and AWDL, HomeKit, Find My, CloudKit, IDS, Rapport, Nearby Interaction, pairing, identity, storage, contacts, notifications, and networking. It also includes exact private keys such as `com.apple.private.cloudkit.masquerade`, `com.apple.private.cloudkit.systemService`, and `com.apple.private.nsurlsession.impersonate`.
 
 `sharingd` did not walk into the room.
 
-It arrived with a diplomatic passport and 132 visas.
+It arrived with a diplomatic passport and 134 visas.
 
 ## I share things
 
@@ -47,7 +49,7 @@ sharingd:
 several radios and services.
 
 User:
-why do you have 132 entitlements
+why do you have 134 entitlements
 
 sharingd:
 I told you.
@@ -156,6 +158,66 @@ excellent, discovery will be fast
 
 The daemon’s broad access is not automatically evidence of abuse. It is evidence of a large trust and attack surface that deserves careful design and scrutiny. Those are different statements, and a serious book can hold both without becoming either marketing or panic.
 
+## Finding is not knowing is not sending
+
+The Share button conceals several questions because putting all of them in the menu would make the menu the size of a tax return.
+
+Is another device nearby? Does it advertise a compatible service? Which account or contact might correspond to it? Is the recipient eligible for this feature? Which transport can carry the payload? Will the other side accept it?
+
+Those questions can involve overlapping machinery, but they are not one permission called `share=yes`.
+
+```text
+sharingd:
+I found a device.
+
+User:
+send it the photo.
+
+sharingd:
+I said I found a device.
+
+User:
+is it my friend's device?
+
+sharingd:
+new question.
+
+User:
+can it receive this photo?
+
+sharingd:
+another new question.
+
+User:
+what did finding it accomplish
+
+sharingd:
+the finding.
+```
+
+Discovery supplies a candidate. Identity tries to attach meaning to the candidate. Policy and user choice decide whether a transfer should proceed. A transport moves bytes. Success at one desk is paperwork for the next desk, not authority over it.
+
+This matters when reading the entitlement list. A Bluetooth-related capability may help with discovery or coordination. An account capability may help with identity. A networking capability may help reach a service. None of those names proves that the daemon can make every nearby device accept arbitrary data.
+
+```text
+Bluetooth:
+someone is nearby.
+
+Accounts:
+I may know who.
+
+Network:
+I may know how to reach them.
+
+Recipient:
+no.
+
+sharingd:
+meeting adjourned.
+```
+
+The rejection at the end does not make the earlier work fake. It means the system kept its nouns.
+
 ## The neighbor knows everyone
 
 Every family has a relative who can solve a logistical problem by saying, “I know a guy.”
@@ -175,10 +237,12 @@ launchd:
 badges?
 
 sharingd:
-*drops 132 entitlements on desk*
+*drops 134 entitlements on desk*
 
 launchd:
 I asked a yes-or-no question
 ```
 
 `sharingd` crosses kingdoms wearing enough credentials to make their rulers nervous. Somewhere, quietly, `amfid` still has eight.
+
+The count changed. The constitutional lesson did not.

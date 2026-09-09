@@ -65,6 +65,85 @@ launchd:
 say less
 ```
 
+## A system call is not customer service
+
+Applications cross into the kernel through defined interfaces for operations such as files, memory, processes, and networking. This gives XNU authority over whether and how those kernel mechanisms proceed.
+
+It does not require XNU to understand the user's purpose.
+
+```text
+Notes:
+save my document.
+
+XNU:
+write these bytes to this file descriptor?
+
+Notes:
+my novel.
+
+XNU:
+bytes.
+
+Notes:
+the emotional climax.
+
+XNU:
+length?
+```
+
+The kernel accepts technical operations, not product requirements. Userspace turns “save my document” into a sequence of file, metadata, synchronization, and policy requests. XNU can enforce each request it receives without knowing whether the document is a novel or a resignation letter written in TextEdit at 4:52 p.m.
+
+```text
+User:
+the app lost my work.
+
+XNU:
+the write system call succeeded.
+
+User:
+then where is it
+
+XNU:
+that is a product question wearing errno.
+```
+
+This boundary explains why kernel authority is both deep and strangely literal. XNU can stop a process, deny an operation, or preserve isolation. It cannot infer the high-level promise the app made to the person clicking Save.
+
+The scheduler has the same problem. It decides what runs, where, and for how long under kernel policy. It does not know which thread contains the user's apology email and which one is animating a button nobody can currently see.
+
+```text
+Application:
+this thread is urgent.
+
+Scheduler:
+priority and runnable state?
+
+Application:
+the user is watching.
+
+Scheduler:
+that sounds like metadata
+someone should have translated.
+```
+
+Kernel mechanisms need inputs they can enforce. “Important” is not one of them until some interface turns importance into a supported scheduling or quality-of-service decision. Human urgency cannot cross the boundary as raw emotion.
+
+```text
+User:
+why is the spinner spinning
+
+XNU:
+many threads are making progress.
+
+User:
+not the one I care about.
+
+XNU:
+there it is: the missing noun.
+```
+
+This is not indifference. It is what a mechanism looks like before userspace supplies product meaning. The kernel governs execution. The application still has to arrange useful work.
+
 ## “The” kernel
 
 XNU’s recurring line is:

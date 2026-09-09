@@ -274,6 +274,10 @@ html.reader-ready .book-source {
     overflow: auto;
 }
 
+.reader-page-fixed.reader-page-oversize .back-cover {
+    justify-content: flex-start;
+}
+
 :is(.book-source, .reader-page-content) p,
 :is(.book-source, .reader-page-content) li {
     hanging-punctuation: first last;
@@ -310,6 +314,10 @@ nav#TOC {
 .reader-page-fixed .back-cover,
 .reader-page-fixed nav#TOC {
     height: 100%;
+}
+
+.reader-page-fixed .back-cover {
+    padding: clamp(2rem, 4vw, 3rem);
 }
 
 .book-source .front-cover,
@@ -560,9 +568,9 @@ nav#TOC a:hover {
 
 .back-cover h2 {
     margin-top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.4rem;
     color: #f7f0e4;
-    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-size: clamp(2rem, 3vw, 2.8rem);
     letter-spacing: -0.045em;
 }
 
@@ -575,7 +583,7 @@ nav#TOC a:hover {
 
 .back-cover p:first-of-type {
     color: #fff;
-    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
     font-weight: 650;
 }
 

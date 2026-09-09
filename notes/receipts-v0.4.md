@@ -392,3 +392,213 @@ Does **not** support: treating SPTM as the documented speaker for this objection
 Every event after `send /sbin/launchd SEP` is deliberately impossible dramatization. `send` is invented. AirDrop does not cross processor trust domains. A pathname is not a transport, delivery is not authorization, and authorization would not turn an Application Processor Mach-O into a SEP-native executable.
 
 Publication rule: the chapter must retain its visible evidence note and must never acquire plausible-sounding mechanics. The joke is that even an intentionally impossible chapter shows identification at the door.
+
+## Chapter 9 — Policy Is Not Enforcement
+
+### PUB-POLICY-001 — Apple separates prevention, blocking, and remediation
+
+Apple's current platform-security documentation describes three overlapping malware-defense layers: preventing launch or execution through the App Store or Gatekeeper with notarization; blocking known malware through Gatekeeper, notarization, and XProtect; and remediation through XProtect.
+
+Source: <https://support.apple.com/guide/security/sec469d47bd8/web>
+
+Supports: Chapter 9's use of evaluate, block, detect, and remediate as different verbs and its claim that XProtect participates in more than one stage.
+
+Caveat: the chapter's four-word line is a vocabulary, not a promise that every file follows one fixed sequence or that each verb belongs to exactly one component.
+
+### OBS-POLICY-001 — current local system-policy manuals
+
+On macOS 27.0 build `26A5425a`, the installed `syspolicyd(8)` manual says the daemon manages the master system-policy database and serves as a general “oracle” that other system components may ask for a verdict on a proposed operation. The installed `spctl(8)` manual documents assessment types and says several rule-database or global-state modification options are deprecated as of macOS 15.0.
+
+Commands:
+
+```sh
+MANPAGER=cat man 8 syspolicyd | col -b
+MANPAGER=cat man 8 spctl | col -b
+```
+
+Supports: the oracle joke and the claim that administrator-facing policy controls change over time.
+
+Does **not** support: a complete current private call graph, the identity of every enforcement consumer, or the claim that `syspolicyd` alone makes all launch decisions.
+
+### OBS-POLICY-002 — XProtect and MRT installed names
+
+On macOS 27.0 build `26A5425a`, direct filesystem enumeration found:
+
+```text
+/Library/Apple/System/Library/CoreServices/XProtect.bundle
+/Library/Apple/System/Library/CoreServices/XProtect.app
+/Library/Apple/System/Library/CoreServices/MRT.app
+```
+
+Supports: Chapter 9 saying those artifacts are installed on the observed build.
+
+Does **not** support: complete behavior, current responsibility boundaries, launch frequency, or treating an older MRT org chart as a current public contract.
+
+## Chapter 10 — Consent Is Its Own Authority
+
+### PUB-TCC-001 — Full Disk Access requires a person or managed policy
+
+Apple's developer documentation says an app cannot automatically gain Full Disk Access through an entitlement or code; the person using the app must grant it in Privacy & Security. The same page lists independent facilities that may still deny file access, including POSIX permissions, ACLs, System Integrity Protection, and data protection.
+
+Apple's platform-security documentation describes macOS privacy controls as requiring user consent before apps access protected file locations and explicit addition for full-storage access.
+
+Sources:
+
+- <https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox>
+- <https://support.apple.com/guide/security/secddd1d86a6/web>
+
+Supports: Chapter 10 separating Unix identity, sandbox allowance, signed capabilities, and privacy consent; the Full Disk Access dialogue; and the claim that an approved ordinary app does not thereby become globally more privileged than root.
+
+Caveat: public documentation describes the user-facing and developer contract, not every private TCC attribution rule or daemon message.
+
+### PUB-TCC-002 — App Sandbox does not grant unrestricted home access
+
+Apple documents App Sandbox as limiting file, network, and hardware access. A sandboxed app receives a container it can access but does not receive unrestricted access to the user's home directory. User-selected files and declared folder capabilities create scoped access paths.
+
+Sources:
+
+- <https://developer.apple.com/documentation/security/protecting-user-data-with-app-sandbox>
+- <https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox>
+
+Supports: Chapter 10 treating sandbox authority as a separate question from TCC consent and file permissions.
+
+Does **not** support: the claim that sandboxing and TCC use one policy engine or one denial path.
+
+### OBS-TCC-001 — installed `tccd` path
+
+On macOS 27.0 build `26A5425a`, the executable exists at:
+
+```text
+/System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+```
+
+Supports: using the exact installed name as a character while labeling its dialogue dramatization.
+
+Does **not** support: a complete private schema, attribution algorithm, IPC route, or interpretation of every privacy decision.
+
+## Chapter 11 — The Entitlement Bureaucracy
+
+### PUB-ENT-001 — entitlements are signed key-value capability claims
+
+Apple defines entitlements as key-value pairs embedded in an executable's code signature that grant permission to use a service or technology. Apple's macOS distribution-signing documentation says a provisioning profile must authorize most restricted entitlement claims, while some entitlement families can be claimed without that profile authorization.
+
+Sources:
+
+- <https://developer.apple.com/documentation/bundleresources/entitlements>
+- <https://developer.apple.com/documentation/xcode/creating-distribution-signed-code-for-the-mac>
+
+Supports: Chapter 11's issuer/claim/verifier model, the refusal to treat self-typed private keys as Apple-granted authority, and the claim that different entitlements can have different authorization conditions.
+
+Caveat: the public pages do not document complete semantics or enforcement paths for Apple's private entitlements.
+
+### OBS-ENT-004 — v0.4 badge census
+
+On macOS 27.0 build `26A5425a`, `codesign --display --entitlements -` produced abstract dictionary output with these top-level `[Key]` counts:
+
+| Binary | Count |
+|---|---:|
+| `/System/Applications/Utilities/Console.app/Contents/MacOS/Console` | 2 |
+| `/Library/Apple/System/Library/CoreServices/MRT.app/Contents/MacOS/MRT` | 2 |
+| `/usr/libexec/amfid` | 8 |
+| `/usr/libexec/sharingd` | 134 |
+| `/Applications/Safari.app/Contents/MacOS/Safari` | 194 |
+
+Console's keys were exactly `com.apple.private.logging.diagnostic` and `com.apple.private.logging.stream`. MRT's were exactly `com.apple.private.mrt` and `com.apple.private.managedclient.configurationprofiles`.
+
+The current `codesign --xml` request warned that the binary contained an invalid entitlements blob, while the default abstract representation decoded the values. The census therefore counts top-level `[Key]` entries in the abstract output and does not pretend an XML extraction succeeded on this build.
+
+Supports: Chapter 11's build-labeled sidebar and Chapter 12's current 134-key entrance.
+
+Does **not** support: ranking authority by count, treating nested values as extra top-level keys, proving runtime use, or assigning semantics beyond documented or separately observed behavior.
+
+## Chapter 13 — Macintosh HD Is a Diplomatic Arrangement
+
+### PUB-FS-001 — volume groups, roles, firmlinks, and the boot snapshot
+
+Apple documents the modern macOS APFS layout with System and Data volumes plus Preboot, VM, and Recovery roles. The System volume is read-only by default; changing user and third-party data belongs on the Data volume. Apple also says macOS 11 or later boots from a snapshot of the System volume.
+
+Apple's WWDC19 filesystem session introduced firmlinks as the bidirectional mechanism used to present the System/Data split as a unified directory hierarchy.
+
+Sources:
+
+- <https://support.apple.com/guide/security/seca6147599e/web>
+- <https://developer.apple.com/videos/play/wwdc2019/710/>
+
+Supports: Chapter 13's “two volumes in a convincing coat,” the distinction between visible path and underlying role, and the statement that the booted state is a selected System-volume snapshot.
+
+Caveat: the chapter diagram and dialogue compress a product- and release-specific layout. A firmlink is not represented as a generic symbolic link.
+
+### PUB-FS-002 — the Signed System Volume seal
+
+Apple documents SSV as a tree of cryptographic hashes covering system content. The root hash is called a seal. During installation or update, the seal is recomputed and checked against Apple's signed measurement; on Apple silicon the bootloader verifies it before transferring control to the kernel. Apple also documents lower-security choices that change this protection model.
+
+Source: <https://support.apple.com/guide/security/secd698747c9/web>
+
+Supports: the distinction between writing bytes and producing a seal-valid state accepted by the normal protected boot path.
+
+Does **not** support: personifying SSV and the seal as independent daemons. Those are separate comic voices only.
+
+### PUB-FS-003 — APFS container space sharing
+
+Apple's Disk Utility guide says APFS allocates storage on demand and that multiple volumes in one container share the container's free space. Each volume uses part of the container rather than owning a fixed partition-sized allotment.
+
+Source: <https://support.apple.com/guide/disk-utility/dskua9e6a110/mac>
+
+Supports: Chapter 13's distinction between shared capacity and separate volume identity.
+
+Does **not** support: saying that sharing free space merges namespaces, mount state, volume roles, or protection rules.
+
+### OBS-FS-001 — `/private` symbolic-link indirection
+
+On macOS 27.0 build `26A5425a`, `ls -ld /etc /tmp /var` shows all three as symbolic links into `private/etc`, `private/tmp`, and `private/var`.
+
+Supports: the `/private` sidebar's narrow path-indirection claim.
+
+Does **not** support: treating those symbolic links as firmlinks, volume-group machinery, or Signed System Volume behavior.
+
+## Chapter 14 — Memory Has Borders
+
+### PUB-MEM-001 — virtual address space, residency, and faults
+
+Apple's archived memory documentation describes per-process logical address spaces, page-table translation by the processor and MMU, mapped regions with access protections, and faults that the virtual-memory system may resolve. Its allocation guide also says a large allocation can receive a virtual address range before physical pages become resident; access then causes the kernel to arrange physical backing.
+
+Sources:
+
+- <https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/AboutMemory.html>
+- <https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/MemoryAlloc.html>
+
+Supports: Chapter 14's separation of address reservation, mapping, protection, physical residency, and fatal versus resolvable faults.
+
+Caveat: these guides are archived and include old release-specific size and paging examples. The chapter uses only the durable virtual-memory model, not their historical constants.
+
+## Chapter 17 — The House Inside the House
+
+### PUB-VIRT-001 — Apple's two virtualization framework levels
+
+Apple documents Hypervisor.framework as lightweight, user-space APIs for hardware-assisted virtual machines and virtual CPUs. Its overview describes virtual machines as processes and virtual CPUs as threads. Apple documents Virtualization.framework as higher-level APIs for configuring and operating complete virtual machines, including supported macOS and Linux guests on Apple silicon.
+
+Sources:
+
+- <https://developer.apple.com/documentation/hypervisor>
+- <https://developer.apple.com/documentation/virtualization>
+- <https://developer.apple.com/documentation/virtualization/running-macos-in-a-virtual-machine-on-apple-silicon>
+
+Supports: Chapter 17's lower-level/higher-level distinction, host-process diagram, and host-resource-versus-guest-kernel jurisdiction.
+
+Caveat: “VM as process” is Apple's API-level description. The chapter does not infer private implementation internals or teach CPU virtualization mechanisms beyond the public framework contract.
+
+## Chapter 19 — At the Mercy of the Kernel
+
+### OBS-HW-001 — the author's ten-core M4
+
+On the author's Mac, a local hardware-profile check reported `Chip: Apple M4` and `Total Number of Cores: 10 (4 Performance and 6 Efficiency)`.
+
+A publication-safe reproduction command is:
+
+```sh
+system_profiler SPHardwareDataType | sed -n '/Chip:/p;/Total Number of Cores:/p'
+```
+
+Supports: XNU's Chapter 19 ten-core flex and SEP telling it to turn off all ten.
+
+Does **not** support: claiming every M4 product has this CPU configuration. The dialogue is dramatization; the machine inventory is observed.

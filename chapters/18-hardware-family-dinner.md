@@ -1,4 +1,4 @@
-# 17. The Hardware Family Dinner
+# 18. The Hardware Family Dinner
 
 The mistake was inviting everyone.
 
@@ -9,6 +9,27 @@ Now everybody is seated at one table.
 This is the **hardware family dinner**.
 
 There is a place card for every jurisdiction and no place card labeled *boss*.
+
+SEP has requested not to sit beside launchd after the incident in Chapter 16.
+
+```text
+launchd:
+that chapter was not canon.
+
+SEP:
+you reorganized my services.
+
+launchd:
+fictionally.
+
+SPTM:
+I filed an objection.
+
+iBoot:
+personal matters.
+```
+
+Efeali's place card has been replaced with **DO NOT GIVE THIS PERSON A TRANSPORT VERB**.
 
 ## The Application Processor owns the house
 
@@ -116,6 +137,56 @@ they are currently photons.
 
 Every sovereign eventually meets customs.
 
+## Security brought six separate clipboards
+
+The executable from Chapters 8 through 11 attempts to enter carrying one folder labeled **APPROVED**.
+
+```text
+Gatekeeper:
+approved for first open.
+
+Signature machinery:
+valid code identity.
+
+XProtect:
+no current known-malware match.
+
+TCC:
+microphone denied.
+
+Entitlement clerk:
+HomeKit claim accepted.
+
+Executable:
+can one of you stamp the folder
+
+Everyone:
+which page
+```
+
+Root sees six officials and assumes a management vacancy.
+
+```text
+root:
+I will supervise security.
+
+Gatekeeper:
+policy résumé?
+
+TCC:
+user consent?
+
+amfid:
+signature?
+
+root:
+I regret approaching this table.
+```
+
+The officials are not six ranks in a chain. They ask about different objects: code identity, arrival policy, malware knowledge, protected resources, signed capabilities, and enforcement. The app can satisfy five and still lose to the sixth without anybody contradicting anybody.
+
+This makes security architecture difficult to summarize and extremely easy to turn into a dinner where everyone brought their own stamp.
+
 ## ANE has standards
 
 The Apple Neural Engine sits down only after confirming the menu contains tensors.
@@ -205,6 +276,47 @@ still block 927 to you ❤️
 
 Authority through abstraction is the friendliest form of lying in the house.
 
+## APFS brought two dishes under one lid
+
+Finder places **Macintosh HD** in the middle of the table.
+
+```text
+Finder:
+one casserole.
+
+System volume:
+do not modify my side.
+
+Data volume:
+the vegetables are over here.
+
+Finder:
+one casserole.
+
+APFS:
+firmlink the gravy.
+```
+
+Root reaches for `/System`.
+
+```text
+root:
+I am serving myself.
+
+Mounted view:
+read-only.
+
+root:
+I own the spoon.
+
+seal:
+explain the measurement afterward.
+```
+
+The seal is not a daemon and has not eaten. It still manages to make root put the spoon down.
+
+Across the table, Storage Controller quietly moves the physical peas while preserving their logical block addresses. APFS notices and decides dinner is better without complete implementation transparency.
+
 ## The loading dock reports an incident
 
 ```text
@@ -241,6 +353,31 @@ and I'm literally the IOMMU.
 
 The device returns to the loading dock to complete its paperwork.
 
+## The guest asks where the house ends
+
+Virtualization.framework arrives with a smaller table containing another operating system, another kernel, another root user, and an argument already in progress.
+
+```text
+Guest root:
+I control this machine.
+
+Guest kernel:
+within my policy.
+
+Host XNU:
+within one process I schedule.
+
+Application Processor:
+on my processor.
+
+Dinner host:
+we needed fewer nesting dolls.
+```
+
+The guest asks for more memory. The host offers a configuration change. The Memory Controller hands both of them ticket numbers.
+
+No participant is pretending the guest's authority is fake. They are enjoying how many landlords can fit above one confident UID 0.
+
 ## Everyone states their office
 
 The host makes the catastrophic decision to go around the table.
@@ -270,6 +407,21 @@ graphical environment.
 securityd:
 security services and credentials.
 
+Gatekeeper:
+downloaded-software policy.
+
+syspolicyd:
+policy verdicts.
+
+XProtect:
+known-malware detection and remediation.
+
+TCC:
+protected-resource consent.
+
+Entitlement clerk:
+signed capability claims.
+
 amfid:
 signature?
 
@@ -298,8 +450,17 @@ Storage Controller:
 the physical storage abstraction
 you all take for granted.
 
+APFS:
+volumes, files, snapshots.
+
+seal:
+boot-accepted system integrity.
+
 Display Controller:
 actual scanout.
+
+Guest kernel:
+this entire list, but inside.
 ```
 
 Silence.
