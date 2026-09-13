@@ -8,7 +8,7 @@ The argument of this book is simple:
 
 > There is no single highest form of authority inside a modern computer. Authority has a jurisdiction.
 
-The current release is v0.5, the Jurisdiction Edition: 20 chapters and roughly 24,000 words of technical comedy, evidence notes, and mutually hostile components. The files in [`chapters/`](chapters/) are the source of truth. Read the generated [`manuscript.md`](manuscript.md), open the [interactive HTML edition](dist/on-your-processor.html), or use the frozen [v0.5 manuscript](releases/on-your-processor-v0.5.md).
+The current release is v0.6, Below the Kernel: 21 chapters and roughly 27,000 words of technical comedy, evidence notes, and mutually hostile components. The files in [`chapters/`](chapters/) are the source of truth. Read the generated [`manuscript.md`](manuscript.md), open the [interactive HTML edition](dist/on-your-processor.html), or use the frozen [v0.6 manuscript](releases/on-your-processor-v0.6.md). The frozen [v0.5 manuscript](releases/on-your-processor-v0.5.md) remains available as historical material.
 
 ## Read the book
 
@@ -32,7 +32,8 @@ The current release is v0.5, the Jurisdiction Edition: 20 chapters and roughly 2
 - [17. The House Inside the House](chapters/17-the-house-inside-the-house.md)
 - [18. Hardware Family Dinner](chapters/18-hardware-family-dinner.md)
 - [19. At the Mercy of the Kernel](chapters/19-shutdown.md)
-- [20. One More Jurisdiction](chapters/20-epilogue.md)
+- [20. Below the Kernel](chapters/20-below-the-kernel.md)
+- [21. One More Jurisdiction](chapters/21-epilogue.md)
 
 ## Editing
 
@@ -54,7 +55,7 @@ Character dialogue is dramatization. It may compress a documented relationship, 
 
 ## Draft status
 
-v0.5 is the current edition, not the 13-chapter Receipts Edition with a new sticker. Stable claims still prefer primary public sources; build-specific observations name their build; reverse-engineered behavior and inference stay labeled. One chapter deliberately breaks the architecture for the joke and says so at the door.
+v0.6 is the current edition, not the previous edition with a new sticker. Stable claims still prefer primary public sources; build-specific observations name their build; reverse-engineered behavior and inference stay labeled. One chapter deliberately breaks the architecture for the joke and says so at the door.
 
 The reading sequence still ends at `moo.` Back matter stays outside the manuscript.
 

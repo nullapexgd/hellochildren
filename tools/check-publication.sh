@@ -22,6 +22,10 @@ not_contains() {
     fi
 }
 
+contains_with_normalized_whitespace() {
+    awk 'NF { $1=$1; printf "%s ", $0 }' "$1" | grep -Fq -- "$2" || fail "$1 does not contain after whitespace normalization: $2"
+}
+
 epub_contains() {
     marker=$1
     epub=$2
@@ -118,7 +122,7 @@ contains "$html_file" 'reader-page'
 contains "$html_file" 'ArrowLeft'
 contains "$html_file" 'ArrowRight'
 contains "$html_file" '20. Below the Kernel'
-contains "$html_file" '21. One More Jurisdiction'
+contains_with_normalized_whitespace "$html_file" '21. One More Jurisdiction'
 contains "$html_file" 'data:image/png;base64,'
 not_contains "$html_file" '<link rel="stylesheet"'
 not_contains "$html_file" '<script src='
@@ -147,8 +151,11 @@ not_contains "$project_dir/chapters/19-shutdown.md" 'the v0.3 reproduction pass'
 last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/manuscript.md")
 test "$last_nonblank" = 'moo.' || fail 'manuscript does not end at moo.'
 
-release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.5.md")
-test "$release_last_nonblank" = 'moo.' || fail 'frozen v0.5 manuscript does not end at moo.'
+v05_release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.5.md")
+test "$v05_release_last_nonblank" = 'moo.' || fail 'frozen v0.5 manuscript does not end at moo.'
 contains "$project_dir/releases/on-your-processor-v0.5.md" '# 20. One More Jurisdiction'
+
+v06_release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.6.md")
+test "$v06_release_last_nonblank" = 'moo.' || fail 'frozen v0.6 manuscript does not end at moo.'
 
 printf '%s\n' 'publication check passed'

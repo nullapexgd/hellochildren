@@ -2,7 +2,7 @@
 
 ## A Field Guide to the Dysfunctional Family Living Inside Your Mac
 
-### v0.5 — The Jurisdiction Edition
+### v0.6 — Below the Kernel
 
 ---
 
