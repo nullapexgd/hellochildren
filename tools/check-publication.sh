@@ -22,6 +22,16 @@ not_contains() {
     fi
 }
 
+epub_contains() {
+    marker=$1
+    epub=$2
+    unzip -Z1 "$epub" | while IFS= read -r entry; do
+        case "$entry" in
+            EPUB/text/*.xhtml) unzip -p "$epub" "$entry" ;;
+        esac
+    done | grep -Fq -- "$marker" || fail "$epub reading content does not contain: $marker"
+}
+
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
 contains "$project_dir/VERSION" '0.6'
 contains "$project_dir/book/metadata.yaml" 'title: "On Your Processor"'
@@ -88,6 +98,8 @@ not_contains "$project_dir/book/book.css" 'column-fill'
 not_contains "$project_dir/book/book.css" '.book-pages > main'
 contains "$project_dir/README.md" '[Interactive HTML reader](dist/on-your-processor.html)'
 contains "$project_dir/README.md" 'Left/Right arrow keys'
+contains "$project_dir/manuscript.md" '# 20. Below the Kernel'
+contains "$project_dir/manuscript.md" '# 21. One More Jurisdiction'
 
 test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
@@ -105,6 +117,8 @@ contains "$html_file" 'id="reader-track"'
 contains "$html_file" 'reader-page'
 contains "$html_file" 'ArrowLeft'
 contains "$html_file" 'ArrowRight'
+contains "$html_file" '20. Below the Kernel'
+contains "$html_file" '21. One More Jurisdiction'
 contains "$html_file" 'data:image/png;base64,'
 not_contains "$html_file" '<link rel="stylesheet"'
 not_contains "$html_file" '<script src='
@@ -116,6 +130,8 @@ printf '%s' "$epub_metadata" | grep -Fq '<dc:title' || fail 'EPUB title metadata
 printf '%s' "$epub_metadata" | grep -Fq '>On Your Processor</dc:title>' || fail 'EPUB title is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq '>Efeali Bel</dc:creator>' || fail 'EPUB author is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq 'cover-image' || fail 'EPUB cover image is missing'
+epub_contains '20. Below the Kernel' "$epub_file"
+epub_contains '21. One More Jurisdiction' "$epub_file"
 
 contains "$project_dir/chapters/04-launchd.md" '# 4. launchd: Hello Children'
 contains "$project_dir/chapters/00-title.md" 'Unless a passage says otherwise, local observations carried forward from the Receipts Edition came from macOS 27.0 build `26A5416b`.'
