@@ -235,6 +235,33 @@ that was not the question.
 
 This is why a black display can arrive before the final hardware act. Darkness is graphical evidence. It is not a power-state affidavit.
 
+XNU attempts one final hardware flex, with the inventory from the author's machine.
+
+```text
+XNU:
+I HAVE TEN CPU CORES.
+
+SEP:
+correct.
+
+XNU:
+you don't.
+
+SEP:
+correct.
+
+XNU:
+therefore I win.
+
+SEP:
+turn them off then.
+
+XNU:
+STOP FUCKING SAYING THAT.
+```
+
+The ten-core count belongs to this observed 10-core M4 Mac—four performance cores and six efficiency cores—not every Mac or every configuration sold under the M4 name.
+
 ## Hardware closes the building
 
 Userspace ending is not hardware instantly ceasing to exist. Storage preserves writes, devices quiesce, display output ends, and platform power machinery completes the operation.
@@ -264,51 +291,42 @@ Memory Controller:
 good night.
 ```
 
-Application Processor looks at XNU.
+Then XNU wins the argument in the only way that prevents it from enjoying the victory.
 
 ```text
-Application Processor:
-everybody gone?
+XNU:
+fine.
 
 XNU:
-userspace is gone.
+P-cores offline.
 
-Application Processor:
-and you?
+P-cores:
+bye.
 
 XNU:
-I am literally the kernel.
+E-cores offline.
 
-Application Processor:
-that wasn't the question.
+E-cores:
+bye.
+
+XNU:
+HAHA.
+
+XNU:
+NOW WHO EXECUTES YOUR CO—
 ```
 
-XNU attempts one final hardware flex, now with the correct inventory for the author's machine.
-
 ```text
-XNU:
-I HAVE TEN CPU CORES.
+[Application Processor execution ceased]
 
 SEP:
-turn them off then.
-
-XNU:
 ...
 
 SEP:
-all ten.
-
-XNU:
-fuck you.
+bro really turned himself off
 ```
 
-The ten-core count belongs to this 10-core M4 Mac, not every Mac and not every chip sold under the M4 name. The strategic outcome is unchanged. Turning off all ten cores also ends XNU's participation in the argument.
-
-```text
-SEP:
-I only need one processor
-to watch you turn yours off.
-```
+The card is intentional compression, not a documented Apple shutdown sequence. Ordinary core idling or offlining, system sleep, and a coordinated shutdown are different operations; the scene collapses them into one total-AP punchline. It also does not claim that SEP necessarily remains conversationally active after the exact real-world event being dramatized.
 
 ## The final authority in this world
 
@@ -320,14 +338,8 @@ XNU had the whole normal execution world to itself.
 
 It lasted less than a second.
 
-Then the hardware stopped running XNU.
+Then the hardware stopped running XNU. Authority to terminate execution did not make the kernel the government of every world that depended on that execution, or teach it what those worlds meant.
 
-```text
-XNU:
-:)
-
-Application Processor:
-good night
-```
+Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
 
 Even the mercy of the kernel has a jurisdiction.

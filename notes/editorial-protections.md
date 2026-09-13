@@ -130,26 +130,7 @@ personal matters.
 
 The chapter must remain labeled dramatization. It must never acquire an exploit explanation, magical entitlement, SEP migration protocol, or real `send` command.
 
-Preserve the Chapter 19 core-count correction as a machine-specific flex:
-
-```text
-XNU:
-I HAVE TEN CPU CORES.
-
-SEP:
-turn them off then.
-
-XNU:
-...
-
-SEP:
-all ten.
-
-XNU:
-fuck you.
-```
-
-The ten-core count belongs to the author's observed M4 Mac. Do not generalize it to every M4 configuration or silently turn it back into eight.
+The Chapter 19 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
 
 ## v0.4 structural protections
 
@@ -282,3 +263,73 @@ entrepreneurship.
 ```
 
 `iBootd` and `amfidd` are already-labeled fictional characters reused from Chapters 5 and 8, not Apple components or real SEP services. That disclaimer must remain with generated excerpts of this exchange.
+
+## v0.6 Five-Minute Kernel protections
+
+Preserve the challenge verbatim and do not explain the joke between its lines:
+
+```text
+XNU:
+I HAVE TEN CPU CORES.
+
+SEP:
+correct.
+
+XNU:
+you don't.
+
+SEP:
+correct.
+
+XNU:
+therefore I win.
+
+SEP:
+turn them off then.
+
+XNU:
+STOP FUCKING SAYING THAT.
+```
+
+Preserve the later departures and interruption verbatim:
+
+```text
+XNU:
+fine.
+
+XNU:
+P-cores offline.
+
+P-cores:
+bye.
+
+XNU:
+E-cores offline.
+
+E-cores:
+bye.
+
+XNU:
+HAHA.
+
+XNU:
+NOW WHO EXECUTES YOUR CO—
+```
+
+The next card and SEP reaction are one uninterrupted protected beat:
+
+```text
+[Application Processor execution ceased]
+
+SEP:
+...
+
+SEP:
+bro really turned himself off
+```
+
+The ten-core count is the author's observed 10-core M4 (four performance and six efficiency cores), not a claim about every M4 configuration. Dialogue, core responses, exact sequence, and SEP's reaction are dramatization, not a literal Apple shutdown transcript. Ordinary core idling/offlining, sleep, and coordinated shutdown remain distinct from the intentionally compressed execution-ceased card. Do not claim SEP necessarily remains conversationally active after the exact real-world event.
+
+Preserve the chapter's returning thesis exactly:
+
+> Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.

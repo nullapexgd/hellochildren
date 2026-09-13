@@ -80,3 +80,11 @@ Chapter 18 seats the already-fictional `iBootd` and `amfidd` characters beside S
 Supports: the embedded-startup faction and entrepreneurship exchange.
 
 Does **not** establish that SEP runs either character, that sepOS provides these services, or that the scene documents a real startup architecture, process model, or protocol.
+
+## DRAM-FIVE-MINUTE-001 — the Five-Minute Kernel shuts itself down
+
+Chapter 19 turns the author's existing machine-specific observation—a 10-core M4 with four performance cores and six efficiency cores, recorded as `OBS-HW-001`—into a fictional shutdown argument. The dialogue, the core responses, the exact sequence, and SEP's reaction are dramatization.
+
+Supports: the comic distinction between authority to terminate Application Processor execution and authority to understand or govern every world that depends on it.
+
+Does **not** establish a documented Apple shutdown transcript, core-offlining order, private message exchange, or claim that SEP necessarily remains conversationally active after the exact real-world event depicted. Ordinary core idling or offlining, sleep, and coordinated shutdown are distinct from the scene's intentionally compressed `[Application Processor execution ceased]` card.

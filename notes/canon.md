@@ -14,7 +14,7 @@ This ledger records callbacks, not claims of implementation.
 | Fictional `amfidd` | 08, 09, 18 | Deliberately fictional character | `/usr/libexec/amfid` is real; the extra `d`, genealogy, personality, and SEP “microservice” role are not. Preserve “cryptographically rigorous and socially vulnerable”: acquaintance is not a trust primitive. Any excerpt of the Chapter 18 startup exchange must retain the fictional-status disclaimer. |
 | OIK/AMFI personal hostility | 08 | Dramatized jurisdiction dispute | Both offices are real, but the personal beef, meeting, reporting relationship, and rank are invented. OIK discusses owner-authorized LocalPolicy; AMFI discusses code-signing trust and enforcement. |
 | Gatekeeper: “that's your résumé.” | 09 | Dramatized | Root's title does not turn a policy decision into automatic approval. |
-| Politics line | 06 | Narrator satire | “Apple and modern politics still argue about who invented this” is not an Apple-intent claim. |
+| Politics line | 06, 19 | Narrator satire | “Apple and modern politics still argue about who invented this” is not an Apple-intent claim. |
 | LaunchAngels | 05 | Observed undocumented artifact | Quote spellings; complete semantics remain unknown. |
 | `amfid`: “signature?” | 08 | Dramatized | Not a protocol string. Keep it short. |
 | `sharingd` | 12 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target and 134 in later observations. |
@@ -27,7 +27,8 @@ This ledger records callbacks, not claims of implementation.
 | SoC: “you are all PART OF ME.” | 18 | Dramatized platform-integration claim | “Part of me” is the required wording; do not replace it with literal-topology language. Sharing a platform does not imply one processor domain, trust domain, governed object, policy engine, or universal command hierarchy. |
 | SEP: “entrepreneurship.” | 18 | Deliberately fictional startup exchange | `iBootd` and `amfidd` are reused fictional characters, not real SEP services. Generated excerpts must carry that status with the exchange. |
 | “at the mercy of the kernel” | 19 | Reproduced launchd string | On build 26A5416b the sentence is split across adjacent extracted strings. Quote the reconstructed sentence exactly; do not invent the private call sequence. |
-| XNU's ten CPU cores | 19 | Observed machine fact plus dramatization | The author's Mac is a 10-core M4 (4 performance, 6 efficiency). Never generalize the count to every M4 configuration, and never repossess two cores. SEP still tells XNU to turn off all ten. |
+| XNU's ten CPU cores | 19 | Observed machine fact plus dramatization | The author's Mac is a 10-core M4 (4 performance, 6 efficiency). Never generalize the count to every M4 configuration, and never repossess two cores. SEP tells XNU to turn them off. |
+| Five-Minute Kernel | 19 | Dramatized total-AP shutdown | Preserve the challenge, P-core/E-core departures, interrupted `NOW WHO EXECUTES YOUR CO—`, execution-ceased card, and SEP reaction. The exact sequence is not an Apple shutdown transcript; ordinary idling/offlining, sleep, and coordinated shutdown remain distinct. |
 | Linux on Larpintosh uses Hyprland | 20 | Deliberately fictional guest | The second “on your virtual machine” punctures the Hyprland flex. Do not answer the compatibility question; it sets up the final `moo.` |
 | hyprvisor: “moo.” | 20 | Deliberately fictional outside character | `moo.` is the final nonblank line of the book. |
 
