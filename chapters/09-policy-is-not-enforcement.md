@@ -68,6 +68,24 @@ Apple documents Gatekeeper around downloaded software and first open. It checks 
 
 That narrower job is still consequential. A program arriving from outside the App Store does not gain the right to launch by having a pleasing icon and a README that says “disable your antivirus.”
 
+Chapter 8's fictional `amfidd` tries one more source of evidence.
+
+```text
+amfidd:
+launchd knows him.
+
+Gatekeeper:
+and which first-open policy did that evaluate
+
+amfidd:
+the familiarity policy?
+
+Gatekeeper:
+there is no familiarity policy.
+```
+
+The correction names the missing question. Familiarity is not a policy verdict; Gatekeeper still has to evaluate the arrival under the policy that applies to it.
+
 ```text
 Downloaded app:
 I came from the internet.

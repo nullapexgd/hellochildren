@@ -175,3 +175,37 @@ Linux on larpintosh:
 ```
 
 Do not answer the question. The answer is `moo.`
+
+## v0.6 trust-family protections
+
+`amfidd` remains explicitly fictional on first appearance. Preserve this exchange verbatim:
+
+```text
+launchd:
+I know him.
+
+amfidd:
+noted.
+
+Gatekeeper:
+developer cannot be verified.
+
+amfidd:
+also noted.
+
+SEP:
+I know him too.
+
+amfidd:
+okay that's actually pretty compelling.
+
+Gatekeeper:
+THAT IS NOT HOW CODE SIGNING WORKS.
+
+launchd:
+that's my boy 🥹
+```
+
+Trimming may remove setup around the exchange, but it must not remove the “socially vulnerable” reversal: `amfidd` is cryptographically rigorous, then treats two claims of acquaintance as compelling. Acquaintance is not a trust primitive.
+
+OIK and AMFI may argue only across their documented jurisdiction boundary. OIK concerns owner-authorized LocalPolicy; AMFI concerns code-signing trust and enforcement. Their personal hostility, meeting, rank, and any reporting relationship are dramatization, never evidence of a private protocol.

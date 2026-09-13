@@ -47,6 +47,71 @@ no
 
 “Signed code” is a useful phrase because ordinary conversation cannot spend twelve minutes naming every verification layer. The machine is allowed to be less conversational.
 
+## Different objects, same argument
+
+The Owner Identity Key arrives from the boot-policy side of the building. Apple calls access to it Ownership: the authority an owner uses to re-sign LocalPolicy after policy or software changes.
+
+AMFI is occupied with code-signing enforcement and trust. This gives both offices excellent material for an argument and no common answer to the question of rank.
+
+```text
+OIK:
+Ownership permits a user to re-sign LocalPolicy.
+
+AMFI:
+I am asking whether code satisfies
+its signing and trust requirements.
+
+OIK:
+so I outrank you.
+
+AMFI:
+for which of those two questions
+
+OIK:
+the important one.
+
+AMFI:
+that is still not an object.
+```
+
+They cannot rank each other because they are discussing different objects. One statement concerns owner-authorized LocalPolicy. The other concerns code identity, trust, and enforcement.
+
+Both offices are real. Their personal beef, this meeting, and any suggestion that one reports to the other are dramatization.
+
+## The extra `d`
+
+`amfidd` is fictional. `/usr/libexec/amfid` is real and already documented in this book; the extra `d`, the genealogy, and the personality belong to *On Your Processor*.
+
+The family explanation is that launchd plus Gatekeeper produced bureaucracy, but raised it in a loving home.
+
+```text
+launchd:
+I know him.
+
+amfidd:
+noted.
+
+Gatekeeper:
+developer cannot be verified.
+
+amfidd:
+also noted.
+
+SEP:
+I know him too.
+
+amfidd:
+okay that's actually pretty compelling.
+
+Gatekeeper:
+THAT IS NOT HOW CODE SIGNING WORKS.
+
+launchd:
+that's my boy 🥹
+```
+
+`amfidd` is cryptographically rigorous and socially vulnerable. Acquaintance is not a trust primitive. That is the architectural punchline.
+
 ## A signature is not a compliment
 
 A code signature binds claims to code. It can help establish that the code has not changed since signing and identify the signing authority under a trust model. It can also carry entitlements whose acceptance depends on that signing and policy environment.

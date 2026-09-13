@@ -8,7 +8,11 @@ This ledger records callbacks, not claims of implementation.
 | XNU: “I am literally the kernel” | 03 | Dramatized | XNU is powerful; the next speaker names the jurisdiction. |
 | launchd: “hello children” | 04 | Dramatized | Parental voice for userspace service organization. |
 | Fake launchd, UID 2 | 05 | Deliberately fictional experiment | Always call it fake; never confuse UID 2 with PID 1. |
+| Owner Identity Key | 02, 08 | Documented role plus dramatization | Ownership permits users to re-sign LocalPolicy. Do not turn OIK into a daemon, universal owner, AMFI superior, or participant in an invented private protocol. |
+| Fictional `iBootd` | 05 | Deliberately fictional character | The extra `d`, persistence, genealogy, and personality are OYP inventions. A boot-stage handoff is not Unix process parentage. |
 | “GenuineApple™” / “branding transcends ISA” | 08 | Dramatized fake-launchd exchange | A self-applied label is not a signing authority; preserve the ISA punchline. |
+| Fictional `amfidd` | 08, 09 | Deliberately fictional character | `/usr/libexec/amfid` is real; the extra `d`, genealogy, and personality are not. Preserve “cryptographically rigorous and socially vulnerable”: acquaintance is not a trust primitive. |
+| OIK/AMFI personal hostility | 08 | Dramatized jurisdiction dispute | Both offices are real, but the personal beef, meeting, reporting relationship, and rank are invented. OIK discusses owner-authorized LocalPolicy; AMFI discusses code-signing trust and enforcement. |
 | Gatekeeper: “that's your résumé.” | 09 | Dramatized | Root's title does not turn a policy decision into automatic approval. |
 | Politics line | 06 | Narrator satire | “Apple and modern politics still argue about who invented this” is not an Apple-intent claim. |
 | LaunchAngels | 05 | Observed undocumented artifact | Quote spellings; complete semantics remain unknown. |
