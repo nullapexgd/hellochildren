@@ -23,12 +23,30 @@ not_contains() {
 }
 
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
-contains "$project_dir/VERSION" '0.5'
+contains "$project_dir/VERSION" '0.6'
 contains "$project_dir/book/metadata.yaml" 'title: "On Your Processor"'
 contains "$project_dir/book/metadata.yaml" 'author: "Efeali Bel"'
-contains "$project_dir/book/metadata.yaml" 'edition: "v0.5 — The Jurisdiction Edition"'
-contains "$project_dir/chapters/00-title.md" '### v0.5 — The Jurisdiction Edition'
-contains "$project_dir/README.md" 'The current release is v0.5'
+contains "$project_dir/book/metadata.yaml" 'edition: "v0.6 — Below the Kernel"'
+contains "$project_dir/chapters/00-title.md" '### v0.6 — Below the Kernel'
+contains "$project_dir/README.md" 'The current release is v0.6'
+contains "$project_dir/chapters/02-the-boot-chain.md" 'Owner Identity Key'
+contains "$project_dir/chapters/05-the-children.md" '`iBootd` is fictional.'
+contains "$project_dir/chapters/08-trust-and-signatures.md" '`amfidd` is fictional.'
+contains "$project_dir/chapters/18-hardware-family-dinner.md" 'you are all PART OF ME.'
+contains "$project_dir/chapters/19-shutdown.md" 'bro really turned himself off'
+contains "$project_dir/chapters/20-below-the-kernel.md" '# 20. Below the Kernel'
+contains "$project_dir/chapters/20-below-the-kernel.md" 'The jurisdiction map has now left the motherboard.'
+contains "$project_dir/chapters/20-below-the-kernel.md" 'wrong temporal domain.'
+contains "$project_dir/chapters/20-below-the-kernel.md" 'Spacetime:'
+contains "$project_dir/chapters/21-epilogue.md" '# 21. One More Jurisdiction'
+not_contains "$project_dir/chapters/18-hardware-family-dinner.md" 'physically inside me'
+
+chapter_count=$(find "$project_dir/chapters" -maxdepth 1 -type f -name '[0-9][0-9]-*.md' ! -name '00-title.md' | wc -l | tr -d ' ')
+test "$chapter_count" = 21 || fail "expected 21 numbered chapters, found $chapter_count"
+
+test -f "$project_dir/notes/receipts-v0.6.md" || fail 'missing notes/receipts-v0.6.md'
+test -f "$project_dir/releases/on-your-processor-v0.6.md" || fail 'missing frozen v0.6 manuscript'
+contains "$project_dir/releases/on-your-processor-v0.6.md" '# 21. One More Jurisdiction'
 contains "$project_dir/book/template.html" 'content="On Your Processor build system"'
 contains "$project_dir/build.sh" 'on-your-processor.html'
 contains "$project_dir/build.sh" 'on-your-processor.epub'
