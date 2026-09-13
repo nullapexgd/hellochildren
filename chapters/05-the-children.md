@@ -305,6 +305,52 @@ Names can tempt us because Apple assigned them.
 
 Either way, the remedy is evidence.
 
+## The boot family files a claim
+
+`iBootd` is fictional. Apple does not ship a component by that name. We invented it after fake launchd had already demonstrated that a name does not confer office.
+
+SEP introduced the newcomer to real iBoot as if the family resemblance settled anything.
+
+```text
+SEP:
+iBoot, meet iBootd.
+
+iBoot:
+what is that
+
+SEP:
+you but persistent.
+
+iBoot:
+I take that personally.
+
+iBootd:
+I kept the d.
+
+XNU:
+appending d to a boot component
+does not create a daemon.
+```
+
+The objection was technically correct and therefore useless at family court.
+
+```text
+iBootd:
+iBoot is my parent.
+
+iBoot:
+I handed off a boot stage.
+I did not have a child.
+
+SEP:
+you have the same face.
+
+XNU:
+none of those statements define process parentage.
+```
+
+Boot-stage handoff, Unix process parentage, and the invented family relationship are three different relations.
+
 ## Bedtime
 
 At shutdown, the real launchd will coordinate the end of userspace. The fake one will attempt to claim squatter’s rights.

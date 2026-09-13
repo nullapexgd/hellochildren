@@ -164,6 +164,28 @@ Normal boot, recovery, and fallback paths do not all begin with the same policy 
 
 This is another kind of authority: not the power to run a process now, but the power to determine which system and security configuration may become the environment where processes later run.
 
+## OIK owns one noun
+
+Apple calls access to the **Owner Identity Key (OIK)** “Ownership.” That ownership is required to let users re-sign LocalPolicy after policy or software changes. The OIK is normally protected by user passwords and measurements of the operating system and policy.
+
+This is ownership authorization for a particular boot-policy job, not universal machine ownership. It is not a daemon, the oracle of every code signature, or AMFI’s manager wearing a key-shaped crown.
+
+```text
+OIK:
+I speak for the owner here.
+
+root:
+finally.
+
+OIK:
+about this LocalPolicy.
+
+root:
+there's always a noun.
+```
+
+That is as far as documented ownership goes. Chapter 5 will now misuse the family metaphor with professional confidence.
+
 ## The other processors have childhoods too
 
 Apple documents peripheral processors dedicated to display, storage, system management, Thunderbolt, graphics, and other functions. Some download verified firmware at startup; others may implement their own secure boot.
