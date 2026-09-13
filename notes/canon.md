@@ -29,8 +29,14 @@ This ledger records callbacks, not claims of implementation.
 | “at the mercy of the kernel” | 19 | Reproduced launchd string | On build 26A5416b the sentence is split across adjacent extracted strings. Quote the reconstructed sentence exactly; do not invent the private call sequence. |
 | XNU's ten CPU cores | 19 | Observed machine fact plus dramatization | The author's Mac is a 10-core M4 (4 performance, 6 efficiency). Never generalize the count to every M4 configuration, and never repossess two cores. SEP tells XNU to turn them off. |
 | Five-Minute Kernel | 19 | Dramatized total-AP shutdown | Preserve the challenge, P-core/E-core departures, interrupted `NOW WHO EXECUTES YOUR CO—`, execution-ceased card, and SEP reaction. The exact sequence is not an Apple shutdown transcript; ordinary idling/offlining, sleep, and coordinated shutdown remain distinct. |
-| Linux on Larpintosh uses Hyprland | 20 | Deliberately fictional guest | The second “on your virtual machine” punctures the Hyprland flex. Do not answer the compatibility question; it sets up the final `moo.` |
-| hyprvisor: “moo.” | 20 | Deliberately fictional outside character | `moo.` is the final nonblank line of the book. |
+| “The jurisdiction map has now left the motherboard.” | 20 | Grounded-to-infrastructure hinge | Keep the standalone line. Execution, integration, power control, stored energy, supply, ownership, regulation, and taxation are distinct relations, never one universal technical or political hierarchy. |
+| Power Management / Battery / Charger | 20 | Dramatized hardware ensemble | Power Management is an ensemble role, not a single universal component. Battery makes the scene a laptop example; supply, stored energy, and charging remain distinct. |
+| IRS interruption | 20 | Explicit satire | IRS interrupts Government's unfinished explanation. Taxation is not a literal rung in electricity delivery. Governmental roles vary by jurisdiction. |
+| SEP: “on your grid.” | 20 | Dramatized infrastructure callback | Preserve the power plant's “I AM LITERALLY THE POWER PLANT.” setup. Generation does not imply command of the grid. |
+| Causality: “wrong temporal domain.” | 20 | Metaphysical satire | Preserve the Big Bang / initial-conditions exchange verbatim. It is not a factual cosmology claim or an extension of the evidence chain. |
+| Spacetime: “zzz” | 20 | Metaphysical satire | The unanswered summons and `zzz` close Chapter 20, not the book. No `moo.` appears in Chapter 20. |
+| Linux on Larpintosh uses Hyprland | 21 | Deliberately fictional guest | The second “on your virtual machine” punctures the Hyprland flex. Do not answer the compatibility question; it sets up the final `moo.` |
+| hyprvisor: “moo.” | 21 | Deliberately fictional outside character | `moo.` is the single final nonblank line of the book. |
 
 ## Recurring dynamics
 

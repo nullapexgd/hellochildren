@@ -88,3 +88,47 @@ Chapter 19 turns the author's existing machine-specific observation—a 10-core 
 Supports: the comic distinction between authority to terminate Application Processor execution and authority to understand or govern every world that depends on it.
 
 Does **not** establish a documented Apple shutdown transcript, core-offlining order, private message exchange, or claim that SEP necessarily remains conversationally active after the exact real-world event depicted. Ordinary core idling or offlining, sleep, and coordinated shutdown are distinct from the scene's intentionally compressed `[Application Processor execution ceased]` card.
+
+## PUB-POWER-001 — platform power management and electrical supply
+
+Apple Platform Security includes power management among peripheral-processor tasks and discusses firmware where separate processors require it. This supports a broad hardware/firmware dependency, not one controller governing the entire platform. Apple's current Mac charging guidance connects a laptop's adapter and cable to an outlet; its battery guidance distinguishes operation on stored energy from external supply. Apple also documents that a connected source may run the computer without charging its battery, and that a demanding workload can exceed the connected source's power.
+
+Sources, checked 2026-09-13:
+- Apple Platform Security, “Peripheral processor security in Mac computers”: <https://support.apple.com/guide/security/peripheral-processor-security-seca500d4f2b/web>
+- Apple Support, “Charge your Mac laptop computer” (published July 30, 2026): <https://support.apple.com/en-ca/102397>
+- Apple MacBook Air User Guide, “Charge the MacBook Air battery”: <https://support.apple.com/guide/macbook-air/charge-the-battery-apdbc13fd966/2026/mac/26>
+- Apple Mac User Guide, “If your Mac battery status is ‘Not Charging’”: <https://support.apple.com/en-gb/guide/mac-help/mh20876/26/mac/26>
+
+Supports: Chapter 20's distinction among execution prerequisites, platform power control, a battery's finite stored energy, external electrical supply, and charging. Existing `PUB-SOC-001` supports the platform-integration portion of the descent.
+
+Does **not** establish a universal component named Power Management, an exact controller topology or power-state sequence, a private protocol, or internal batteries in every Mac. All dialogue and motives are fiction. No model-specific wattage, duration, charging threshold, or new shutdown claim is made.
+
+## PUB-GRID-001 — electricity delivery and varied institutional arrangements
+
+The U.S. Energy Information Administration describes generation, transmission, and distribution as different parts of electricity delivery. Its explanation distinguishes organizations selling electricity from utilities delivering it and gives municipal, cooperative, private, and federal examples. FERC separately identifies its U.S. role in regulating interstate transmission and wholesale electricity sales, while distinguishing retail sales outside that role. These examples support conditional institutional language; they do not establish a worldwide governance model.
+
+Sources, checked 2026-09-13:
+- U.S. EIA, “Delivery to consumers”: <https://www.eia.gov/energyexplained/electricity/delivery-to-consumers.php>
+- U.S. FERC, “What FERC Does”: <https://www.ferc.gov/what-ferc-does>
+
+Supports: Chapter 20's conventional grid example, the distinction between a utility organization and grid infrastructure, and the caution that ownership and governmental roles differ by jurisdiction. Generalizing those examples as possibilities is deliberately conditional.
+
+Does **not** establish that every outlet is grid-connected, that generation and delivery have one owner, that a power plant commands the grid, that every government has the same authority, or that IRS/taxation is a physical stage in electrical delivery. The chapter supplies no legal or tax guidance.
+
+## DRAM-POWER-001 — hardware and infrastructure hearing
+
+Chapter 20's XNU, Application Processor, SoC, Power Management, Battery, Charger, Outlet, Utility, Grid, and Power Plant dialogue is dramatization. Power Management is explicitly an ensemble role for distributed platform work. Battery and Charger are a laptop example, not a universal inventory of Macs. The scene begins again after Chapter 19 through a literary reset, not a documented recovery protocol.
+
+Supports: the power-supply quarrel, finite stored-energy interval, connected-versus-charging dispute, the motherboard hinge, and “I AM LITERALLY THE POWER PLANT.” / “on your grid.” callback.
+
+Does **not** establish consciousness, private messages, a wiring diagram, command rank, or a universal technical/political hierarchy. Execution, integration, power control, stored energy, supply, infrastructure ownership, regulation, and taxation name distinct relationships.
+
+## DRAM-METAPHYSICS-001 — inadmissible governmental and metaphysical postscript
+
+Government and IRS become explicitly satirical personalities after the visible “The hearing becomes inadmissible” heading. IRS interrupts an unfinished Government explanation rather than joining an electricity-delivery ladder. Governmental capacities are qualified before the seam; the subsequent dialogue is not a description of actual administrative or tax procedure.
+
+Physics, Causality, and Spacetime are personifications in a metaphysical postscript. The Big Bang, initial-conditions, authorization-before-a-“before,” and “wrong temporal domain” exchange is protected fiction, not a scientific explanation or sourced cosmological assertion. Spacetime's `zzz` ends Chapter 20; the unchanged Hyprvisor scene in Chapter 21 retains the book's only final `moo.`.
+
+Supports: a deliberately visible departure from the grounded dependency argument into satire.
+
+Does **not** extend the technical evidence chain into government or metaphysics, assert a universal political hierarchy, imply that taxation delivers electricity, or prove anything about the universe's origin.

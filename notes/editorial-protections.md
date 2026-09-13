@@ -132,17 +132,18 @@ The chapter must remain labeled dramatization. It must never acquire an exploit 
 
 The Chapter 19 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
 
-## v0.4 structural protections
+## Structural protections (v0.4, updated for v0.6)
 
-- The reading copy has twenty numbered chapters plus `00-title.md`.
+- The reading copy has twenty-one numbered chapters plus `00-title.md`.
 - Chapter 16 is the openly impossible Civil War.
 - Chapter 17 introduces Apple virtualization lightly and does not spend the Hyprvisor reveal.
 - Chapter 18 is the Hardware Family Dinner climax.
 - Chapter 19 is the shutdown denouement.
-- Chapter 20 is the Hyprvisor epilogue.
+- Chapter 20 is Below the Kernel; its `zzz` ends the chapter, not the book.
+- Chapter 21 is the Hyprvisor epilogue.
 - No reading-copy prose follows `moo.`
 
-Preserve the final Larpintosh exchange immediately before Hyprvisor clears its throat:
+Preserve Chapter 21's final Larpintosh exchange immediately before Hyprvisor clears its throat:
 
 ```text
 Linux on larpintosh:
@@ -333,3 +334,93 @@ The ten-core count is the author's observed 10-core M4 (four performance and six
 Preserve the chapter's returning thesis exactly:
 
 > Privilege can end a world without understanding it. That is power, not government. Apple and modern politics still argue about who invented this.
+
+## v0.6 Below the Kernel protections
+
+Chapter 20 follows different dependency relations, not a universal technical or political hierarchy. Keep execution, integration, power control, stored energy, electrical supply, ownership, regulation, and taxation distinct. Power Management must remain labeled as a dramatized ensemble role. The battery scene is a laptop example. Keep the following exchange verbatim:
+
+```text
+XNU:
+I control execution.
+
+SoC:
+on which hardware?
+
+Power Management:
+while powered how?
+
+Battery:
+using whose energy?
+
+Charger:
+whose energy?
+
+Battery:
+GET THE FUCK OUT.
+```
+
+Preserve this exact standalone hinge:
+
+> The jurisdiction map has now left the motherboard.
+
+Infrastructure ownership and governmental roles remain conditional on jurisdiction. Before Government enters, preserve a visible satire heading and explicit fictional-status framing. IRS interrupts Government's explanation; it is never a literal electricity-delivery rung. Preserve:
+
+```text
+Power Plant:
+I AM LITERALLY THE POWER PLANT.
+
+SEP:
+on your grid.
+```
+
+The metaphysical postscript is satire, not an extension of the evidence chain or an explanation of cosmology. Preserve the final exchanges verbatim, with no prose between them or after them in Chapter 20:
+
+```text
+Power Plant:
+Physics.
+
+Physics:
+what.
+
+Power Plant:
+who authorized the Big Bang.
+
+Physics:
+that's not really—
+
+Power Plant:
+WHO SIGNED OFF ON
+INITIAL CONDITIONS
+
+Causality:
+I object.
+
+Physics:
+on what grounds
+
+Causality:
+you're asking for authorization
+before there was a "before."
+
+Power Plant:
+wrong jurisdiction?
+
+Causality:
+wrong temporal domain.
+```
+
+```text
+Physics:
+Spacetime?
+
+Spacetime:
+...
+
+Physics:
+Spacetime?
+
+Spacetime:
+zzz
+```
+
+Chapter 20 contains no `moo.`. Chapter 21 changes only its chapter number for this expansion: preserve the Larpintosh question, the breathing beat, and exactly one final `moo.` outside the dialogue block. Nothing follows it in the reading sequence.
