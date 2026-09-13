@@ -209,3 +209,76 @@ that's my boy 🥹
 Trimming may remove setup around the exchange, but it must not remove the “socially vulnerable” reversal: `amfidd` is cryptographically rigorous, then treats two claims of acquaintance as compelling. Acquaintance is not a trust primitive.
 
 OIK and AMFI may argue only across their documented jurisdiction boundary. OIK concerns owner-authorized LocalPolicy; AMFI concerns code-signing trust and enforcement. Their personal hostility, meeting, rank, and any reporting relationship are dramatization, never evidence of a private protocol.
+
+## v0.6 SoC dinner protections
+
+Chapter 18 remains the Hardware Family Dinner. Preserve this exchange verbatim:
+
+```text
+SoC:
+okay.
+
+XNU:
+what.
+
+SoC:
+I have been listening to all of you
+argue about who owns the machine.
+
+SEP:
+not me.
+I have my security domain.
+
+XNU:
+I run the operating system.
+
+GPU:
+I render.
+
+ANE:
+tensor.
+
+DART:
+papers.
+
+SoC:
+STOP SAYING PAPERS.
+
+SoC:
+you are all PART OF ME.
+
+XNU:
+see? my SoC.
+
+SEP:
+our SoC.
+
+SoC:
+THAT WAS NOT THE POINT.
+```
+
+Use **part of me** and do not replace it with literal-topology language. The surrounding prose must distinguish sharing one platform from executing in one processor domain, sharing one trust domain, or governing the same object. The SoC is not one policy engine or a universal commander, and the scene must not assert undocumented die or package topology. SEP retains its separate processor and security domain.
+
+Preserve the embedded-startup exchange verbatim:
+
+```text
+SoC:
+who the fuck are those two.
+
+SEP:
+my daemons.
+
+SoC:
+you have DAEMONS now?
+
+SEP:
+microservices 🤝
+
+SoC:
+YOU ARE A SECURITY COPROCESSOR.
+
+SEP:
+entrepreneurship.
+```
+
+`iBootd` and `amfidd` are already-labeled fictional characters reused from Chapters 5 and 8, not Apple components or real SEP services. That disclaimer must remain with generated excerpts of this exchange.

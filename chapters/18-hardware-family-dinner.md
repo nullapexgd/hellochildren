@@ -353,6 +353,77 @@ and I'm literally the IOMMU.
 
 The device returns to the loading dock to complete its paperwork.
 
+## The platform would like a word
+
+The SoC has been listening to the component roll call with increasing regret.
+
+```text
+SoC:
+okay.
+
+XNU:
+what.
+
+SoC:
+I have been listening to all of you
+argue about who owns the machine.
+
+SEP:
+not me.
+I have my security domain.
+
+XNU:
+I run the operating system.
+
+GPU:
+I render.
+
+ANE:
+tensor.
+
+DART:
+papers.
+
+SoC:
+STOP SAYING PAPERS.
+
+SoC:
+you are all PART OF ME.
+
+XNU:
+see? my SoC.
+
+SEP:
+our SoC.
+
+SoC:
+THAT WAS NOT THE POINT.
+```
+
+Apple publicly describes its systems on a chip as integrating specialized technologies into one platform. Being part of that platform does not mean executing in the same processor domain: XNU runs on the Application Processor while SEP retains its separate processor and security domain. It does not mean sharing a trust domain, and it does not mean governing the same object. Integration describes the platform, not a single policy engine or a universal chain of command.
+
+Two smaller place cards appear beside SEP. They belong to `iBootd` and `amfidd`, the already-labeled fictional characters from Chapters 5 and 8. Neither is a real SEP service; the seating plan is committing to the bit, not documenting startup architecture.
+
+```text
+SoC:
+who the fuck are those two.
+
+SEP:
+my daemons.
+
+SoC:
+you have DAEMONS now?
+
+SEP:
+microservices 🤝
+
+SoC:
+YOU ARE A SECURITY COPROCESSOR.
+
+SEP:
+entrepreneurship.
+```
+
 ## The guest asks where the house ends
 
 Virtualization.framework arrives with a smaller table containing another operating system, another kernel, another root user, and an argument already in progress.

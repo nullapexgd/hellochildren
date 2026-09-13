@@ -52,3 +52,31 @@ Does **not** establish an OIK↔AMFI message, call order, kernel callback, entit
 Supports: Chapters 8–9's joke that familiarity is not evidence for either code-signing trust or first-open policy.
 
 Does **not** establish software, process, genealogy, policy, or protocol existence. The OIK/AMFI personal hostility is dramatization too.
+
+## PUB-SOC-001 — Apple silicon integrates multiple specialized components
+
+Apple describes M1 as a system on a chip that combines CPU, I/O, security, GPU, Neural Engine, and other technologies in one integrated platform. Apple separately describes the Secure Enclave as a dedicated secure subsystem integrated into the SoC but isolated from the main processor.
+
+Sources:
+- Apple Newsroom, “Apple unleashes M1”: <https://www.apple.com/newsroom/2020/11/apple-unleashes-m1/>
+- Apple Platform Security, “The Secure Enclave”: <https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web>
+
+Supports: Chapter 18's broad integration claim and its distinction between sharing a platform and sharing a processor or security domain.
+
+Does **not** establish that every named character has the same topology on every Apple product, that “SoC” is one policy engine, that integrated components execute in one processor domain, or that integration erases isolation, trust boundaries, or jurisdiction.
+
+## DRAM-SOC-001 — SoC family-dinner dialogue
+
+The SoC's voice, exasperation, family claim, and Chapter 18 dialogue are dramatization. “Part of me” names platform integration without asserting a particular die or package arrangement.
+
+Supports: Chapter 18's family-dinner metaphor and the distinction between integration and universal authority.
+
+Does **not** establish consciousness, command authority, a reporting hierarchy, private messages, or undocumented die or package topology.
+
+## DRAM-SEP-STARTUP-001 — SEP claims fictional daemons
+
+Chapter 18 seats the already-fictional `iBootd` and `amfidd` characters beside SEP and has SEP call them daemons and microservices. They remain inventions from Chapters 5 and 8, not Apple components or real SEP services.
+
+Supports: the embedded-startup faction and entrepreneurship exchange.
+
+Does **not** establish that SEP runs either character, that sepOS provides these services, or that the scene documents a real startup architecture, process model, or protocol.
