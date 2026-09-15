@@ -130,7 +130,7 @@ personal matters.
 
 The chapter must remain labeled dramatization. It must never acquire an exploit explanation, magical entitlement, SEP migration protocol, or real `send` command.
 
-The Chapter 29 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
+The Chapter 31 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
 
 ## Structural protections (v0.4, updated for v0.6)
 
@@ -338,7 +338,7 @@ Preserve the chapter's returning thesis exactly:
 
 ## v0.6 Below the Kernel protections
 
-Chapter 30 follows different dependency relations, not a universal technical or political hierarchy. Keep execution, integration, power control, stored energy, electrical supply, ownership, regulation, and taxation distinct. Power Management must remain labeled as a dramatized ensemble role. The battery scene is a laptop example. Keep the following exchange verbatim:
+Chapter 28 follows different dependency relations, not a universal technical or political hierarchy. Keep execution, integration, power control, stored energy, electrical supply, ownership, regulation, and taxation distinct. Power Management must remain labeled as a dramatized ensemble role. The battery scene is a laptop example. Keep the following exchange verbatim:
 
 ```text
 XNU:
@@ -374,7 +374,7 @@ SEP:
 on your grid.
 ```
 
-The metaphysical postscript is satire, not an extension of the evidence chain or an explanation of cosmology. Preserve the final exchanges verbatim, with no prose between them or after them in Chapter 30:
+The metaphysical postscript is satire, not an extension of the evidence chain or an explanation of cosmology. Preserve the final exchanges verbatim, with no prose between them or after them in Chapter 28:
 
 ```text
 Power Plant:
@@ -424,7 +424,7 @@ Spacetime:
 zzz
 ```
 
-Chapter 30 contains no `moo.`. Chapter 32 changes only its chapter number for this expansion: preserve the Larpintosh question, the breathing beat, and exactly one final `moo.` outside the dialogue block. Nothing follows it in the reading sequence.
+Chapter 28 contains no `moo.`. Chapter 32 changes only its chapter number for this expansion: preserve the Larpintosh question, the breathing beat, and exactly one final `moo.` outside the dialogue block. Nothing follows it in the reading sequence.
 
 ## v0.7 demolition-permit protection
 
@@ -462,4 +462,24 @@ The exchange dramatizes the ordinary filesystem/block-storage boundary. Keep the
 
 Chapter 13 retains APFS volume roles, firmlinks, mount state, snapshots, and SSV. Its “the write succeeded” exchange concerns boot-accepted sealed content, not power-loss durability. Chapter 14 owns names, object/open lifetime, and view-relative existence. Chapter 15 owns acceptance, write/close/sync distinctions and durability, including the narrow documented F_FULLFSYNC guarantee and error/device qualification.
 
-Chapter 29's callback must preserve the distinction that a clean process exit does not by itself certify durable storage. It should cash Chapter 15's lesson without retelling it.
+Chapter 31's callback must preserve the distinction that a clean process exit does not by itself certify durable storage. It should cash Chapter 15's lesson without retelling it.
+
+## v0.7 address, memory, and cache protections
+
+Chapter 16 owns address vocabulary: CPU virtual, physical, I/O virtual/device-visible, and MMIO. A numeric address is never a universal deed, and no illustrative value is a real mapping trace.
+
+Chapter 17 owns reservation, backing, residency, faults, sharing, copy-on-write, compression, and unified-memory scope. Never equate a successful allocation with immediate physical residency or unified memory with unrestricted access.
+
+Chapter 18 retains these lines verbatim:
+
+```text
+Policy without enforcement is a wish. Enforcement without policy is a very fast misunderstanding.
+The DRAM cells store charge and have never heard of root.
+A cable should not be a constitutional amendment.
+DART:
+absolutely fucking not.
+```
+
+Apple's public documentation calls the DMA boundary an IOMMU; public Asahi reverse engineering supplies the DART name. Do not merge those evidence classes or invent current Apple-silicon topology.
+
+Chapter 19 owns CPU-cache locality, coherence, visibility, ordering, and cache-kind ambiguity. It must not claim a specific M4 cache hierarchy. CPU-cache writeback is never storage durability, and coherence never grants authorization or repairs an unsynchronized program.

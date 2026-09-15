@@ -81,7 +81,7 @@ Sources:
 - Installed `close(2)`: descriptor deallocation, automatic descriptor freeing at process exit, and possible `EIO` from an earlier uncommitted write. A successful close is not a full device-cache flush contract.
 - Installed `fsync(2)`: modified data/attributes move from host to drive; explicitly warns drive buffering/reordering can leave some or all data unwritten after power failure, and refers tighter requirements to `F_FULLFSYNC`. The manual's platter language is historical wording, not a claim that an SSD has platters.
 
-Supports: Chapter 15's ordinary buffered regular-file path; meaningful write success without equating it to durable completion; checked error results; clean process exit not certifying durable storage (Chapter 29 callback). Application buffers, kernel/filesystem work, and device buffers are distinct; not every application or write uses every stage.
+Supports: Chapter 15's ordinary buffered regular-file path; meaningful write success without equating it to durable completion; checked error results; clean process exit not certifying durable storage (Chapter 31 callback). Application buffers, kernel/filesystem work, and device buffers are distinct; not every application or write uses every stage.
 
 ## PUB-DURABILITY-001 — filesystem recovery and the device boundary
 
@@ -100,3 +100,57 @@ Supports: separating filesystem consistency, application-level transaction compl
 Classification: dramatization built around the logical/physical distinction in `PUB-VFS-001` and `PUB-DURABILITY-001`.
 
 Chapter 14 preserves the exact XNU/SSD exchange beginning `read /Users/efeali/book.txt.` and ending `what's a file`. XNU does not literally issue that pathname as a storage command. “SSD” is the storage ensemble's comic voice, not a documented single controller, private protocol, or claim that no storage firmware can ever understand a filesystem. The scene concerns the ordinary filesystem/block-storage boundary.
+
+## PUB-ADDR-001 — CPU address translation needs a context
+
+Classification: official Arm architecture documentation plus Apple's durable VM model.
+
+Sources: [Arm Memory Management guide](https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Learn%20the%20Architecture/LearnTheArchitecture-MemoryManagement-101811_0100_00_en.pdf) and Apple's archived [About the Virtual Memory System](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/AboutMemory.html).
+
+Supports: Chapter 16's virtual/physical distinction, multiple address spaces, mapping lifetimes, and Chapter 18's MMU enforcement. The numeric examples are dramatization. No current M4 page size, translation-level count, TLB topology, or private map is claimed.
+
+## PUB-IOVA-001 — a DMA agent uses an explicitly mapped I/O view
+
+Classification: Apple public security documentation plus separately labeled public reverse engineering.
+
+Sources: Apple's [Direct memory access protections for Mac computers](https://support.apple.com/guide/security/direct-memory-access-protections-for-mac-computers-seca4960c2b5/web), `PUB-DMA-001`, `RE-DART-001`, and the Asahi DART sources recorded in `notes/receipts-v0.5.md`.
+
+Supports: Chapters 16 and 18 separating CPU virtual, physical, and device-visible coordinates. Apple supplies the per-agent IOMMU property; Asahi supplies the DART name. It does not establish one universal Apple device/stream topology.
+
+## PUB-MMIO-001 — an address can select a device interface
+
+Classification: official Arm architectural documentation.
+
+Source: [Armv8-A memory model guide](https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Learn%20the%20Architecture/Armv8-A%20memory%20model%20guide.pdf?revision=58b1dd0a-3800-4218-b21a-f95a0332034c), section 7: Device memory describes peripherals; peripheral registers are commonly memory-mapped I/O, and accesses can have side effects.
+
+Supports: Chapter 16's MMIO distinction only. It does not disclose an Apple-silicon register map or justify a universal driver sequence.
+
+## PUB-VM-LIFETIME-001 — mappings, backing, residency, sharing, and compression differ
+
+Classification: archived Apple documentation and current Apple OSS XNU source.
+
+Sources: Apple's archived [About the Virtual Memory System](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/AboutMemory.html), [Viewing Virtual Memory Usage](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/VMPages.html), and Apple OSS XNU [`vm_compressor_internal.h`](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/vm/vm_compressor_internal.h) plus [`memorystatus_notify.md`](https://github.com/apple-oss-distributions/xnu/blob/main/doc/vm/memorystatus_notify.md).
+
+Supports: Chapter 17's reservation, backing, residency, faults, aliasing, copy-on-write, sharing, reclaimability, compression, and swapping distinctions at a durable conceptual level. Archived constants and a fixed per-page itinerary are excluded.
+
+## PUB-CACHE-001 — cache locality and hierarchy
+
+Classification: official Arm architectural material, used generically.
+
+Sources: Arm's [Cache coherency white paper](https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/CacheCoherencyWhitepaper_6June2011.pdf?revision=e5a82cb4-0f87-4f5c-91cf-52b33a5cd1da) and [Armv8-A memory model guide](https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Learn%20the%20Architecture/Armv8-A%20memory%20model%20guide.pdf?revision=58b1dd0a-3800-4218-b21a-f95a0332034c).
+
+Supports: Chapter 19's locality, dirty/write-back state, cache-line granularity, and false-sharing explanation. The chapter deliberately gives no M4 cache sizes, levels, sharing topology, protocol, or replacement policy.
+
+## PUB-COHERENCE-001 — coherence, visibility, and ordering are different jobs
+
+Classification: official Arm architecture and interconnect documentation, applied only at the architectural level.
+
+Sources: Arm Architecture Reference Manual [memory barriers](https://developer.arm.com/documentation/ddi0487/mc/-Part-B-The-AArch64-Application-Level-Architecture/-Chapter-B2-The-AArch64-Application-Level-Memory-Model/-B2-6-Memory-barriers?lang=en) and the [AMBA AXI/ACE specification](https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/IHI0022H_amba_axi_protocol_spec.pdf), especially shareability domains and coherent-copy tracking.
+
+Supports: Chapter 19's distinction among coherent copies, synchronization/order, authorization, and persistence. It does not identify Apple's current private coherence fabric, make every device coherent, or claim coherence repairs data races.
+
+## DRAM-CACHE-001 — the cache family
+
+Classification: dramatization grounded in `PUB-CACHE-001`, `PUB-COHERENCE-001`, existing trust-cache receipts, and Chapter 15's durability receipts.
+
+The talking caches, joint-tenancy cache line, and `F_FULLFSYNC` confusion are not traces. They preserve the boundary: “cache” names a strategy, not one authority, and CPU-cache writeback is not a storage-durability oath.

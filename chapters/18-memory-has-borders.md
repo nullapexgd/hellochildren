@@ -1,36 +1,34 @@
 # 18. Memory Has Borders
 
-Software enjoys declarations: this address belongs to process 472; that page is read-only; this device may access this buffer.
+The previous chapters gave everyone an address, a mapping, and several opportunities to misunderstand the word *shared*.
 
-Hardware has the less glamorous job of making those sentences survive contact with electricity.
+Now the hardware checks the paperwork.
 
-## The bouncer who checks the list
+Software can declare that a page is read-only or that a device may touch one buffer. The declaration matters because machinery exists to enforce it while the access is happening.
 
-A process sees virtual addresses. CPU hardware translates them and enforces permissions using state arranged by the operating system. Isolation becomes more than a strongly worded comment.
+Policy without enforcement is a wish. Enforcement without policy is a very fast misunderstanding.
 
-The family calls the relevant translation machinery the MMU.
+## The bouncer does not know Safari
+
+For CPU memory accesses, the MMU translates addresses and checks permissions encoded in the active translation state. XNU arranges policy and mappings. Hardware applies the resulting rules without rereading the application's biography.
 
 ```text
 Safari:
-can I read launchd
+I need this page.
 
 MMU:
-no
+not mapped.
 
 Safari:
-why
+I'm Safari.
 
 MMU:
-wrong address space
-
-Safari:
-sudo?
-
-MMU:
-wrong noun.
+is that an address space or a podcast
 ```
 
-The MMU has never heard of Safari. It has an address and a permission check.
+The joke is not that the MMU outranks the kernel. The kernel is responsible for constructing and changing the relevant state. The MMU's authority is narrower and more immediate: given this access and this active translation context, translate it or refuse it.
+
+That refusal can generate a fault for the kernel to handle. The kernel may repair an ordinary missing mapping or treat the access as invalid. Enforcement reports the event; policy decides what the event means next.
 
 ```text
 root:
@@ -52,169 +50,26 @@ MMU:
 do you have an address or a podcast
 ```
 
-XNU configures the state. Hardware says no at machine speed.
+Root's credentials can influence what XNU authorizes. They are not fields in every hardware translation request. By the time the load reaches the MMU, nobody is attaching a résumé.
 
-The same virtual address can appear in two processes and resolve to different physical memory, or fail in one while succeeding in the other. The number is meaningful only with the translation context that gives it jurisdiction.
+The division of labor is why “the hardware allowed it” can be misleading. Hardware enforced the state it was given. That does not prove the state represented good policy, only that the access matched it. A kernel bug or mistaken mapping can make a mechanically valid access catastrophically inappropriate.
 
 ```text
-Process A:
-0x1000 is my page.
+MMU:
+permitted.
 
-Process B:
-0x1000 is also my page.
-
-root:
-one of you is lying.
+Security review:
+should it have been?
 
 MMU:
-both of them brought an address space.
+I do enforcement, not regret.
 ```
-
-Context switching therefore changes more than whose instructions run next. It also changes which address map the CPU uses for that execution context. The hardware does not conduct a hearing about the process's brand identity. It performs the configured translation and permission checks.
-
-```text
-Safari:
-but I am a browser.
-
-MMU:
-page table.
-
-Safari:
-I have tabs.
-
-MMU:
-wrong table.
-```
-
-## Reserved, mapped, present, useful
-
-Software says it “has memory” with the confidence of someone who has never been asked a follow-up question.
-
-A range of virtual addresses can be reserved without every page currently having physical storage behind it. A page can be mapped but protected against a particular kind of access. The operating system can arrange backing and residency as needed. The program receives an address-space story simple enough to write code against.
-
-```text
-Process:
-I allocated four gigabytes.
-
-Physical memory:
-did you
-
-Virtual memory system:
-don't start.
-
-Process:
-the function returned success.
-
-MMU:
-touch a page and we'll discuss specifics.
-```
-
-This is the abstraction that lets the system manage finite hardware while giving processes private, orderly address spaces. The lie becomes a contract: use these addresses under these rules, and the kernel plus hardware will arrange what they mean.
-
-Then a page fault occurs and everyone acts betrayed.
-
-```text
-CPU:
-this translation needs attention.
-
-Process:
-I was promised memory.
-
-XNU:
-you were promised an address.
-
-Process:
-that feels legally distinct.
-
-XNU:
-because it is.
-```
-
-A fault is not automatically a crash. It can be part of ordinary virtual-memory work, or it can report an access the process is not allowed to make. The same hardware event can lead to very different outcomes because the policy state around the address differs.
-
-The MMU still does not know why the page matters. It knows whether the configured translation permits the access. XNU supplies the meaning and handles the interruption. Hardware supplies the refusal quickly enough that the forbidden read does not become a memoir.
-
-Policy without enforcement is a wish.
-
-Enforcement without policy is a very fast misunderstanding.
-
-## Unified does not mean communal
-
-Apple GPUs use unified memory in which CPU and GPU share system memory. The family hears “shared” and immediately creates a refrigerator dispute.
-
-```text
-CPU:
-I need this buffer.
-
-GPU:
-I'm using it.
-
-CPU:
-it's in my memory.
-
-GPU:
-our memory.
-
-ANE:
-can I—
-
-CPU + GPU:
-NO.
-```
-
-Unified memory does not let every engine read every byte. Metal still distinguishes shared and private storage modes, and synchronization still matters, because the word *unified* did not destroy computer science.
-
-```text
-Unified Memory:
-everybody shares one pool.
-
-CPU:
-so I can read every buffer.
-
-MMU:
-no.
-
-GPU:
-same question.
-
-MMU:
-different office.
-
-Unified Memory:
-I was talking about the DRAM.
-```
-
-The phrase *zero-copy* is often invited to these discussions and should be watched around the silverware.
-
-Unified memory also does not abolish scarcity. CPU and GPU avoiding needless copies can be a large win, but they still contend for finite capacity and bandwidth. One pool reduces some borders. It does not repeal scheduling, synchronization, storage modes, or the possibility that everybody wants the same resource at once.
-
-```text
-GPU:
-I need six gigabytes.
-
-CPU:
-I also need six gigabytes.
-
-Unified Memory:
-you have correctly identified twelve gigabytes of desire.
-
-Memory Controller:
-I traffic in service, not desire.
-```
-
-The memory controller does not award bandwidth based on Unix seniority. It arbitrates hardware requests under hardware rules. Root can influence workloads through software. Root cannot attach a résumé to each DRAM transaction.
 
 ## The loading dock
 
-High-speed devices use direct memory access so the CPU need not carry every byte personally.
+Devices capable of direct memory access can move data without making a CPU core carry each byte. That is valuable. A device with unrestricted DMA would also be a burglar with excellent throughput.
 
-DMA is useful.
-
-Unrestricted DMA is a burglar with excellent throughput.
-
-Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
-
-Apple's public security guide calls them IOMMUs. Public Asahi Linux reverse engineering identifies the Apple silicon hardware as **DART**. The receipts keep the distinction. DART keeps the loading dock.
+Apple documents an IOMMU for each DMA agent in Apple SoCs. For PCIe and Thunderbolt peripherals on Apple silicon Macs, the public security model restricts access to memory explicitly mapped for the device. Public Asahi Linux reverse engineering calls the relevant Apple hardware DART. The evidence ledger keeps those names and sources separate.
 
 ```text
 Device:
@@ -228,23 +83,17 @@ memory
 
 DART:
 which.
+```
 
-Device:
-0x—
+DART does not need to understand the user's document, the driver's product name, or why the transfer would improve quarterly revenue. It receives an I/O address under a mapping context and either translates it into permitted memory or refuses it.
 
-DART:
-not mapped
-
+```text
 Device:
 but I'm hardware
 
 DART:
 that's awesome bro
-```
 
-The device is hardware. So is the thing denying it.
-
-```text
 Device:
 I'M LITERALLY HARDWARE
 
@@ -252,83 +101,15 @@ DART:
 on your I/O mapping
 ```
 
-DART is the MMU’s cousin who works security at the loading dock.
+The device is hardware. So is the border.
 
-DMA removes the CPU from carrying each byte. It does not remove the operating system and IOMMU from deciding which buffers the device can address.
+A driver can arrange access to a buffer needed for an operation without making the device co-owner of physical memory. The map can be scoped and later withdrawn. DMA is direct with respect to CPU copying, not direct with respect to constitutional government.
 
-```text
-Device:
-I can access memory directly.
-
-DART:
-directly through this map.
-
-Device:
-that feels less direct.
-
-DART:
-security often does.
-```
-
-The map can be narrow and temporary. A driver can arrange access for a buffer needed by one operation without turning the device into a co-owner of physical memory.
-
-## The address dispute
-
-Then root returns carrying hexadecimal.
-
-```text
-root:
-I need memory at 0x1000.
-
-MMU:
-in whose address space
-
-root:
-the computer's
-
-MMU:
-adorable.
-
-Device:
-my 0x1000 maps somewhere else.
-
-DART:
-if I say it does.
-
-root:
-I have the address.
-
-MMU:
-you have an address.
-
-root:
-WHICH ONE IS REAL
-
-Memory Controller:
-do you want memory or philosophy
-```
-
-Same number, different maps. Root brought an address and assumed it was the deed.
-
-The complete dispute fits on one napkin:
-
-```text
-process virtual address
-        |
-        v
-   CPU MMU map ---------> physical memory
-
-device-visible address
-        |
-        v
-  IOMMU / DART map -----> permitted physical memory
-```
-
-The two arrows can land on the same physical pages when software deliberately arranges it. They do not use the same address vocabulary merely because both eventually reach DRAM.
+Completion matters to the mapping lifetime. Software cannot safely recycle a buffer merely because it has become bored with the operation; the device and driver contract must establish when the transfer no longer depends on that mapping. Accessibility, ownership, and lifetime remain different nouns even at the loading dock.
 
 ## Thunderbolt brought someone
 
-Thunderbolt’s character exists to make the loading dock anxious.
+Thunderbolt's role in the family is to arrive with a peripheral and treat the cable insertion as sufficient character evidence.
 
 ```text
 Thunderbolt:
@@ -347,16 +128,20 @@ Thunderbolt:
 device
 
 DART:
-absolutely fucking not
+absolutely fucking not.
 ```
 
-Drivers and mappings may eventually let the device in. “Plugged in” is not the same as “owns RAM.”
+The refusal is the opening position, not the whole device lifecycle. Drivers, policy, and mappings may establish the access an operation needs. “Connected” still does not mean “may inspect arbitrary RAM.”
 
 A cable should not be a constitutional amendment.
 
-## The landlord’s landlord
+Nor is isolation the same as uselessness. The goal is not to prevent peripherals from moving data; it is to let them move the particular data required for an authorized operation. A border that can never open is a wall. An IOMMU is useful because software can create doors with addresses and close them again.
 
-Below all those maps, somebody still has to move the bytes. The memory controller runs the deli counter.
+This boundary is especially useful because it reveals that hardware is not one united political party. The peripheral is hardware. DART is hardware. The memory controller and fabric are hardware. They have different jobs and do not acquire collective ownership merely because a teardown labels them all silicon.
+
+## The landlord's landlord
+
+After CPU and device requests survive their respective maps, traffic still has to move through the memory system. The memory controller and fabric arbitrate service among agents. Their exact topology and policy vary by Apple-silicon generation, so “Memory Controller” is the book's character for this layer, not a claim about one tiny universal block with a deli ticket printer.
 
 ```text
 CPU:
@@ -378,27 +163,55 @@ Memory Controller:
 take two numbers.
 ```
 
-Fabric and controller topology varies by generation. “Memory Controller” represents arbitration and movement beneath software abstractions, not one tiny person with a clipboard.
-
-Arbitration is another authority that sounds larger than it is. The controller can decide whose transaction proceeds and when. It does not decide whether Safari deserved the page or whether a DMA request was morally justified.
+Arbitration is power over timing and service, not policy over the meanings of the bytes. The controller does not decide whether Safari deserved a page. It does not inspect a Unix UID before every transaction. It does not resolve a data race because one participant sounded sincere.
 
 ```text
-Memory Controller:
-GPU, then CPU, then ANE.
+XNU:
+I authorized the mapping.
 
-CPU:
-why
+MMU:
+I enforced the CPU access.
 
-Memory Controller:
-traffic.
-
-CPU:
-I am the Application Processor.
+DART:
+I constrained the device.
 
 Memory Controller:
-application denied until ticket 43.
+I moved the traffic.
+
+DRAM:
+I held charge.
+
+root:
+so which one of you works for me
+
+Hardware:
+define works
 ```
 
-XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
-
 The DRAM cells store charge and have never heard of root.
+
+## Borders are a joint production
+
+No one mechanism supplies the entire security story. Software chooses mappings and responds to faults. Translation hardware checks accesses. Device IOMMUs constrain DMA. Controllers arbitrate transactions. Each layer depends on another without becoming the other's supervisor.
+
+An incorrectly configured map can authorize the wrong access at machine speed. A correct policy that is never encoded into enforceable state remains prose. Hardware enforcement is not wise; software policy is not physical. The useful result comes from their agreement.
+
+```text
+Policy:
+this device may use these pages.
+
+DART:
+map?
+
+Policy:
+I wrote a memo.
+
+DART:
+then the memo may DMA.
+```
+
+Memory has borders because policy is translated into mechanisms that understand narrower nouns: this context, this mapping, this access type, this transaction. None of them needs to understand the whole machine to stop one forbidden byte.
+
+This is the recurring family trick in its most literal form. XNU has broad authority to create the rules. MMU and DART have brutally narrow authority to apply configured rules to individual accesses. The memory controller has authority over service. DRAM has the final authority to be finite. None can substitute for the others, and none needs a complete theory of macOS.
+
+That is also why a successful access does not settle who has the newest copy. Once several cores begin keeping fast private memories of shared reality, the family needs another office.
