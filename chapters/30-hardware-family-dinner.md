@@ -1,4 +1,4 @@
-# 28. The Hardware Family Dinner
+# 30. The Hardware Family Dinner
 
 The mistake was inviting everyone.
 
@@ -524,6 +524,27 @@ you all take for granted.
 APFS:
 volumes, files, snapshots.
 
+VFS:
+names into file operations.
+
+Driver:
+device-specific translation.
+
+firmware:
+local controller behavior.
+
+Network:
+packets without your PID.
+
+Scheduler:
+runnable is not running.
+
+Wait queue:
+eligible, not executed.
+
+Interrupt machinery:
+delivery, not the whole consequence.
+
 seal:
 boot-accepted system integrity.
 
@@ -606,7 +627,7 @@ The MMU and DART turn mappings into refusals.
 
 The GPU, ANE, storage, display, and memory machinery own specialized mechanisms. SEP has a security jurisdiction the Application Processor cannot annex. The AP hosts XNU without becoming XNU.
 
-The system works because these limits meet through boot, IPC, policy, mappings, drivers, queues, shared memory, cryptography, and mutual suspicion.
+The system works because these limits meet through boot, IPC, policy, names, mappings, drivers, firmware, queues, packets, waits, wakeups, interrupts, shared memory, cryptography, and mutual suspicion.
 
 This is the Apple silicon family.
 

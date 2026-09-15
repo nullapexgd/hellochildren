@@ -226,3 +226,29 @@ Supports: Chapter 24 separating waiter eligibility, timer expiry, callback deliv
 Classification: dramatization grounded in the four receipts above.
 
 The packet does not literally argue about PIDs, and Power Management is an ensemble character. Dialogue never establishes that one packet always launches a service, one callback always uses a particular thread, or one reported wake reason is a complete causal trace.
+
+## PUB-EXCEPTION-001 — synchronous exceptions and asynchronous interrupts
+
+Classification: official Arm architectural documentation.
+
+Source: Arm Architecture Reference Manual for A-profile architecture, [Exception model](https://developer.arm.com/documentation/ddi0487/latest/), including synchronous exception and IRQ categories.
+
+Supports: Chapter 29 separating instruction-caused synchronous exceptions from asynchronous hardware interrupts. It does not disclose current Apple interrupt-controller topology or routing policy.
+
+## PUB-MACH-EXCEPTION-001 and PUB-SIGNAL-001 — operating-system delivery layers
+
+Classification: Apple archived Mach documentation, Apple OSS XNU interfaces, and installed macOS manuals.
+
+Sources: Apple archived [Mach Overview](https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/Mach/Mach.html), Apple OSS XNU `osfmk/mach/exception_types.h`, and macOS 27.0 SDK `signal(3)`/`sigaction(2)` manuals.
+
+Supports: Mach exception-port delivery and Unix signal semantics, including `SIGINT`, without treating either as a raw hardware interrupt.
+
+## PUB-DEFERRED-WORK-001 — delivery and later work differ
+
+Classification: Apple OSS/XNU architectural interfaces plus scoped explanation.
+
+Sources: Apple OSS XNU interrupt/event and thread scheduling interfaces; `PUB-WAIT-001` and DriverKit event sources. Chapter 29 claims only that prompt event handling can arrange later work. It does not prescribe one deferral mechanism for every Apple device.
+
+## DRAM-SPACETIME-INTERRUPT-001 — the `zzz` bridge
+
+Classification: dramatization. Spacetime is not an Arm processing element. The chapter begins after Chapter 28's exact `zzz`, introduces no Hyprvisor name, and uses the guest/host interruption question only to prepare Chapter 32.

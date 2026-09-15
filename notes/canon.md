@@ -33,6 +33,7 @@ This ledger records callbacks, not claims of implementation.
 | The packet leaves without your PID | 22 | Protocol boundary | Local attribution and explicit higher-level identity remain real; PID is not automatically an Internet routing field. |
 | The CPU is waiting | 23 | State-vocabulary joke | Always name thread, core, pipeline, operation, or user. Async moves waiting; it does not remove latency. |
 | Who woke me up? | 24 | Multi-boundary callback | Waiter, timer, callback, service activation, core, display, and system wake remain distinct. Interrupt routing belongs to Chapter 29. |
+| Please stop interrupting me | 29 | Architectural bridge | Synchronous exception, hardware interrupt, Mach exception, Unix signal, deferred work, and wake remain separate. Do not name Hyprvisor. |
 | SEP mailbox dap-up | 25 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |
 | Efeali sends launchd to SEP | 26 | Deliberately impossible dramatization | `send` is invented; AirDrop does not cross trust domains; the evidence note must say the architecture argues against the scene. |
 | iBoot: “personal matters.” | 26 | Dramatized | iBoot accepts the impossible premise for personal reasons and never explains them. |

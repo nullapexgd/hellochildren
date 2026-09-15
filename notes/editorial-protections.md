@@ -513,3 +513,5 @@ Chapter 22 must state both qualifications: local policy may attribute sockets to
 Chapter 23 separates runnable, running, blocked, spinning, core idle, and pipeline stall. Do not invent private XNU scheduler policy or M4 microarchitecture. Asynchronous code waits elsewhere; it does not remove latency.
 
 Chapter 24 always asks what woke. Thread eligibility, timer expiry, callback delivery, service activation, processor/display activity, and system wake are not synonyms. It may point toward interrupt routing but must not teach or spend Chapter 29's interrupt material.
+
+Chapter 29 begins directly after Chapter 28's `zzz`. It separates synchronous exceptions, asynchronous hardware interrupts, Mach exceptions, Unix signals, deferred work, thread wake, service launch, and system wake. It must not name Hyprvisor or contain `moo.`. It hands the fully expanded cast to Chapter 30 Dinner.
