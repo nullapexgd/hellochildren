@@ -36,6 +36,138 @@ epub_contains() {
     done | grep -Fq -- "$marker" || fail "$epub reading content does not contain: $marker"
 }
 
+epub_reading_content() {
+    epub=$1
+    unzip -Z1 "$epub" | while IFS= read -r entry; do
+        case "$entry" in
+            EPUB/text/*.xhtml) unzip -p "$epub" "$entry" ;;
+        esac
+    done
+}
+
+count_standalone() {
+    awk '$0 == "moo." { count++ } END { print count + 0 }' "$1"
+}
+
+assert_order() {
+    file=$1
+    shift
+    previous=0
+    for marker in "$@"; do
+        line=$(grep -n -m1 -F -- "$marker" "$file" | cut -d: -f1 || true)
+        test -n "$line" || fail "$file does not contain ordered marker: $marker"
+        test "$line" -gt "$previous" || fail "$file has out-of-order marker: $marker"
+        previous=$line
+    done
+}
+
+contains "$project_dir/VERSION" '0.7'
+contains "$project_dir/book/metadata.yaml" 'edition: "v0.7 — Expanded Jurisdiction Edition"'
+contains "$project_dir/chapters/00-title.md" '### v0.7 — Expanded Jurisdiction Edition'
+contains "$project_dir/README.md" 'The current release is v0.7'
+test -f "$project_dir/notes/receipts-v0.7.md" || fail 'missing notes/receipts-v0.7.md'
+test -f "$project_dir/releases/on-your-processor-v0.7.md" || fail 'missing frozen v0.7 manuscript'
+
+chapter_count=$(find "$project_dir/chapters" -maxdepth 1 -type f -name '[0-9][0-9]-*.md' ! -name '00-title.md' | wc -l | tr -d ' ')
+test "$chapter_count" = 32 || fail "expected 32 numbered chapters, found $chapter_count"
+i=1
+while [ "$i" -le 32 ]; do
+    chapter_number=$(printf '%02d' "$i")
+    find "$project_dir/chapters" -maxdepth 1 -type f -name "$chapter_number-*.md" | grep -q . || fail "missing consecutive chapter $chapter_number"
+    i=$((i + 1))
+done
+
+for chapter in \
+    14-your-file-does-not-exist.md \
+    15-please-wait-im-writing.md \
+    16-everybody-has-an-address.md \
+    17-that-is-not-your-memory.md \
+    19-the-cache-has-receipts.md \
+    20-you-never-talked-to-the-hardware.md \
+    21-the-firmware-nobody-invited.md \
+    22-the-network-does-not-care-about-your-process.md \
+    23-the-cpu-is-waiting.md \
+    24-who-woke-me-up.md \
+    31-please-stop-interrupting-me.md \
+    18-memory-has-borders.md \
+    25-sep-has-a-mailbox.md \
+    26-the-civil-war.md \
+    27-the-house-inside-the-house.md \
+    28-the-hardware-family-dinner.md \
+    29-shutdown.md \
+    30-below-the-kernel.md \
+    32-epilogue.md; do
+    test -f "$project_dir/chapters/$chapter" || fail "missing v0.7 chapter: $chapter"
+done
+
+contains "$project_dir/chapters/03-xnu.md" 'congratulations on having a demolition permit'
+contains "$project_dir/chapters/14-your-file-does-not-exist.md" "what's a Users"
+contains "$project_dir/chapters/14-your-file-does-not-exist.md" "what's a file"
+contains "$project_dir/chapters/21-the-firmware-nobody-invited.md" "what's your PID"
+contains "$project_dir/chapters/21-the-firmware-nobody-invited.md" 'my what'
+contains "$project_dir/chapters/30-below-the-kernel.md" 'zzz'
+contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'synchronous exceptions'
+contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'hardware interrupts'
+contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Mach exceptions'
+contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Unix signals'
+contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'deferred work'
+contains "$project_dir/chapters/32-epilogue.md" 'Hyprvisor'
+test "$(count_standalone "$project_dir/chapters/31-please-stop-interrupting-me.md")" = 0 || fail 'Chapter 31 contains standalone moo.'
+test "$(count_standalone "$project_dir/chapters/32-epilogue.md")" = 1 || fail 'Chapter 32 must contain exactly one standalone moo.'
+
+test -f "$project_dir/book/contents.txt" || fail 'missing book/contents.txt'
+for part in \
+    01-who-let-you-run.md \
+    02-the-offices-upstairs.md \
+    03-names-bytes-and-addresses.md \
+    04-nobody-touched-the-hardware.md \
+    05-other-worlds.md \
+    06-everybody-leaves-eventually.md; do
+    test -f "$project_dir/parts/$part" || fail "missing part source: $part"
+    contains "$project_dir/parts/$part" '.part-title'
+done
+contains "$project_dir/book/reader.js" 'isPartDivider'
+contains "$project_dir/book/reader.js" 'reader-page-part'
+contains "$project_dir/book/book.css" '.reader-page-part'
+contains "$project_dir/book/book.css" '.part-title'
+
+for marker in \
+    'parts/01-who-let-you-run.md' \
+    'chapters/01-nobody-is-actually-in-charge.md' \
+    'parts/02-the-offices-upstairs.md' \
+    'chapters/06-sessions-and-windows.md' \
+    'parts/03-names-bytes-and-addresses.md' \
+    'chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md' \
+    'parts/04-nobody-touched-the-hardware.md' \
+    'chapters/20-you-never-talked-to-the-hardware.md' \
+    'parts/05-other-worlds.md' \
+    'chapters/25-sep-has-a-mailbox.md' \
+    'parts/06-everybody-leaves-eventually.md' \
+    'chapters/28-the-hardware-family-dinner.md' \
+    'chapters/32-epilogue.md'; do
+    contains "$project_dir/book/contents.txt" "$marker"
+done
+assert_order "$project_dir/book/contents.txt" \
+    'chapters/00-title.md' \
+    'parts/01-who-let-you-run.md' \
+    'chapters/01-nobody-is-actually-in-charge.md' \
+    'chapters/05-the-children.md' \
+    'parts/02-the-offices-upstairs.md' \
+    'chapters/06-sessions-and-windows.md' \
+    'chapters/12-sharingd-knows-a-guy.md' \
+    'parts/03-names-bytes-and-addresses.md' \
+    'chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md' \
+    'chapters/19-shutdown.md' \
+    'parts/04-nobody-touched-the-hardware.md' \
+    'chapters/20-you-never-talked-to-the-hardware.md' \
+    'chapters/24-who-woke-me-up.md' \
+    'parts/05-other-worlds.md' \
+    'chapters/25-sep-has-a-mailbox.md' \
+    'chapters/27-the-house-inside-the-house.md' \
+    'parts/06-everybody-leaves-eventually.md' \
+    'chapters/28-the-hardware-family-dinner.md' \
+    'chapters/32-epilogue.md'
+
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
 contains "$project_dir/VERSION" '0.6'
 contains "$project_dir/book/metadata.yaml" 'title: "On Your Processor"'
@@ -46,14 +178,14 @@ contains "$project_dir/README.md" 'The current release is v0.6'
 contains "$project_dir/chapters/02-the-boot-chain.md" 'Owner Identity Key'
 contains "$project_dir/chapters/05-the-children.md" '`iBootd` is fictional.'
 contains "$project_dir/chapters/08-trust-and-signatures.md" '`amfidd` is fictional.'
-contains "$project_dir/chapters/18-hardware-family-dinner.md" 'you are all PART OF ME.'
-contains "$project_dir/chapters/19-shutdown.md" 'bro really turned himself off'
-contains "$project_dir/chapters/20-below-the-kernel.md" '# 20. Below the Kernel'
-contains "$project_dir/chapters/20-below-the-kernel.md" 'The jurisdiction map has now left the motherboard.'
-contains "$project_dir/chapters/20-below-the-kernel.md" 'wrong temporal domain.'
-contains "$project_dir/chapters/20-below-the-kernel.md" 'Spacetime:'
-contains "$project_dir/chapters/21-epilogue.md" '# 21. One More Jurisdiction'
-not_contains "$project_dir/chapters/18-hardware-family-dinner.md" 'physically inside me'
+contains "$project_dir/chapters/28-hardware-family-dinner.md" 'you are all PART OF ME.'
+contains "$project_dir/chapters/29-shutdown.md" 'bro really turned himself off'
+contains "$project_dir/chapters/30-below-the-kernel.md" '# 30. Below the Kernel'
+contains "$project_dir/chapters/30-below-the-kernel.md" 'The jurisdiction map has now left the motherboard.'
+contains "$project_dir/chapters/30-below-the-kernel.md" 'wrong temporal domain.'
+contains "$project_dir/chapters/30-below-the-kernel.md" 'Spacetime:'
+contains "$project_dir/chapters/32-epilogue.md" '# 32. One More Jurisdiction'
+not_contains "$project_dir/chapters/28-hardware-family-dinner.md" 'physically inside me'
 
 chapter_count=$(find "$project_dir/chapters" -maxdepth 1 -type f -name '[0-9][0-9]-*.md' ! -name '00-title.md' | wc -l | tr -d ' ')
 test "$chapter_count" = 21 || fail "expected 21 numbered chapters, found $chapter_count"
@@ -102,12 +234,46 @@ not_contains "$project_dir/book/book.css" 'column-fill'
 not_contains "$project_dir/book/book.css" '.book-pages > main'
 contains "$project_dir/README.md" '[Interactive HTML reader](dist/on-your-processor.html)'
 contains "$project_dir/README.md" 'Left/Right arrow keys'
-contains "$project_dir/manuscript.md" '# 20. Below the Kernel'
-contains "$project_dir/manuscript.md" '# 21. One More Jurisdiction'
+contains "$project_dir/manuscript.md" '# 30. Below the Kernel'
+contains "$project_dir/manuscript.md" '# 32. One More Jurisdiction'
 
 test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
 test -f "$project_dir/releases/on-your-processor-v0.5.md" || fail 'missing frozen v0.5 manuscript'
+
+for part_marker in \
+    'Part I — Who Let You Run?' \
+    'Part II — The Offices Upstairs' \
+    'Part III — Names, Bytes, and Addresses' \
+    'Part IV — Nobody Touched the Hardware' \
+    'Part V — Other Worlds' \
+    'Part VI — Everybody Leaves Eventually'; do
+    contains "$html_file" "$part_marker"
+    epub_contains "$part_marker" "$epub_file"
+done
+epub_order_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-epub.XXXXXX")
+trap 'rm -f "$epub_order_file"' EXIT
+epub_reading_content "$epub_file" > "$epub_order_file"
+assert_order "$epub_order_file" \
+    'Part I — Who Let You Run?' \
+    'Part II — The Offices Upstairs' \
+    'Part III — Names, Bytes, and Addresses' \
+    'Part IV — Nobody Touched the Hardware' \
+    'Part V — Other Worlds' \
+    'Part VI — Everybody Leaves Eventually' \
+    '30. Below the Kernel' \
+    '31. Please Stop Interrupting Me' \
+    '32. One More Jurisdiction'
+assert_order "$html_file" \
+    'Part I — Who Let You Run?' \
+    'Part II — The Offices Upstairs' \
+    'Part III — Names, Bytes, and Addresses' \
+    'Part IV — Nobody Touched the Hardware' \
+    'Part V — Other Worlds' \
+    'Part VI — Everybody Leaves Eventually' \
+    '30. Below the Kernel' \
+    '31. Please Stop Interrupting Me' \
+    '32. One More Jurisdiction'
 
 contains "$html_file" '<h1 class="title">On Your Processor</h1>'
 contains "$html_file" 'Efeali Bel'
@@ -157,5 +323,8 @@ contains "$project_dir/releases/on-your-processor-v0.5.md" '# 20. One More Juris
 
 v06_release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.6.md")
 test "$v06_release_last_nonblank" = 'moo.' || fail 'frozen v0.6 manuscript does not end at moo.'
+
+test "$(count_standalone "$project_dir/manuscript.md")" = 1 || fail 'manuscript must contain exactly one standalone moo.'
+test "$(count_standalone "$project_dir/releases/on-your-processor-v0.7.md")" = 1 || fail 'frozen v0.7 manuscript must contain exactly one standalone moo.'
 
 printf '%s\n' 'publication check passed'
