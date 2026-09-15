@@ -61,6 +61,10 @@ assert_order() {
     done
 }
 
+extract_html_toc() {
+    awk '/<nav[^>]*role="doc-toc"/ { inside=1 } inside { print } inside && /<\/nav>/ { exit }' "$1"
+}
+
 contains "$project_dir/VERSION" '0.7'
 contains "$project_dir/book/metadata.yaml" 'edition: "v0.7 — Expanded Jurisdiction Edition"'
 contains "$project_dir/chapters/00-title.md" '### v0.7 — Expanded Jurisdiction Edition'
@@ -237,6 +241,10 @@ contains "$project_dir/manuscript.md" '# 32. One More Jurisdiction'
 test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
 test -f "$project_dir/releases/on-your-processor-v0.5.md" || fail 'missing frozen v0.5 manuscript'
+html_toc_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-html-toc.XXXXXX")
+trap 'rm -f "$html_toc_file"' EXIT
+extract_html_toc "$html_file" > "$html_toc_file"
+contains "$html_toc_file" 'role="doc-toc"'
 
 for part_marker in \
     'Part I — Who Let You Run?' \
@@ -251,7 +259,7 @@ done
 epub_order_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-epub.XXXXXX")
 epub_nav_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-nav.XXXXXX")
 epub_opf_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-opf.XXXXXX")
-trap 'rm -f "$epub_order_file" "$epub_nav_file" "$epub_opf_file"' EXIT
+trap 'rm -f "$html_toc_file" "$epub_order_file" "$epub_nav_file" "$epub_opf_file"' EXIT
 epub_reading_content "$epub_file" > "$epub_order_file"
 unzip -p "$epub_file" EPUB/nav.xhtml > "$epub_nav_file"
 unzip -p "$epub_file" EPUB/content.opf > "$epub_opf_file"
@@ -295,7 +303,7 @@ for navigation_marker in \
     navigation_id=${navigation_file%.xhtml}_xhtml
     grep -Fq -- "idref=\"$navigation_id\"" "$epub_opf_file" || fail "EPUB spine target missing: $navigation_marker"
 done
-assert_order "$html_file" \
+assert_order "$html_toc_file" \
     'Part I — Who Let You Run?' \
     'Part II — The Offices Upstairs' \
     'Part III — Names, Bytes, and Addresses' \
