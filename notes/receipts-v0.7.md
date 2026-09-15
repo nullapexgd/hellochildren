@@ -16,7 +16,7 @@ Does **not** establish a documented XNU/launchd transcript, private control path
 
 ## EDIT-RENUMBER-001 — chapter-number migration with no changed factual meaning
 
-The eight late v0.6 chapter sources move to their final v0.7 positions: 14→18, 15→25, 16→26, 17→27, 18→28, 19→29, 20→30, and 21→32. Only filenames, top-level chapter numbers, and affected reference bookkeeping change in this migration.
+The eight late v0.6 chapter sources move to their final v0.7 positions: 14→18, 15→25, 16→26, 17→27, 18→30, 19→31, 20→28, and 21→32. Only filenames, top-level chapter numbers, and affected reference bookkeeping change in this migration.
 
 Supports: stable final source paths for the v0.7 chapter spine.
 
