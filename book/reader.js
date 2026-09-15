@@ -77,9 +77,14 @@
         return block.tagName === "H1" && /^\d+\.\s/.test(block.textContent.trim());
     }
 
+    function isPartDivider(block) {
+        return block.matches("h1.part-title");
+    }
+
     function addManuscript(main) {
         let page;
         let firstPage = true;
+        let partPage;
 
         function startPage() {
             page = createPage();
@@ -91,6 +96,26 @@
         }
 
         for (const block of main.children) {
+            if (isPartDivider(block)) {
+                partPage = createPage("reader-page-part");
+                partPage.content.append(block.cloneNode(true));
+
+                page = undefined;
+                continue;
+            }
+
+            if (partPage) {
+                partPage.content.append(block.cloneNode(true));
+
+                if (overflows(partPage.content)) {
+                    partPage.page.classList.add("reader-page-oversize");
+                }
+
+                partPage = undefined;
+                page = undefined;
+                continue;
+            }
+
             if (isNumberedChapter(block)) {
                 page = undefined;
             }

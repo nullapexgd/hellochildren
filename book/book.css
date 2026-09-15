@@ -278,6 +278,36 @@ html.reader-ready .book-source {
     justify-content: flex-start;
 }
 
+.reader-page-part .reader-page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.5rem, 7vw, 5rem);
+    background:
+        linear-gradient(145deg, rgba(166, 59, 48, 0.08), transparent 48%),
+        var(--paper-bright);
+}
+
+:is(.book-source, .reader-page-content) .part-title {
+    max-width: 12ch;
+    margin: 0;
+    padding-top: 1.2rem;
+    border-top: 0.32rem solid var(--accent);
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+}
+
+.reader-page-part .part-title + p {
+    max-width: 32rem;
+    margin: 1.5rem 0 0;
+    color: var(--muted);
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+    line-height: 1.45;
+}
+
 :is(.book-source, .reader-page-content) p,
 :is(.book-source, .reader-page-content) li {
     hanging-punctuation: first last;
@@ -812,6 +842,18 @@ nav#TOC a:hover {
     .book-source main > h1 {
         page-break-before: always;
         break-before: page;
+    }
+
+    .book-source .part-title {
+        page-break-before: always;
+        page-break-after: avoid;
+        break-before: page;
+        break-after: avoid-page;
+    }
+
+    .book-source .part-title + p {
+        page-break-after: always;
+        break-after: page;
     }
 
     .book-source pre,

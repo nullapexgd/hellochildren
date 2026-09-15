@@ -11,6 +11,7 @@ html_output="$dist_dir/on-your-processor.html"
 epub_output="$dist_dir/on-your-processor.epub"
 cover_image="$book_dir/assets/cover.png"
 synopsis_file="$project_dir/notes/synopsis.md"
+contents_file="$book_dir/contents.txt"
 
 temp_file=$(mktemp "${TMPDIR:-/tmp}/on-your-processor.XXXXXX")
 
@@ -18,16 +19,40 @@ trap 'rm -f "$temp_file"' EXIT HUP INT TERM
 
 : > "$temp_file"
 
+test -f "$contents_file" || {
+    printf '%s\n' "error: missing book/contents.txt" >&2
+    exit 1
+}
+
 first=1
 
-for chapter_file in "$project_dir"/chapters/*.md; do
+while IFS= read -r relative_file || [ -n "$relative_file" ]; do
+    case "$relative_file" in
+        ''|'#'*) continue ;;
+        /*|..|../*|*/..|*/../*)
+            printf '%s\n' "error: unsafe manifest entry: $relative_file" >&2
+            exit 1
+            ;;
+    esac
+
+    source_file="$project_dir/$relative_file"
+    test -f "$source_file" || {
+        printf '%s\n' "error: missing manifest source: $relative_file" >&2
+        exit 1
+    }
+
     if [ "$first" -eq 0 ]; then
         printf '\n\n' >> "$temp_file"
     fi
 
-    cat "$chapter_file" >> "$temp_file"
+    cat "$source_file" >> "$temp_file"
     first=0
-done
+done < "$contents_file"
+
+test "$first" -eq 0 || {
+    printf '%s\n' "error: book/contents.txt contains no sources" >&2
+    exit 1
+}
 
 mv "$temp_file" "$output_file"
 

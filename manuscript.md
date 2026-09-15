@@ -31,6 +31,11 @@ The joke still gets to enter. It just has to show identification.
 Welcome to the family.
 
 
+# Part I — Who Let You Run? {#part-i .part-title}
+
+Before anyone can rule the machine, somebody has to let them exist.
+
+
 # 1. Nobody Is Actually in Charge
 
 Most explanations of computers begin with a hierarchy.
@@ -421,32 +426,7 @@ That is as far as documented ownership goes. Chapter 5 will now misuse the famil
 
 ## The other processors have childhoods too
 
-Apple documents peripheral processors dedicated to display, storage, system management, Thunderbolt, graphics, and other functions. Some download verified firmware at startup; others may implement their own secure boot.
-
-This matters because the popular diagram shows hardware as a silent gray rectangle labeled HARDWARE.
-
-The gray rectangle is lying by omission.
-
-Inside it are specialists who also have startup requirements, firmware, memory, protection boundaries, and the capacity to make the main CPU’s day much worse.
-
-```text
-Application Processor:
-everybody ready?
-
-Display controller:
-firmware verified
-
-Storage controller:
-firmware verified
-
-Thunderbolt controller:
-I brought—
-
-DART:
-don't
-```
-
-The hardware relatives implement execution privilege, memory translation, DMA isolation, secure key operations, storage translation, rendering, inference, and display. Boot is customs opening several borders in order while everybody insists their form was already stamped.
+Apple also documents peripheral processors whose firmware may be verified after loading from the primary CPU or by a separate secure-boot chain. The main boot story therefore opens more than one execution world. Chapter 21 will meet the relatives who were never ordinary launchd jobs.
 
 ## The ancestor leaves the plot
 
@@ -716,6 +696,16 @@ XNU configures mappings; the MMU enforces translations. XNU and drivers arrange 
 This is not weakness. It is separation of responsibility hardened into boundaries.
 
 The insecure alternative is not “XNU, but more kingly.” It is “one compromise gets the whole house.”
+
+```text
+XNU:
+I can destroy the entire userspace.
+
+launchd:
+congratulations on having a demolition permit
+```
+
+Destructive authority is not service organization.
 
 ## The first child
 
@@ -1402,6 +1392,11 @@ LaunchAngel:
 We still do not know what that means.
 
 We do know it has excellent timing.
+
+
+# Part II — The Offices Upstairs {#part-ii .part-title}
+
+Userspace looks orderly until every office presents a different badge.
 
 
 # 6. Who Owns the User Session?
@@ -3213,6 +3208,8 @@ The daemon’s broad access is not automatically evidence of abuse. It is eviden
 
 ## Finding is not knowing is not sending
 
+This chapter owns discovery, identity, policy, and the decision to send. Chapter 22 takes the resulting bytes from a socket through protocol and interface boundaries toward a network that has never heard of `sharingd`'s reputation.
+
 The Share button conceals several questions because putting all of them in the menu would make the menu the size of a tax return.
 
 Is another device nearby? Does it advertise a compatible service? Which account or contact might correspond to it? Is the recipient eligible for this feature? Which transport can carry the payload? Will the other side accept it?
@@ -3299,6 +3296,11 @@ I asked a yes-or-no question
 `sharingd` crosses kingdoms wearing enough credentials to make their rulers nervous. Somewhere, quietly, `amfid` still has eight.
 
 The count changed. The constitutional lesson did not.
+
+
+# Part III — Names, Bytes, and Addresses {#part-iii .part-title}
+
+The same object acquires a new identity at every desk it crosses.
 
 
 # 13. Macintosh HD Is a Diplomatic Arrangement
@@ -3501,8 +3503,6 @@ Older snapshot:
 in which century
 ```
 
-The joke is not that one view lies. The joke is that the user asked for *the* state.
-
 ## The seal would like a word
 
 The Signed System Volume protects system content with a tree of cryptographic hashes whose root measurement is called a seal. On Apple silicon, Apple documents the bootloader verifying the seal before handing control to the kernel under the normal protected boot configuration.
@@ -3541,7 +3541,7 @@ SSV:
 historical fiction is on another volume.
 ```
 
-The useful distinction is between a byte existing and a boot policy accepting a system built from it. A recovery tool can operate under authority that an ordinary process does not possess. A changed security configuration can authorize a different boot path. Neither event travels backward in time and turns the original running root shell into Boot ROM's supervisor.
+Here, “the write succeeded” concerns altered system content and boot acceptance. Whether those bytes survive a power failure is a separate question. A recovery tool can operate under authority that an ordinary process does not possess. Neither event travels backward in time and turns the original running root shell into Boot ROM's supervisor.
 
 ```text
 root:
@@ -3559,55 +3559,9 @@ that is a time, not an answer.
 
 Filesystems preserve states. Boot policy chooses among states it is willing to trust. The path `/System` cannot explain either decision by itself.
 
-## The path is lying politely again
-
-> **Sidebar: `/private` has been here the whole time**
->
-> Familiar macOS paths such as `/var`, `/tmp`, and `/etc` resolve through links into `/private`. This indirection predates the modern System/Data split and should not be confused with firmlinks or the Signed System Volume.
->
-> ```text
-> User:
-> /var
->
-> Filesystem:
-> /private/var
->
-> User:
-> why hide the word private
->
-> Filesystem:
-> it was in the path.
-> ```
->
-> A visible pathname is an interface. Following it may cross a symbolic link, a firmlink-backed volume boundary, or a mount point. Similar surprise does not make those mechanisms identical.
-
 ## Namespace lies politely
 
-The directory tree is one of computing's best user interfaces because it lets wildly different storage arrangements answer to paths. Local volumes, snapshots, firmlinks, mounted disk images, network shares, and synthetic locations can all appear under one navigable shape.
-
-The lie is polite because the alternative is asking the user to provide a volume-group UUID before opening Downloads.
-
-```text
-User:
-open my file.
-
-Path resolver:
-which mounted view
-
-User:
-the normal one.
-
-Path resolver:
-finally, an honest abstraction.
-```
-
-Three authorities remain distinct:
-
-- A process may have permission to write.
-- A particular mounted view may expose a path and permit mutation.
-- The resulting filesystem state may or may not be the snapshot and seal accepted for boot.
-
-Changing one answer does not automatically change the others. Root can possess write authority somewhere without controlling which snapshot the boot chain accepts. Finder can display one “Macintosh HD” without erasing the System/Data split. APFS can present a coherent path without claiming every byte lives on one volume.
+The directory tree lets the System and Data volumes appear as one navigable place. That saves the user from providing a volume-group UUID before opening Downloads. The visible path still leaves mount state and boot acceptance to their respective offices.
 
 Authority through abstraction is the friendliest form of lying in the house.
 
@@ -3616,17 +3570,411 @@ Finder closes the information window.
 The disk once again appears singular.
 
 
-# 14. Memory Has Borders
+# 14. Your File Does Not Exist
 
-Software enjoys declarations: this address belongs to process 472; that page is read-only; this device may access this buffer.
+The title is something a filesystem might say during a difficult breakup. It needs a qualification: the name you supplied might no longer identify anything, while the file you already opened remains perfectly usable.
 
-Hardware has the less glamorous job of making those sentences survive contact with electricity.
+Computing has found a way to make “it's over” depend on reference counting.
 
-## The bouncer who checks the list
+## The name at the door
 
-A process sees virtual addresses. CPU hardware translates them and enforces permissions using state arranged by the operating system. Isolation becomes more than a strongly worded comment.
+`/Users/efeali/book.txt` looks reassuringly specific. It has slashes. It has a surname. It ends in a format modest enough to survive several generations of software ambition.
 
-The family calls the relevant translation machinery the MMU.
+It is a pathname: instructions for finding something through a directory tree. A directory entry associates a name with a filesystem object. The object supplies the contents and attributes; the name is how a lookup gets there. Several names can refer to the same regular file through hard links, so the name cannot also be its one true soul.
+
+```text
+File:
+my name is book.txt.
+
+Directory:
+that's what I call you.
+
+Other directory:
+I call him final-final.txt.
+
+File:
+please don't introduce me like that.
+```
+
+Lookup has a starting place. An absolute pathname begins at the process's root; an ordinary relative pathname starts at its current directory. `openat` can instead start a relative lookup from a directory descriptor. The short name `book.txt` leaves quite a lot of the address on the envelope blank.
+
+The route can also contain indirection. Familiar macOS paths `/etc`, `/tmp`, and `/var` lead through symbolic links into `/private`. The user can spend years navigating these paths without noticing the extra component.
+
+```text
+User:
+/var
+
+Filesystem:
+/private/var
+
+User:
+why hide the word private
+
+Filesystem:
+it was in the path.
+```
+
+A symbolic link supplies another path to follow. A firmlink joins the paired locations from the previous chapter. A mount point exposes another filesystem. The tree makes them convenient to traverse without making them the same mechanism.
+
+macOS even supports a limited set of synthetic links and empty directories at the root, described by `synthetic.conf` and constructed during boot. A synthetic empty directory can provide a mount point; it is not an ordinary writable folder waiting to receive children. Being visible in a listing is a remarkably small job description.
+
+## Open after disappearance
+
+Suppose a program successfully opens our ordinary local text file for reading. It receives a file descriptor, a small integer in that process's table of open references. We'll call it `7`.
+
+The integer refers to an *open file description*, the open instance with such state as its access mode and current offset. That description refers to the file. The distinction becomes less bureaucratic when the directory starts deleting things.
+
+Another process successfully calls `unlink` on the file's last name. The directory entry disappears. A fresh attempt to open that pathname, without asking to create it, now fails because the name is absent.
+
+Our first program can keep reading through descriptor `7`.
+
+```text
+Directory:
+he no longer works here.
+
+Reader:
+I'm talking to him.
+
+Directory:
+then please stop using reception.
+```
+
+Removing the last link postpones removal of the file's contents while open references remain. This is ordinary Unix file lifetime, assuming the unlink succeeds. It is not a special undelete privilege and doesn't need the Trash to intervene. A graphical application's Delete command may have a different workflow; `unlink` is the specific operation at this meeting.
+
+Now create a new file under the old name. New lookups can reach the replacement. The first reader still holds the earlier object, which has not been promoted into the replacement merely because the two share a former address.
+
+That gives us a perfectly respectable state of affairs in which one reader sees the old draft and a newly opened reader sees the new draft. Both can truthfully say they opened `book.txt`. Their opening times matter.
+
+Nor is `7` permanent identification. Closing it releases that descriptor slot for reuse. A later open may return `7` for something else. Writing the number on a sticky note does not preserve the relationship.
+
+There can also be several descriptors for one open description: duplicating a descriptor shares its current offset, whereas opening the file separately creates a separate open instance. Two bookmarks can therefore turn out to be the same bookmark. Unix has been doing collaborative editing to people's file positions for decades.
+
+## Which version exists
+
+An open reference preserves access to an object through a name change. It does not freeze the object's contents. If someone modifies that same live file, keeping it open is not a request to retain yesterday's paragraphs.
+
+A snapshot supplies a different kind of continuity. It records a read-only volume view at a particular time. Imagine a Friday snapshot containing the old draft. On Saturday the live volume's draft changes. Reading the snapshot and reading the live volume can give different contents under corresponding paths without either read being wrong.
+
+```text
+Live file:
+I've grown.
+
+Friday snapshot:
+you still think this needs a blockchain.
+
+Live file:
+THAT WAS A WORKING DRAFT.
+```
+
+The same distinction covers absence. A file created after Friday's snapshot can exist in the live view and have no entry in Friday's view. A file removed from the live view can still appear in a retained earlier snapshot. Closing the last live open reference doesn't order every snapshot to forget its own state, and logical removal isn't a physical-erasure certificate.
+
+Mounts add a question about where the reader is standing. Mounting a filesystem at a directory normally exposes the mounted filesystem's contents there and hides the directory's previous contents until unmount. The covered files have not been deleted. Their usual route is occupied.
+
+```text
+User:
+this directory used to have my notes.
+
+Mount point:
+this entrance now serves another building.
+
+User:
+did you demolish the first one
+
+Mount point:
+we put up a sign.
+```
+
+A mounted disk image or network share can inhabit the same tree as local storage. The slash does not announce that the next operation will have a different failure mode. It certainly doesn't promise that a remote server obeys the local filesystem's every lifetime detail.
+
+This is why “I can see it” and “my program can't open it” need an actual path and context before becoming an argument. There may be a permission failure, a changed name, or a different mounted view. An error return is evidence about that attempted operation, not a census of all the world's copies.
+
+## The storage department objects
+
+XNU would like to get on with the read.
+
+```text
+XNU:
+read /Users/efeali/book.txt.
+
+SSD:
+what's a Users
+
+XNU:
+...
+
+SSD:
+what's a file
+```
+
+This is dialogue about the filesystem/block-storage boundary, not a trace of a command XNU sends. By the time an ordinary file read needs storage I/O, software has work to do turning its request into something that the storage interface can service.
+
+Darwin's virtual filesystem machinery, or VFS, gives different filesystems a common set of ways to participate in the kernel's file operations. A vnode is the kernel's representation of an active file or directory. Filesystem-specific code supplies the operations and the knowledge of that filesystem's structures.
+
+The vnode isn't another spelling of the pathname, the application's descriptor, or a physical spot in flash. It is useful to the kernel because it represents an object the kernel can work with. It doesn't need a tiny folder icon to accomplish this.
+
+```text
+Application:
+my document.
+
+VFS:
+file operation.
+
+Filesystem:
+I can work with that.
+
+SSD:
+finally, somebody will send something usable.
+```
+
+Flash introduces its own translation. Apple's APFS documentation describes a flash translation layer that can group writes into NAND blocks; separate logical locations do not let the caller dictate exact physical placement. The bytes don't retain a little `/Users` badge that the controller consults while deciding where to put them.
+
+None of this makes the file imaginary. It makes the file a software object whose storage depends on other representations. The SSD character's offense is that the introductions have arrived several abstractions too early.
+
+## Existence needs a noun
+
+Our draft can now have a missing name, a surviving open reference, and an earlier version in a snapshot. A replacement can take its old pathname while an existing reader finishes the original. The storage beneath those views is still doing storage, without becoming the arbitrator of which draft the author meant.
+
+For the author, “the file” is the manuscript. For a particular read, it is the object reached by that reference in that view. The disagreement usually stays invisible because the layers cooperate. It becomes visible exactly when someone insists that renaming, deleting, replacing, opening, and retaining a version must all mean the same thing.
+
+```text
+Author:
+fine. this object, through this reference,
+in this view.
+
+XNU:
+beautiful.
+
+Author:
+please save these bytes.
+
+XNU:
+we've reached a different problem.
+```
+
+
+# 15. Please Wait, I’m Writing
+
+## The Save button has made an announcement
+
+The author presses Save. A dot disappears from the window title. This is the most reassuring punctuation event in computing.
+
+Somewhere beneath it, a much less reassuring discussion concerns the word *done*.
+
+```text
+Application:
+saved.
+
+User:
+so I can relax.
+
+Application:
+I have updated the interface.
+
+User:
+that wasn't the part I was worried about.
+```
+
+An application's Save command has whatever contract that application gives it. It might wait for a completed storage operation, delegate to a document framework, or announce progress while work continues. The button's appearance alone tells us none of that. Our example will follow ordinary buffered output to a local regular file; other routes exist, and nobody is required to visit every desk here.
+
+The application first has bytes it wants to store. It may also have an output buffer in its own process. A library can accept output into that buffer without having sent all of it through a system call yet. For a C output stream, `fflush` pushes buffered data through the stream's underlying write function.
+
+That is useful progress. It is also a reason to ask where a buffer lives before declaring that it has been flushed. Emptying an application buffer and emptying a storage device's volatile cache are different work, even though both get the same gratifying verb.
+
+```text
+Application buffer:
+empty.
+
+User:
+the data is safe?
+
+Application buffer:
+the data has left me.
+
+User:
+you sound like my shipping notification.
+```
+
+A crash before the program submits buffered output can lose work that never reached the filesystem. That is an earlier failure than losing submitted data during a power cut. The distinction matters because asking the filesystem to finish cannot recover bytes the application has not handed it.
+
+## Accepted is not completed
+
+At the system-call boundary, `write()` attempts to write a specified number of bytes through a descriptor. Its successful result is a byte count. That number deserves to be read.
+
+Under the interface's permitted conditions, a write can transfer fewer bytes than requested. The program must handle the actual result and any error rather than translating “returned something nonnegative” into “the whole chapter is safe.” We'll give our example the easier case: the requested count came back in full.
+
+```text
+Application:
+4096 bytes, please.
+
+write():
+4096.
+
+Application:
+forever?
+
+write():
+you passed a size, not a prophecy.
+```
+
+The success has real meaning. In the ordinary regular-file model, a subsequent successful read of those positions sees the new data until it is modified again. The current file state has changed. Calling that merely an illusion would erase the very contract that lets programs exchange data through files.
+
+But a read can obtain the current bytes while storage work remains. Seeing the new contents in another window, or reading them back immediately, does not simulate losing power. The machine is still powered, with its useful temporary state intact.
+
+Filesystem work includes more than carrying the paragraph's bytes downward. It must maintain the information that makes those bytes reachable as part of a file: contents, size, allocation, and whatever bookkeeping the operation requires. The exact work depends on the filesystem and operation. There is no single procession in which every Mac writes the same structures in the same order.
+
+Apple describes APFS crash protection using copy-on-write. A filesystem can protect its structural consistency and still recover a state older than the application's latest intention. A perfectly readable previous draft is a consistent filesystem's way of ruining your afternoon.
+
+In our example, a successful ordinary write establishes the updated file state. A durability request asks for more: finish the relevant work under a contract that reaches the required storage boundary. The pause between those promises can be productive batching, until the author starts leaning toward the power button.
+
+## Close is not a sworn affidavit
+
+`close()` releases a descriptor. On the last relevant reference it also permits cleanup of the open instance. The file doesn't need a reader to stay named in its directory; the name and open lifetime were separate in the previous chapter, and they remain separate when a writer leaves.
+
+```text
+Application:
+I closed it.
+
+Filesystem:
+thank you for returning the key.
+
+Application:
+so the building is earthquake-proof.
+
+Filesystem:
+what
+```
+
+Close can report an error from previously uncommitted output. That is one reason its result matters. Successful close, however, is not a documented demand that the device flush all its buffered writes into permanent storage.
+
+When a process exits, its descriptors are freed. Even a clean exit therefore tells us about the process finishing; by itself it cannot certify durable storage. Keep that distinction handy for the evening when XNU decides to dismiss the entire staff.
+
+`fsync` is a more pointed request. On macOS, its manual describes moving modified data and attributes from the host to the drive. The same manual warns that a drive may still buffer or reorder writes, leaving some or all of the data unwritten after power failure. It uses platter-era language, but the host/device distinction isn't abolished by replacing a spinning disk with flash.
+
+For the stronger operation, macOS provides `fcntl` with `F_FULLFSYNC`. The installed manual describes an fsync followed by a device flush request. Its stated guarantee concerns data previously fsynced on that same device: “data that had been fsync'd on the same device before is guaranteed to be persisted when this call returns.”
+
+That sentence has a subject, a scope, and a completion point. APFS is among the documented supported filesystems. The call can take time, and an error result cannot be treated as success.
+
+```text
+Application:
+why are we waiting
+
+F_FULLFSYNC:
+because you asked a stronger question.
+```
+
+## The controller has its own inbox
+
+“The device completed it” sounds final until we ask what *it* was. A normal write completion and completion of a flush request need to be interpreted under their respective contracts. The word *completion* doesn't silently append “through any future loss of power” to every operation.
+
+Device buffering helps explain why software asks for a stronger boundary. A device can have accepted data that still depends on power. To demand persistence, the request has to cover that remaining work, and the device has to honor the request.
+
+Apple's full-sync manual even retains a warning about certain FireWire drives ignoring flush requests. That is a warning about those devices, not a discovery that the Mac's internal SSD is lying. It does explain why a documented request and compliant hardware both belong in the sentence about guarantees.
+
+```text
+Controller:
+completed.
+
+Application:
+the write or the flush
+
+Controller:
+look at your request.
+
+Application:
+I named it saveFinalReallyFinal.
+
+Controller:
+that did not reach this department.
+```
+
+Below the filesystem, flash translation also prevents an application from assigning every byte a permanent seat in NAND. Persistence is about being able to recover the required data under the storage contract. It does not require that the application know which physical cells currently hold it. A controller's internal placement work is not a file manager with smaller icons.
+
+The exact hardware can change while the host's buffers and the device's pending work remain separate concerns. The application's receipt has to cover the work it is relying on.
+
+## Please survive the lights going out
+
+There is another problem even after the individual writes acquire respectable receipts. Suppose an application stores a balance in one record and a corresponding history entry in another. It wants both changes to represent one completed transaction. Persisting only one can leave durable bytes describing an incomplete application operation.
+
+The filesystem can be healthy while the application's accounts disagree. The application needs a protocol that makes its own group of changes recoverable. Naming every operation “Save” does not supply that protocol.
+
+```text
+Filesystem:
+the records are readable.
+
+Application:
+they disagree about where the money went.
+
+Filesystem:
+I preserve your writing.
+I don't do your books.
+```
+
+For a document, replacing the old file with a newly written file creates a related boundary. A name replacement can give readers an orderly transition between objects. That namespace behavior alone doesn't establish that the replacement's payload has reached permanent storage. The writer still needs the appropriate persistence operations and error handling for its chosen save method. There isn't a universal two-line recipe hiding in the word *atomic*.
+
+So the question at the power button is specific: which state has the application promised to recover, after which successful operations, under which failure? An application crash and loss of device power stop different pieces of the work. Neither is reproduced by politely closing a window and opening it again.
+
+The author does not need a NAND map. The author needs the software's “saved” to match the promise they depend on, with the relevant work completed before the celebration.
+
+```text
+User:
+please survive the lights going out.
+
+Storage stack:
+that's the request.
+
+User:
+can you make the wait less annoying
+
+Progress indicator:
+I have been training for this my whole life.
+```
+
+
+# 16. Everybody Has an Address
+
+Computers use the word *address* the way a family uses “home”: confidently, emotionally, and with several incompatible maps in the glove compartment.
+
+An address is not a thing. It is a coordinate interpreted by some system. The number can be perfectly valid and still belong to the wrong map.
+
+## Same number, different city
+
+A process normally works with virtual addresses. Two processes can both use the same numeric address without referring to the same physical memory. Each brings an address-space context that gives the number meaning.
+
+```text
+Process A:
+0x1000 is mine.
+
+Process B:
+0x1000 is mine.
+
+root:
+one of you is lying.
+
+MMU:
+both of them included a city.
+```
+
+The operating system arranges mappings; the CPU's memory-management hardware uses the active translation regime to translate and check an access. A number copied out of one process is not a universal pointer that another process can dereference by confidence.
+
+This is why a crash report can display an address without providing the bytes, object, or source line a human hoped it would identify. The number needs its execution context, mapping state, and time. Address-space layouts change. Mappings appear and disappear. A coordinate without its map is a souvenir.
+
+```text
+Developer:
+the bug is at 0x1042c0000.
+
+Debugger:
+in which process, image, run, and mapping?
+
+Developer:
+the hexadecimal one.
+
+Debugger:
+excellent font choice.
+```
+
+## The map currently in force
+
+When the CPU executes a load or store, hardware does not ask which application logo is bouncing in the Dock. It consults the translation and permission state in force for that execution context.
 
 ```text
 Safari:
@@ -3648,7 +3996,407 @@ MMU:
 wrong noun.
 ```
 
-The MMU has never heard of Safari. It has an address and a permission check.
+The same virtual address can translate differently, lack a valid mapping, or permit different kinds of access under another context. A context switch therefore changes more than whose instructions receive CPU time. It also lets execution proceed under the map assigned to that context.
+
+The word *physical* does not rescue us from qualification. A physical address is a coordinate in a physical address space used beneath translation. It is not necessarily a DRAM-cell serial number, a promise about one package location, or a deed granting the speaker access. Hardware ranges can lead to memory or to device interfaces. Platform details determine what a given physical range means.
+
+```text
+root:
+I have the physical address.
+
+MMU:
+how did you get here
+
+root:
+administrator.
+
+MMU:
+that is still not a map.
+```
+
+Mappings also have lifetimes. XNU can replace or remove a mapping; translation hardware must then stop relying on obsolete translation state. Architectures provide mechanisms for maintaining translation caches and ordering the change. The details matter enormously to kernel code and very little to a process holding yesterday's pointer.
+
+```text
+Process:
+but this address worked earlier.
+
+XNU:
+the lease ended.
+
+Process:
+the number is unchanged.
+
+XNU:
+so is the street number after an eviction.
+```
+
+A pointer value therefore does not carry a permanent guarantee that the same mapping still exists. Programs need object-lifetime and synchronization rules; hexadecimal cannot provide either. “Valid address” always has an implied time as well as an address space.
+
+## The device brought its own map
+
+Devices capable of direct memory access need addresses they can use for their transactions. On Apple silicon Macs, Apple documents per-agent IOMMUs that restrict DMA agents to explicitly mapped memory. Public Asahi Linux work identifies Apple's relevant IOMMU hardware as DART; Apple’s public security guide uses the generic term IOMMU.
+
+A device-visible or I/O virtual address is interpreted through that device's I/O mapping. It can be numerically identical to a CPU virtual address and mean something else. It can eventually reach physical pages also mapped for a process, but that agreement exists because software arranged both maps—not because the numbers recognized each other at a conference.
+
+```text
+Device:
+I have 0x1000.
+
+Process:
+me too.
+
+Device:
+twins?
+
+DART:
+complete strangers with matching luggage.
+```
+
+The benefit is controlled delegation. A driver can arrange a mapping for the buffers needed by an operation without granting the device every byte in the machine. DMA avoids making the CPU personally carry each byte. It does not abolish boundaries; it gives the loading dock a faster conveyor belt and a stricter guest list.
+
+An I/O address is therefore not “more real” than a process address. It answers a different question: what coordinate may this DMA agent present under this I/O translation context?
+
+The map may also distinguish devices or streams. A coordinate accepted for one agent does not become a transferable invitation for every peripheral. The number is part of a sentence whose subject is the device and whose verb is the configured translation.
+
+## The register lives at an address too
+
+Memory-mapped I/O gives another use for address-shaped numbers. A range in a processor-visible address space can select registers or windows belonging to a device rather than ordinary RAM. Loads and stores to that range can communicate with hardware.
+
+The syntax is dangerously familiar.
+
+```text
+CPU:
+store this value at the address.
+
+DRAM:
+not mine.
+
+Device register:
+I received it.
+
+CPU:
+you all dress exactly alike.
+```
+
+That resemblance does not mean a device register behaves like normal memory. Ordering, access width, side effects, and valid operations depend on the hardware contract. Reading may acknowledge an event. Writing may start an operation. Treating an MMIO register as an ordinary variable is how a convenient abstraction files a noise complaint.
+
+The exact Apple-silicon register maps and routes vary by component and generation. This chapter does not invent one universal path. It needs only the architectural distinction: an address can select device I/O rather than storage backed like ordinary program memory.
+
+The kernel and drivers must also access such ranges through mappings appropriate to the platform. Saying “the register is at address X” skips who can issue the access, through which mapping, with which attributes, and under which ordering requirements. A datasheet coordinate is not an entitlement.
+
+```text
+Driver:
+I know where the register lives.
+
+MMIO:
+do you know how to knock
+
+Driver:
+store 1?
+
+MMIO:
+please read the part after the address.
+```
+
+This is why register documentation contains more than columns of numbers. The address locates an interface. The interface defines what accesses mean.
+
+## Everybody stop saying address
+
+By now the table contains CPU virtual addresses, physical addresses, I/O virtual addresses, and MMIO ranges. Someone brings up a network address. Someone else pastes a URL. A geographer opens the door, sees the hexadecimal, and leaves.
+
+```text
+Network stack:
+I have an address.
+
+MMU:
+not mine.
+
+Browser:
+I have an address bar.
+
+MMU:
+not a bar.
+
+Coordinates:
+latitude, longitude.
+
+MMU:
+finally, somebody labeled the axes.
+```
+
+These uses share an idea—locating something within a scheme—but not a lookup mechanism or authority. A URL is not translated by a page table. A socket address is not a physical-memory coordinate. A CPU virtual address does not tell DART what a device may DMA.
+
+Even the phrase *memory address* can conceal which observer is speaking. A debugger reports process virtual addresses because those are useful for understanding a task. A DMA descriptor uses the device-facing coordinate established for that transfer. Hardware documentation may describe physical or MMIO ranges. Converting between them is privileged machinery, not a formatting operation.
+
+The address dispute from the family can now be settled without choosing one winner:
+
+```text
+root:
+WHICH ONE IS REAL
+
+MMU:
+which map
+
+DART:
+which agent
+
+Device register:
+which interface
+
+root:
+I hate nouns.
+```
+
+They are all real within their jurisdictions. None is self-authenticating. The number points only after somebody supplies the map currently authorized to interpret it.
+
+And even after an address translates successfully, we still have not answered whether anything is resident there, who may share it, or what happens on the first touch.
+
+
+# 17. That Is Not Your Memory
+
+Software says it “has memory” with the confidence of someone who has never been asked whether it means an address range, physical pages, file backing, compressed state, a shared buffer, or a receipt from `malloc`.
+
+Memory ownership is mostly a collection of carefully scoped relationships wearing one trench coat.
+
+## Reserved for whom
+
+A process can receive a range of virtual address space before every page in that range has resident physical storage. The reservation matters: it prevents unrelated mappings from occupying those coordinates in that process. It does not mean a warehouse employee has placed labeled DRAM behind every byte.
+
+```text
+Process:
+I allocated four gigabytes.
+
+Physical memory:
+did you
+
+Virtual memory system:
+don't start.
+
+Process:
+the function returned success.
+
+MMU:
+touch a page and we'll discuss specifics.
+```
+
+The distinction is useful, not fraudulent. Programs get orderly address ranges; the system can arrange backing and residency as the pages are used. A large virtual range need not consume an equally large set of resident pages at the instant its starting address is returned.
+
+Reserved also does not mean accessible in every way. A mapped region has protections. Read permission, write permission, and executable use are separate questions enforced through the active mappings. The process may own the reservation and still lose an argument with the first store instruction.
+
+```text
+Process:
+my region.
+
+MMU:
+read-only.
+
+Process:
+but mine.
+
+MMU:
+you own a museum too?
+```
+
+## Backed by what
+
+A virtual-memory region can be backed by different kinds of objects. File-backed mappings relate memory contents to a file. Anonymous memory uses the virtual-memory system's backing rather than giving the process a pathname to present at reception. Shared mappings can connect more than one address space to related underlying state.
+
+The word *backed* is another scoped promise. It describes where the virtual-memory system can obtain or preserve contents under that mapping's rules. It does not say every page is currently in DRAM, that the process owns the underlying file, or that modifying one view immediately grants write authority over every other view.
+
+```text
+Process:
+where is my page
+
+VM object:
+what do you need it for
+
+Process:
+I want to point at it.
+
+VM object:
+you already have an address.
+```
+
+Aliasing makes the separation harder to ignore. More than one virtual range can refer to the same underlying memory object or pages. The virtual addresses differ while the bytes are shared. Conversely, equal-looking virtual addresses in different tasks can refer to different objects. Neither the number nor the word *mapping* identifies the storage alone.
+
+```text
+Address A:
+I am different from Address B.
+
+VM object:
+both of you point here.
+
+Address B:
+this family is humiliating.
+```
+
+Mach's VM model uses memory objects and mappings to separate the process-visible range from the object's contents and current residency. The implementation is more detailed than this family conversation; the important boundary is that map, object, and physical page are not synonyms.
+
+## Present where
+
+When the CPU touches an address whose translation needs attention, it faults. A fault is an event, not a verdict.
+
+The kernel may resolve it by arranging a page and mapping, retrieving file-backed contents, or performing copy-on-write work. If the requested access is invalid, the outcome can instead become an exception and eventually terminate the process. “Page fault” therefore does not mean either “routine” or “crash” without the surrounding state.
+
+```text
+CPU:
+this translation needs attention.
+
+Process:
+I was promised memory.
+
+XNU:
+you were promised an address under conditions.
+
+Process:
+you added words.
+
+XNU:
+the words were in the contract.
+```
+
+Resident means present in physical memory now. It is a time-sensitive property. A page can be reclaimed and later reconstructed from its backing. Anonymous contents can participate in the system's compression and swapping machinery under pressure. None of those transitions changes the source code's pointer spelling.
+
+Apple's published XNU source contains a VM compressor and documents compressed anonymous memory as a distinct part of its memory accounting. That establishes a real mechanism, not permission to narrate a fixed per-page itinerary for every macOS release. The family is allowed to know compression exists; it is not allowed backstage with a stopwatch.
+
+```text
+Process:
+where did my page go
+
+Compressor:
+it got smaller.
+
+Process:
+can I still use the pointer
+
+Virtual memory system:
+that's why we didn't give you directions.
+```
+
+Some memory cannot be treated as casually. Kernel and device operations may require pages to remain resident or to meet constraints while an operation is in flight. The exact interfaces and categories vary; the general lesson is enough here: reclaimability is another property, separate from mapping and accessibility.
+
+```text
+Process:
+I can access it.
+
+VM system:
+currently.
+
+Driver:
+I need it to stay put.
+
+VM system:
+different request, different paperwork.
+```
+
+Memory pressure exposes these distinctions. The system can reclaim clean file-backed contents that can be read again, compress anonymous memory, swap eligible state, or ask and compel processes to reduce demand. “Free memory” is not the only usable resource, and “used memory” is not a verdict that every byte is equally irreplaceable.
+
+## Shared under which rules
+
+Two mappings can share underlying contents. That fact alone does not tell us what happens when one participant writes.
+
+With copy-on-write, participants can initially share pages while reading. A write causes the writer to receive a private copy for the affected content. The optimization avoids copying everything in advance while preserving the promised separation once mutation begins.
+
+```text
+Process A:
+we share this page.
+
+Process B:
+beautiful.
+
+Process A:
+I changed it.
+
+Copy-on-write:
+you changed yours.
+
+Process B:
+our relationship had conditions?
+```
+
+Other shared-memory arrangements are intentionally shared: a writer's changes are meant to become visible to another participant under the relevant synchronization rules. Shared does not mean synchronized, and synchronized does not mean authorized. Software still needs a protocol for deciding who may modify which data and when another observer can safely rely on it.
+
+The map may permit both participants to write while the program remains catastrophically wrong. The MMU enforces access permissions, not invariants like “the queue length matches the number of elements.” Hardware can protect a page from an unauthorized store. It cannot make two authorized writers emotionally ready for concurrency.
+
+Protection is also scoped to an access through a mapping. It is not moral ownership of the underlying object. One task may have a read-only view while another authorized task has a writable mapping. The first task's inability to store does not prove that the bytes are immutable everywhere.
+
+Revoking or changing a mapping adds a time boundary. A pointer that was valid during one phase can become unusable after an object is released or remapped. The virtual-memory system can enforce the new state; it cannot retroactively make stale program references sensible. Lifetime bugs are what happen when software keeps a coordinate after the relationship that gave it meaning has ended.
+
+## Unified is not communal
+
+Apple GPUs use a unified memory model: CPU and GPU can work with system memory without treating separate device memory as the default arrangement. This removes expensive copies in important cases. It does not turn all memory into a public park.
+
+Metal still distinguishes storage modes. Shared resources are accessible to CPU and GPU; private resources are GPU-only. Synchronization and resource-lifetime rules still matter. *Unified* describes the memory architecture, not a universal access-control override.
+
+```text
+Unified Memory:
+everybody shares one pool.
+
+CPU:
+so I can read every buffer.
+
+MMU:
+no.
+
+GPU:
+same question.
+
+Metal:
+also no.
+
+Unified Memory:
+I was talking about the DRAM.
+```
+
+Nor does one pool abolish scarcity. CPU, GPU, ANE, displays, and other agents can all demand capacity and bandwidth. Unified memory can avoid copies; it cannot fit twelve gigabytes of desire into eight gigabytes by appreciating the application's vision.
+
+```text
+GPU:
+I need six gigabytes.
+
+CPU:
+I also need six gigabytes.
+
+Unified Memory:
+you have correctly identified twelve gigabytes of desire.
+```
+
+The phrase *zero-copy* should therefore be asked which copies it eliminates, along which path, under which storage mode. It is an optimization claim, not diplomatic immunity.
+
+A process can have an address without a resident page. Two processes can share backing without sharing future writes. CPU and GPU can use one physical pool without possessing identical access. The hardware borders in the next chapter make those distinctions enforceable.
+
+
+# 18. Memory Has Borders
+
+The previous chapters gave everyone an address, a mapping, and several opportunities to misunderstand the word *shared*.
+
+Now the hardware checks the paperwork.
+
+Software can declare that a page is read-only or that a device may touch one buffer. The declaration matters because machinery exists to enforce it while the access is happening.
+
+Policy without enforcement is a wish. Enforcement without policy is a very fast misunderstanding.
+
+## The bouncer does not know Safari
+
+For CPU memory accesses, the MMU translates addresses and checks permissions encoded in the active translation state. XNU arranges policy and mappings. Hardware applies the resulting rules without rereading the application's biography.
+
+```text
+Safari:
+I need this page.
+
+MMU:
+not mapped.
+
+Safari:
+I'm Safari.
+
+MMU:
+is that an address space or a podcast
+```
+
+The joke is not that the MMU outranks the kernel. The kernel is responsible for constructing and changing the relevant state. The MMU's authority is narrower and more immediate: given this access and this active translation context, translate it or refuse it.
+
+That refusal can generate a fault for the kernel to handle. The kernel may repair an ordinary missing mapping or treat the access as invalid. Enforcement reports the event; policy decides what the event means next.
 
 ```text
 root:
@@ -3670,169 +4418,26 @@ MMU:
 do you have an address or a podcast
 ```
 
-XNU configures the state. Hardware says no at machine speed.
+Root's credentials can influence what XNU authorizes. They are not fields in every hardware translation request. By the time the load reaches the MMU, nobody is attaching a résumé.
 
-The same virtual address can appear in two processes and resolve to different physical memory, or fail in one while succeeding in the other. The number is meaningful only with the translation context that gives it jurisdiction.
+The division of labor is why “the hardware allowed it” can be misleading. Hardware enforced the state it was given. That does not prove the state represented good policy, only that the access matched it. A kernel bug or mistaken mapping can make a mechanically valid access catastrophically inappropriate.
 
 ```text
-Process A:
-0x1000 is my page.
+MMU:
+permitted.
 
-Process B:
-0x1000 is also my page.
-
-root:
-one of you is lying.
+Security review:
+should it have been?
 
 MMU:
-both of them brought an address space.
+I do enforcement, not regret.
 ```
-
-Context switching therefore changes more than whose instructions run next. It also changes which address map the CPU uses for that execution context. The hardware does not conduct a hearing about the process's brand identity. It performs the configured translation and permission checks.
-
-```text
-Safari:
-but I am a browser.
-
-MMU:
-page table.
-
-Safari:
-I have tabs.
-
-MMU:
-wrong table.
-```
-
-## Reserved, mapped, present, useful
-
-Software says it “has memory” with the confidence of someone who has never been asked a follow-up question.
-
-A range of virtual addresses can be reserved without every page currently having physical storage behind it. A page can be mapped but protected against a particular kind of access. The operating system can arrange backing and residency as needed. The program receives an address-space story simple enough to write code against.
-
-```text
-Process:
-I allocated four gigabytes.
-
-Physical memory:
-did you
-
-Virtual memory system:
-don't start.
-
-Process:
-the function returned success.
-
-MMU:
-touch a page and we'll discuss specifics.
-```
-
-This is the abstraction that lets the system manage finite hardware while giving processes private, orderly address spaces. The lie becomes a contract: use these addresses under these rules, and the kernel plus hardware will arrange what they mean.
-
-Then a page fault occurs and everyone acts betrayed.
-
-```text
-CPU:
-this translation needs attention.
-
-Process:
-I was promised memory.
-
-XNU:
-you were promised an address.
-
-Process:
-that feels legally distinct.
-
-XNU:
-because it is.
-```
-
-A fault is not automatically a crash. It can be part of ordinary virtual-memory work, or it can report an access the process is not allowed to make. The same hardware event can lead to very different outcomes because the policy state around the address differs.
-
-The MMU still does not know why the page matters. It knows whether the configured translation permits the access. XNU supplies the meaning and handles the interruption. Hardware supplies the refusal quickly enough that the forbidden read does not become a memoir.
-
-Policy without enforcement is a wish.
-
-Enforcement without policy is a very fast misunderstanding.
-
-## Unified does not mean communal
-
-Apple GPUs use unified memory in which CPU and GPU share system memory. The family hears “shared” and immediately creates a refrigerator dispute.
-
-```text
-CPU:
-I need this buffer.
-
-GPU:
-I'm using it.
-
-CPU:
-it's in my memory.
-
-GPU:
-our memory.
-
-ANE:
-can I—
-
-CPU + GPU:
-NO.
-```
-
-Unified memory does not let every engine read every byte. Metal still distinguishes shared and private storage modes, and synchronization still matters, because the word *unified* did not destroy computer science.
-
-```text
-Unified Memory:
-everybody shares one pool.
-
-CPU:
-so I can read every buffer.
-
-MMU:
-no.
-
-GPU:
-same question.
-
-MMU:
-different office.
-
-Unified Memory:
-I was talking about the DRAM.
-```
-
-The phrase *zero-copy* is often invited to these discussions and should be watched around the silverware.
-
-Unified memory also does not abolish scarcity. CPU and GPU avoiding needless copies can be a large win, but they still contend for finite capacity and bandwidth. One pool reduces some borders. It does not repeal scheduling, synchronization, storage modes, or the possibility that everybody wants the same resource at once.
-
-```text
-GPU:
-I need six gigabytes.
-
-CPU:
-I also need six gigabytes.
-
-Unified Memory:
-you have correctly identified twelve gigabytes of desire.
-
-Memory Controller:
-I traffic in service, not desire.
-```
-
-The memory controller does not award bandwidth based on Unix seniority. It arbitrates hardware requests under hardware rules. Root can influence workloads through software. Root cannot attach a résumé to each DRAM transaction.
 
 ## The loading dock
 
-High-speed devices use direct memory access so the CPU need not carry every byte personally.
+Devices capable of direct memory access can move data without making a CPU core carry each byte. That is valuable. A device with unrestricted DMA would also be a burglar with excellent throughput.
 
-DMA is useful.
-
-Unrestricted DMA is a burglar with excellent throughput.
-
-Apple documents an IOMMU for each DMA agent on Apple silicon Macs. PCIe and Thunderbolt peripherals can access memory explicitly mapped for them, not the whole house.
-
-Apple's public security guide calls them IOMMUs. Public Asahi Linux reverse engineering identifies the Apple silicon hardware as **DART**. The receipts keep the distinction. DART keeps the loading dock.
+Apple documents an IOMMU for each DMA agent in Apple SoCs. For PCIe and Thunderbolt peripherals on Apple silicon Macs, the public security model restricts access to memory explicitly mapped for the device. Public Asahi Linux reverse engineering calls the relevant Apple hardware DART. The evidence ledger keeps those names and sources separate.
 
 ```text
 Device:
@@ -3846,23 +4451,17 @@ memory
 
 DART:
 which.
+```
 
-Device:
-0x—
+DART does not need to understand the user's document, the driver's product name, or why the transfer would improve quarterly revenue. It receives an I/O address under a mapping context and either translates it into permitted memory or refuses it.
 
-DART:
-not mapped
-
+```text
 Device:
 but I'm hardware
 
 DART:
 that's awesome bro
-```
 
-The device is hardware. So is the thing denying it.
-
-```text
 Device:
 I'M LITERALLY HARDWARE
 
@@ -3870,83 +4469,15 @@ DART:
 on your I/O mapping
 ```
 
-DART is the MMU’s cousin who works security at the loading dock.
+The device is hardware. So is the border.
 
-DMA removes the CPU from carrying each byte. It does not remove the operating system and IOMMU from deciding which buffers the device can address.
+A driver can arrange access to a buffer needed for an operation without making the device co-owner of physical memory. The map can be scoped and later withdrawn. DMA is direct with respect to CPU copying, not direct with respect to constitutional government.
 
-```text
-Device:
-I can access memory directly.
-
-DART:
-directly through this map.
-
-Device:
-that feels less direct.
-
-DART:
-security often does.
-```
-
-The map can be narrow and temporary. A driver can arrange access for a buffer needed by one operation without turning the device into a co-owner of physical memory.
-
-## The address dispute
-
-Then root returns carrying hexadecimal.
-
-```text
-root:
-I need memory at 0x1000.
-
-MMU:
-in whose address space
-
-root:
-the computer's
-
-MMU:
-adorable.
-
-Device:
-my 0x1000 maps somewhere else.
-
-DART:
-if I say it does.
-
-root:
-I have the address.
-
-MMU:
-you have an address.
-
-root:
-WHICH ONE IS REAL
-
-Memory Controller:
-do you want memory or philosophy
-```
-
-Same number, different maps. Root brought an address and assumed it was the deed.
-
-The complete dispute fits on one napkin:
-
-```text
-process virtual address
-        |
-        v
-   CPU MMU map ---------> physical memory
-
-device-visible address
-        |
-        v
-  IOMMU / DART map -----> permitted physical memory
-```
-
-The two arrows can land on the same physical pages when software deliberately arranges it. They do not use the same address vocabulary merely because both eventually reach DRAM.
+Completion matters to the mapping lifetime. Software cannot safely recycle a buffer merely because it has become bored with the operation; the device and driver contract must establish when the transfer no longer depends on that mapping. Accessibility, ownership, and lifetime remain different nouns even at the loading dock.
 
 ## Thunderbolt brought someone
 
-Thunderbolt’s character exists to make the loading dock anxious.
+Thunderbolt's role in the family is to arrive with a peripheral and treat the cable insertion as sufficient character evidence.
 
 ```text
 Thunderbolt:
@@ -3965,16 +4496,20 @@ Thunderbolt:
 device
 
 DART:
-absolutely fucking not
+absolutely fucking not.
 ```
 
-Drivers and mappings may eventually let the device in. “Plugged in” is not the same as “owns RAM.”
+The refusal is the opening position, not the whole device lifecycle. Drivers, policy, and mappings may establish the access an operation needs. “Connected” still does not mean “may inspect arbitrary RAM.”
 
 A cable should not be a constitutional amendment.
 
-## The landlord’s landlord
+Nor is isolation the same as uselessness. The goal is not to prevent peripherals from moving data; it is to let them move the particular data required for an authorized operation. A border that can never open is a wall. An IOMMU is useful because software can create doors with addresses and close them again.
 
-Below all those maps, somebody still has to move the bytes. The memory controller runs the deli counter.
+This boundary is especially useful because it reveals that hardware is not one united political party. The peripheral is hardware. DART is hardware. The memory controller and fabric are hardware. They have different jobs and do not acquire collective ownership merely because a teardown labels them all silicon.
+
+## The landlord's landlord
+
+After CPU and device requests survive their respective maps, traffic still has to move through the memory system. The memory controller and fabric arbitrate service among agents. Their exact topology and policy vary by Apple-silicon generation, so “Memory Controller” is the book's character for this layer, not a claim about one tiny universal block with a deli ticket printer.
 
 ```text
 CPU:
@@ -3996,33 +4531,1379 @@ Memory Controller:
 take two numbers.
 ```
 
-Fabric and controller topology varies by generation. “Memory Controller” represents arbitration and movement beneath software abstractions, not one tiny person with a clipboard.
-
-Arbitration is another authority that sounds larger than it is. The controller can decide whose transaction proceeds and when. It does not decide whether Safari deserved the page or whether a DMA request was morally justified.
+Arbitration is power over timing and service, not policy over the meanings of the bytes. The controller does not decide whether Safari deserved a page. It does not inspect a Unix UID before every transaction. It does not resolve a data race because one participant sounded sincere.
 
 ```text
-Memory Controller:
-GPU, then CPU, then ANE.
+XNU:
+I authorized the mapping.
 
-CPU:
-why
+MMU:
+I enforced the CPU access.
 
-Memory Controller:
-traffic.
-
-CPU:
-I am the Application Processor.
+DART:
+I constrained the device.
 
 Memory Controller:
-application denied until ticket 43.
+I moved the traffic.
+
+DRAM:
+I held charge.
+
+root:
+so which one of you works for me
+
+Hardware:
+define works
 ```
-
-XNU sets policy. MMU and DART enforce mappings. The memory fabric arbitrates traffic.
 
 The DRAM cells store charge and have never heard of root.
 
+## Borders are a joint production
 
-# 15. SEP Has a Mailbox
+No one mechanism supplies the entire security story. Software chooses mappings and responds to faults. Translation hardware checks accesses. Device IOMMUs constrain DMA. Controllers arbitrate transactions. Each layer depends on another without becoming the other's supervisor.
+
+An incorrectly configured map can authorize the wrong access at machine speed. A correct policy that is never encoded into enforceable state remains prose. Hardware enforcement is not wise; software policy is not physical. The useful result comes from their agreement.
+
+```text
+Policy:
+this device may use these pages.
+
+DART:
+map?
+
+Policy:
+I wrote a memo.
+
+DART:
+then the memo may DMA.
+```
+
+Memory has borders because policy is translated into mechanisms that understand narrower nouns: this context, this mapping, this access type, this transaction. None of them needs to understand the whole machine to stop one forbidden byte.
+
+This is the recurring family trick in its most literal form. XNU has broad authority to create the rules. MMU and DART have brutally narrow authority to apply configured rules to individual accesses. The memory controller has authority over service. DRAM has the final authority to be finite. None can substitute for the others, and none needs a complete theory of macOS.
+
+That is also why a successful access does not settle who has the newest copy. Once several cores begin keeping fast private memories of shared reality, the family needs another office.
+
+
+# 19. The Cache Has Receipts
+
+The word *cache* means “a faster place holding something useful nearby.” This definition is broad enough to start several unrelated arguments before breakfast.
+
+The CPU has caches. The filesystem and kernel keep cached data. Browsers cache resources. Networks cache answers. Apple documents trust caches used in code-signing policy.
+
+These things are related by a strategy, not a chain of command.
+
+## Which cache
+
+The trust cache is not networking. The browser cache is not a CPU cache. Clearing website data does not invalidate an L1 line, and flushing a processor cache does not persuade AMFI to trust unsigned code.
+
+```text
+User:
+clear the cache.
+
+CPU cache:
+which one
+
+Browser cache:
+which one
+
+Trust cache:
+absolutely not
+
+User:
+I clicked the button.
+
+All caches:
+whose button
+```
+
+The shared idea is locality: keeping a copy, translation, decision, or result where a future lookup can use it more cheaply. The stored object, owner, validation rule, and consequences of staleness are completely different.
+
+A DNS cache can remember an answer about a name. A browser cache can reuse a response. A page or buffer cache can let file data remain available in memory. A CPU cache can hold copies of memory locations close to a core. A trust cache can participate in code-signing trust decisions. “Cached” never tells us whether the thing is a byte, a name result, or an authorization fact.
+
+## Close enough to lie quickly
+
+CPU caches reduce the cost of repeatedly reaching farther into the memory system. Implementations use hierarchies and policies tuned for locality, but this chapter does not invent a cache topology for the author's particular M4. The architectural point survives without guessing sizes, sharing arrangements, or replacement algorithms.
+
+A core can perform a load and obtain data from a nearby cache rather than waiting for DRAM. A store can update cached state under the architecture's memory and coherence rules. This is how fast execution avoids turning every instruction into a pilgrimage.
+
+It is also how the sentence “the value is in memory” becomes hostile.
+
+```text
+Core 1:
+I have the value.
+
+DRAM:
+not that value.
+
+Core 1:
+near me.
+
+DRAM:
+you left out two important words.
+```
+
+With a write-back cache, modified data may be dirty in a cache before it is written to a farther level or memory. Dirty is accounting, not scandal: the cached copy contains a modification that still needs propagation under the relevant policy.
+
+This is not the durability story from Chapter 15. Writing back a CPU cache line toward memory does not mean a document reached persistent storage. DRAM itself normally depends on power. The word *writeback* changes objects halfway through the book and hopes nobody checks its identification.
+
+## Everybody saw a different yesterday
+
+Multiple cores make private fast copies useful and shared reality difficult. If one core modifies a location, another core must not indefinitely treat an older cached copy as current when the architecture and program require visibility.
+
+Cache coherence mechanisms manage this problem for coherent participants. They track or communicate enough state to keep copies of a memory location from becoming permanently contradictory under the coherence rules. A line may be invalidated, updated, obtained with suitable ownership, or written back depending on the design.
+
+```text
+Core 1:
+x is 2.
+
+Core 2:
+x is 1.
+
+Core 1:
+I changed it.
+
+Core 2:
+I was not copied on that email.
+
+Coherence:
+this is why nobody gets private reality unsupervised.
+```
+
+The family metaphor has a limit: coherence is not one daemon sending polite notifications, and the exact protocol is implementation-specific. Official Arm material describes coherent systems and cache maintenance at the architectural level. It does not justify assigning a guessed Apple-silicon interconnect or per-core cache layout to this Mac.
+
+Nor does coherence alone make arbitrary concurrent code correct. A coherent system can ensure that cores participate in a consistent protocol for a location while a program still lacks the synchronization needed to establish order between operations.
+
+Granularity adds comedy. Caches generally manage blocks of neighboring bytes rather than following the programmer's object boundaries. Two independent variables placed close together can therefore make cores contend over one cache line even though the source code insists they have never met. This performance problem is commonly called false sharing. The variables are logically separate; the cache's unit of custody is larger.
+
+```text
+Variable A:
+I have nothing to do with Variable B.
+
+Cache line:
+joint tenancy.
+
+Variable B:
+we don't even speak.
+
+Cache line:
+you both keep renovating the kitchen.
+```
+
+## Coherence has a narrow job
+
+Suppose two threads update a queue without a lock or another correct synchronization mechanism. Coherence does not infer that the queue length should equal the number of elements. It does not choose which high-level operation happened first. It does not upgrade “eventually visible” into the ordering contract the algorithm forgot to request.
+
+```text
+Thread A:
+I wrote the pointer.
+
+Thread B:
+I read the flag.
+
+Thread A:
+then you understand the whole update.
+
+Memory ordering:
+based on what
+
+Thread A:
+vibes shared across cores.
+```
+
+Architectures provide ordering primitives and synchronization operations so software can establish the relationships it needs. Compilers and CPUs may otherwise perform transformations allowed by the language and architecture. A correct concurrent program uses the relevant rules instead of assuming that source-code order is a notarized timeline.
+
+Coherence also does not decide permission. The MMU can reject an access before a core participates in the cache conversation. DART can constrain a device's DMA. A coherent agent is not automatically an authorized agent.
+
+```text
+Device:
+I can stay coherent.
+
+DART:
+are you mapped
+
+Device:
+different achievement.
+
+DART:
+correct.
+```
+
+Some devices or mappings require explicit cache-maintenance and synchronization work; details depend on the architecture and interface. The safe general claim is not that every participant is magically coherent. It is that visibility has a protocol, and software must use the contract for the participants involved.
+
+## Writeback is not a durability oath
+
+Chapter 15 followed a write toward persistent storage and asked when it could survive power loss. This chapter follows cached memory state and asks when another observer may rely on it. The words overlap because computing enjoys reusing verbs after the warranty expires.
+
+Cleaning or writing back a CPU cache can move dirty data toward a point required by the memory-sharing contract. Invalidating a cache can ensure an old local copy is not reused. Barriers can order relevant operations. None of those acts is, by itself, `F_FULLFSYNC` for a file.
+
+```text
+CPU cache:
+written back.
+
+Application:
+my document is durable?
+
+DRAM:
+I still require electricity.
+
+SSD:
+nobody has even called me.
+```
+
+The reverse confusion is just as bad. A durable file does not make an unrelated in-memory data race correct. Storage persistence and inter-core visibility are different jurisdictions with different failure models.
+
+Likewise, eviction is not deletion from the underlying truth. Removing a clean CPU-cache line merely means a later access must obtain the data elsewhere. Evicting a browser response does not delete the origin server. Removing a cached trust decision does not rewrite the signed program. A cache may forget its copy without acquiring authority to erase the source.
+
+The cache has receipts, but every receipt names the object and boundary it covers. A CPU cache can answer questions about a memory location's local copy and propagation. A filesystem cache can answer different questions about file data. A trust cache can participate in deciding which code is accepted. A browser cache can preserve the logo you were trying to replace.
+
+```text
+User:
+I cleared the cache.
+
+Browser:
+yes.
+
+CPU:
+no.
+
+AMFI:
+absolutely not.
+
+User:
+why is that sentence never complete
+
+Cache family:
+because you keep omitting the noun.
+```
+
+The book's rule survives another ambiguous word. Authority over a cached copy is authority over that copy, under that cache's validation and visibility rules. It does not quietly expand into authority over every object that has ever been described as “cached.”
+
+Now that memory can be named, mapped, protected, shared, and kept coherent, the software stack will take credit for touching the hardware.
+
+It mostly did not.
+
+
+# Part IV — Nobody Touched the Hardware {#part-iv .part-title}
+
+Everybody takes credit while the request travels toward electricity.
+
+
+# 20. You Never Talked to the Hardware
+
+The user clicks a button. The application says it sent the request. The kernel says it handled the operation. The driver says it programmed the device. The device says it did the work.
+
+Everybody is telling the truth at the level where they invoice.
+
+## The application takes credit
+
+Consider a client application communicating with a DriverKit extension. Apple documents DriverKit as a framework for drivers that run in user space. Its sample client uses an `IOUserClient` connection and method calls to exchange validated data with a driver, including asynchronous callbacks.
+
+This is one documented route for one class of interaction. It is not the secret universal pipeline behind every click on macOS. Some devices use Apple-provided drivers, some paths stay in kernel code, some frameworks expose higher-level services, and memory-mapped or other direct mechanisms exist under controlled conditions.
+
+Our application will nevertheless announce victory immediately.
+
+```text
+Application:
+I told the device.
+
+Driver:
+you called my client interface.
+
+Application:
+through the system.
+
+Driver:
+you filled in a structure.
+```
+
+That structure matters. A user-client boundary does not accept human intention; it receives arguments. Apple's DriverKit sample contrasts checked and insecure dispatch paths and validates properties such as counts and structure sizes before calling the driver's method.
+
+The application may be perfectly authorized to request an operation and still submit malformed input. Authority to knock is not authority to redesign the doorbell packet.
+
+```text
+Application:
+but the user clicked Print.
+
+Driver method:
+scalar input count?
+
+Application:
+the icon was blue.
+
+Driver method:
+structure size?
+```
+
+## The kernel forwards the complaint
+
+DriverKit drivers run in user space, but that does not mean an application simply finds the driver process and begins shouting across ordinary memory. The system manages the service and connection. DriverKit's `IOUserClient` represents a connection to another service managed by the system; framework calls carry requests across the boundary.
+
+The kernel's role varies with the family and operation. It may provide transport, enforce access, manage objects, map memory, and coordinate with the hardware-facing service. Saying “the kernel did the I/O” can be useful shorthand. It can also hide the driver that understands the device-specific contract.
+
+```text
+Application:
+kernel, make the hardware do it.
+
+XNU:
+which service
+
+Application:
+the hardware one.
+
+XNU:
+I see the problem has arrived pre-debugged.
+```
+
+Delegation is not abdication. The system still controls which driver may run and which clients may connect. DriverKit uses entitlements for driver and user-client access. The driver receives authority over a defined interface, not a transferable deed to the platform.
+
+Nor is “user-space driver” a demotion into ordinary applicationhood. It has a specialized framework, lifecycle, entitlements, device relationship, and system-managed communication path. PID alone cannot explain the job.
+
+The kernel also remains the office that can revoke the relationship when a process exits, a service stops, or policy changes. The client cannot preserve access by photocopying a connection handle into a text file. Handles name live kernel-managed relationships; they are not bearer bonds redeemable after the objects behind them disappear.
+
+```text
+Application:
+I saved the connection number.
+
+XNU:
+the connection is gone.
+
+Application:
+but the number is right here.
+
+XNU:
+frame it.
+```
+
+This resembles file descriptors without making every I/O connection a regular file. The reusable lesson is object lifetime: a small integer or language object represents authority only while the system relationship behind it remains valid.
+
+## The driver owns a translation problem
+
+Hardware does not usually want the application's pointer. Chapter 16 already prosecuted that address for impersonating a universal coordinate.
+
+DriverKit provides memory-descriptor objects for describing buffers and sharing them across relevant boundaries. An `IOBufferMemoryDescriptor`, for example, can hold data moving into or out of a driver and can be passed to APIs that map it for another process. A hardware operation may additionally require device-accessible mappings under the platform's DMA protections.
+
+The driver therefore receives several questions disguised as one buffer:
+
+```text
+Application:
+here are my bytes.
+
+Driver:
+whose address
+
+Application:
+mine.
+
+Driver:
+the device is not you.
+
+DART:
+and neither of you is automatically mapped.
+```
+
+The exact mapping and hardware APIs depend on the driver family and device. We do not invent them here. The durable lesson is that software must turn a client-visible object into a buffer and address contract the relevant device can use, for long enough to complete the operation and no longer.
+
+That lifetime is authority with a clock. Releasing or reusing a buffer before completion can make yesterday's legitimate mapping point at today's unrelated data. The device cannot infer that the application has moved on emotionally.
+
+## The queue has never heard of your button
+
+Drivers handle concurrency and asynchronous events. DriverKit's `IODispatchQueue` serially executes submitted blocks, and DriverKit provides dispatch sources for events such as timers and hardware-related interrupts. A request can be accepted while waiting its turn; an asynchronous completion can arrive later.
+
+```text
+Application:
+the button click happened first.
+
+Driver queue:
+in the interface.
+
+Application:
+so the operation happened first.
+
+Driver queue:
+you have confused arrival with completion.
+```
+
+Queues provide order within their stated scope. A serial driver queue can order its blocks without proving the physical device finished the corresponding operations in that same moment. The device can have its own command queues, firmware, and completion mechanism. “Queued,” “submitted,” “accepted,” and “completed” are separate receipts again.
+
+Cancellation adds another noun. Stopping future queue work is not necessarily undoing an operation already submitted to hardware. DriverKit documents queue cancellation in terms of stopping dequeue and waiting for in-flight tasks. Whether a particular device command can be canceled is a device contract, not a motivational speech from the application.
+
+Completion travels upward too. A device event can lead to a hardware-related interrupt source, driver work, and an asynchronous callback, depending on the interface. The callback is not the hardware itself visiting the application. It is the system delivering a result through the relationship established earlier.
+
+```text
+Application:
+the device called me.
+
+Driver:
+I invoked your completion.
+
+XNU:
+after an event.
+
+Device:
+I changed one electrical condition.
+
+Application:
+team effort.
+```
+
+Polling is another possible path: software can check state rather than wait for an interrupt. That difference matters to performance and timing, but not to the chapter's point. Either way, the application's high-level action becomes device-specific work and returns through defined boundaries.
+
+## The device did the work
+
+Eventually the device changes a register, moves bytes, emits a packet, produces samples, or performs whatever operation its interface defines. The driver interprets completion and reports upward. The framework delivers a callback. The application redraws its icon and claims it personally moved electrons.
+
+```text
+Device:
+done.
+
+Driver:
+operation completed.
+
+XNU:
+client may resume.
+
+Application:
+I did it.
+
+Device:
+what is your voltage
+```
+
+This is not a universal five-stage pipeline. A display update, storage request, USB transfer, neural-network operation, and network packet use different frameworks and hardware paths. Some operations avoid a client-driver round trip. Some hardware is controlled by kernel components or firmware. Direct access can exist behind mappings and policy. The example proves delegation, not one mandatory staircase.
+
+Even “device” may name a logical service rather than one physical component. Drivers can compose, and one request can cross several services before reaching a controller. Counting boxes in a diagram does not establish constitutional rank; it establishes how many places can return an error.
+
+It also explains why every layer can report an error the others could not predict. The client can fail validation. The service can be unavailable. Mapping can fail. The queue can stop. The device can reject a command. Completion can report a hardware-specific result. Nobody needs total authority to ruin the afternoon.
+
+Success is equally scoped. A client method can return successfully because the request was accepted. A driver can report submission success because the command reached the device queue. A later completion can report the device result. If the operation involves persistent media or a network peer, additional boundaries remain. One green checkmark cannot inherit promises from offices it has not visited.
+
+The application has authority over its requested feature. The system has authority over the connection. The driver has authority over a device interface. DART has authority over DMA translation. The device has authority over whether its physical operation succeeds.
+
+You talked to an abstraction that talked to an abstraction that arranged a very specific audience with hardware.
+
+The cable remains innocent. A cable should still not be a constitutional amendment.
+
+
+# 21. The Firmware Nobody Invited
+
+Userspace holds a census. Every respectable program receives a PID. launchd knows which services it started. Activity Monitor brings columns.
+
+Then a controller executes code nobody can find in the process list.
+
+## Nobody launched it
+
+Firmware is software associated closely with hardware operation and startup. Some firmware executes on a peripheral processor. Some configures hardware before ordinary processes exist. It can be loaded and verified by an earlier boot stage or verified by a processor's own secure-boot chain.
+
+None of that makes firmware supernatural. It means the Unix process model is not the only model of executing code in the machine.
+
+```text
+launchd:
+show me your job label.
+
+firmware:
+no.
+
+launchd:
+bootstrap domain?
+
+firmware:
+also no.
+
+launchd:
+who raised you
+
+Boot chain:
+complicated question.
+```
+
+launchd's authority is enormous in the userspace civilization XNU creates. A peripheral processor is not an undocumented corner of that civilization merely because it lives in the same computer. It can have its own instruction stream, memory, firmware image, reset state, and startup rules.
+
+The chapter title is a joke: the platform absolutely invited the firmware. launchd simply was not on the committee.
+
+## Firmware is not one department
+
+The word *firmware* covers too much to support one family biography.
+
+Boot firmware participates in establishing the machine's early state and chain of trust. Device or controller firmware implements behavior close to a hardware block. Software on a peripheral processor may be downloaded at startup from the primary CPU or boot through a separate verification chain. Persistent firmware can have an update policy distinct from a runtime image loaded on every boot.
+
+```text
+User:
+update the firmware.
+
+Boot firmware:
+whose
+
+SSD controller:
+whose
+
+Display coprocessor:
+whose
+
+User:
+the computer's
+
+Firmware:
+we have been over nouns.
+```
+
+Apple's public security documentation describes modern systems as containing peripheral processors for networking, graphics, power management, and other tasks. Where separate processors require firmware, Apple describes two broad protections: download verified firmware from the primary CPU at startup, or have the peripheral processor implement its own secure boot.
+
+Those are categories, not a claim that every controller follows one sequence. Product and generation matter. The book refuses to turn “firmware verified” into a universal boot command shouted simultaneously across the SoC.
+
+Verification answers a bounded question too. A signature and policy can establish that an image is acceptable to load under a particular trust scheme. They do not prove the firmware is bug-free, that its configuration is correct, or that every command it receives is wise. Authentic mistakes remain authentic.
+
+```text
+Verifier:
+approved image.
+
+Security review:
+approved behavior?
+
+Verifier:
+different meeting.
+```
+
+Updates add time to the boundary. An update package can be authenticated before installation, and a processor can verify what it boots later. Rollback policy, activation, and recovery are component-specific. The chapter will not compress all of them into “Apple signed it, therefore Tuesday happened.”
+
+## The controller has opinions
+
+A controller can accept requests through registers, queues, shared memory, or another device-specific interface and execute firmware that interprets them. By the time an application request arrives, its original nouns may be gone.
+
+The storage controller does not receive a Finder path. A display coprocessor does not receive “make the window feel more premium.” A network controller does not receive a process's moral case for low latency.
+
+```text
+Application:
+please perform the feature.
+
+Driver:
+command prepared.
+
+Controller:
+queue entry accepted.
+
+Application:
+did you preserve my intent
+
+Controller:
+I preserved bits 7 through 12.
+```
+
+Firmware's authority is narrow but concrete. It can govern the controller's local operation, scheduling, or protocol within its design. It does not become the kernel because it executes code, and XNU does not become the firmware's line manager because it submitted a request.
+
+The controller also sees a different world. It may know ring positions, command identifiers, buffer addresses, link state, temperature, or error codes that have no direct representation in the calling application's model. Conversely, it may know nothing about windows, users, paths, or why the request exists.
+
+```text
+Controller:
+queue 3 stalled.
+
+Application:
+the user is getting impatient.
+
+Controller:
+is that a register
+
+Application:
+emotionally.
+```
+
+Abstraction works because the driver translates between those worlds. Translation does not make either description fake. It lets the application avoid learning a device protocol and lets the controller avoid learning product management.
+
+An error may originate there and travel upward through layers that cannot repair it. The driver can translate the result. The kernel can wake a waiter. The application can display “Something went wrong,” the traditional GUI representation of five jurisdictions refusing to name the guilty party.
+
+## Other processors have childhoods
+
+Chapter 2 introduced the hardware relatives briefly because boot must prepare more than the Application Processor. Now the gray rectangle labeled HARDWARE can testify.
+
+```text
+Application Processor:
+everybody ready?
+
+Display controller:
+firmware verified
+
+Storage controller:
+firmware verified
+
+Thunderbolt controller:
+I brought—
+
+DART:
+don't
+```
+
+Some specialists receive firmware from the primary processor. Some establish trust within their own boot environment. The Secure Enclave, explored later, is a particularly strong example of a distinct processor and security domain. Other coprocessors have different protections and responsibilities; sharing the category *peripheral processor* does not make them miniature SEPs.
+
+Public Asahi Linux reverse engineering supplies useful names and implementation detail for particular Apple-silicon generations, such as DCP for display work and S5E for NAND/SSD control on documented targets. Those receipts are explicitly reverse engineering, not Apple documentation and not a license to generalize one chip's topology across the family.
+
+```text
+XNU:
+I loaded your firmware.
+
+Peripheral processor:
+thank you.
+
+XNU:
+so I am your kernel.
+
+Peripheral processor:
+you delivered lunch too.
+```
+
+Loading an image is authority over a startup input. It is not proof that the loader schedules every instruction afterward, owns the processor's local policy, or understands its private runtime state.
+
+## What's your PID
+
+The inevitable census begins.
+
+```text
+launchd:
+I manage userspace.
+
+firmware:
+cool.
+
+launchd:
+what's your PID
+
+firmware:
+my what
+```
+
+The exchange is dramatization. “firmware” is a composite character, not an Apple process hiding its PID, and no real component said this. Its architectural claim is modest: firmware executing outside the ordinary macOS process model does not acquire a Unix PID merely to make Activity Monitor comfortable.
+
+This does not mean no firmware-related helper ever appears in userspace. Update tools, loaders, diagnostics, and services can be ordinary processes. Their PIDs identify those processes, not every processor or firmware image they help manage.
+
+Likewise, a firmware blob stored in a filesystem is not executing merely because it exists. It becomes operational only through the component's loading or boot process. The file can have a path and signature; the running firmware can inhabit another processor with neither a pathname nor a Unix task. One artifact participates in two jurisdictions at different times.
+
+```text
+launchd:
+then how do I restart you
+
+firmware:
+which reset domain
+
+launchd:
+kickstart service
+
+firmware:
+that's adorable.
+```
+
+Reset, reload, update, and restart are different operations. Their availability and authority depend on the component. A user-space service can be restarted without resetting its device. A controller can reset without rebooting the whole Mac. A firmware update can require verification and a later activation step. The verbs need objects again.
+
+```text
+User:
+turn it off and on again.
+
+launchd:
+the service?
+
+Driver:
+the interface?
+
+Controller:
+the engine?
+
+Power Management:
+the domain?
+
+User:
+I regret asking experts.
+```
+
+A reboot may incidentally restart several of these relationships, which is why it often helps and rarely explains anything. The successful ritual does not identify which layer was stale.
+
+Firmware can therefore be alive, authenticated, outdated, waiting, wedged, or perfectly healthy while the service above it is broken. “The firmware” is not a diagnosis. It is a neighborhood.
+
+And every house in that neighborhood has a different reset switch.
+
+The hardware relatives are not above launchd. They are outside the jurisdiction that makes launchd's usual questions meaningful.
+
+That distinction protects the book from a tempting hierarchy. Boot ROM is not CEO of the display controller. A storage controller is not subordinate to a GUI process in the organizational sense. The components participate in dependency and control relationships that name specific images, resets, commands, buffers, and results. “Runs earlier” and “runs underneath” are not ranks.
+
+The firmware nobody invited was invited by boot policy, hardware design, or a driver. It simply arrived before the seating chart and refuses to wear a PID sticker.
+
+
+# 22. The Network Does Not Care About Your Process
+
+The application opens a socket. The network receives a packet. Between those sentences, the process loses most of its biography.
+
+Packets do not cross a link carrying a Unix PID because the sender was proud of it.
+
+## The socket knows locally
+
+A socket is a local operating-system object exposed through a descriptor. It connects a process to a networking endpoint and protocol state. Local policy can know which process opened it, which credentials applied, which sandbox rules matter, and which interface choices are allowed.
+
+```text
+Process:
+socket 12 is mine.
+
+Network:
+what's a 12
+
+XNU:
+local descriptor.
+
+Network:
+keep it local.
+```
+
+Calls such as `connect`, `send`, and `recv` operate through that local object. Their return values describe work at the socket interface. A successful send does not mean a remote application accepted the message, just as writing to a file did not automatically prove durable storage.
+
+Buffers make that distinction practical. The stack can accept bytes from the process while transmission and acknowledgment remain pending. Backpressure can later make another write block or fail. The socket's local success is meaningful—it accepted the specified work—but it cannot sign a receipt on behalf of an unseen peer.
+
+```text
+send():
+accepted.
+
+Application:
+delivered?
+
+send():
+I work at departures.
+```
+
+Socket type and protocol matter. A stream supplies different semantics from a datagram. A local Unix-domain socket does not traverse an Ethernet PHY merely because the API contains the word socket. This chapter follows an ordinary Internet packet far enough to show boundaries, not to invent one universal path.
+
+## The packet leaves without your PID
+
+The networking stack turns application data into protocol data under the rules in use. Transport and network headers carry protocol-defined fields: ports, addresses, sequence state, checksums, and other information appropriate to that protocol. The sender's macOS PID is not an Internet routing field.
+
+```text
+Application:
+tell them process 472 sent it.
+
+TCP:
+port.
+
+IP:
+address.
+
+Application:
+UID?
+
+IP:
+not a routing field.
+```
+
+Local tools and policy engines may attribute traffic to processes because the operating system can relate sockets to tasks. That attribution is real and useful. It is not evidence that every router or receiver sees the local process table.
+
+Addresses can also be rewritten or hidden by tunnels, relays, and network address translation beyond the process's view. The source identity visible to a remote server can differ from the local interface state. This chapter makes no claim about which such mechanisms a particular connection uses; it merely refuses to treat a local endpoint as a globally preserved biography.
+
+Checksums provide integrity checks for defined fields and failure patterns. They do not authenticate the human sender. Sequence numbers organize a transport stream. They do not establish moral seniority among packets. Protocol fields possess the authority their protocol assigns and no more.
+
+Likewise, network-layer addresses identify interfaces or endpoints under a network protocol; they are not CPU virtual addresses from Chapter 16. Port numbers help transport demultiplexing; they are not Mach ports. Computing reused *port* because the original ambiguity was insufficient.
+
+## The interface chooses a door
+
+Routing and interface selection decide where traffic should go next. A Mac can have Wi-Fi, Ethernet, loopback, tunnels, and other interfaces. Policy, route state, destination, and availability influence the choice.
+
+```text
+Packet:
+I need to leave.
+
+Routing table:
+destination?
+
+Packet:
+the internet.
+
+Routing table:
+that is not a row.
+```
+
+The selected interface has its own framing and link behavior. An IP packet carried over Wi-Fi is not transmitted as raw source-code intent. It is packaged for the link, handed toward the relevant driver and controller, and eventually represented as signals by a radio or physical interface.
+
+Virtual interfaces complicate the picture usefully. A tunnel can accept a packet and produce another packet. Loopback can deliver locally without a physical link. Packet filters can deny or transform traffic. “Sent to the network” needs an interface and observation point.
+
+Name resolution happens before or beside this route and has its own caches and policy. Turning a hostname into an address does not open a socket, authenticate a service, or prove that packets can reach it.
+
+```text
+DNS:
+here is an address.
+
+Application:
+connection established.
+
+TCP:
+we have never met.
+
+DNS:
+I gave directions, not a ride.
+```
+
+## The controller speaks link
+
+The driver translates between the operating system's networking objects and the interface hardware's contract. A controller may work with descriptors, buffers, rings, queues, and completion events. The exact design varies; this is not a claim that every Apple network device uses one named queue or firmware ABI.
+
+```text
+Network stack:
+packet for this interface.
+
+Driver:
+buffer prepared.
+
+Controller:
+descriptor accepted.
+
+Application:
+did they read my message
+
+Controller:
+I moved bits toward a link.
+```
+
+The PHY or radio handles physical signaling for its medium. It does not parse the application's account name to decide whether a voltage transition is sincere.
+
+```text
+PHY:
+signal transmitted.
+
+TCP:
+acknowledgment pending.
+
+Application:
+recipient accepted?
+
+Remote service:
+who are you people
+```
+
+Each completion answers a narrower question. Hardware can finish transmitting a frame that never reaches its destination. The network can deliver bytes to a host whose service rejects them. A transport acknowledgment can establish transport progress without proving the human recipient approved the content.
+
+Reliability is similarly scoped. TCP can retransmit and order a byte stream between endpoints. It cannot force the receiving application to commit a transaction, save a file, or keep the data after acknowledging it at another layer. UDP provides different promises. Applications that need end-to-end confirmation define it in their own protocol.
+
+```text
+TCP:
+bytes acknowledged.
+
+Application:
+order fulfilled?
+
+Remote database:
+transaction rejected.
+
+TCP:
+I do transportation.
+```
+
+The reverse path has the same delegation in another direction: signals become frames, buffers, protocol input, socket data, and eventually something a waiting process can read. The packet does not seek the process by PID across the network. The local stack uses protocol state and local socket relationships to deliver it.
+
+## Identity can be packed deliberately
+
+Higher-level protocols can explicitly carry identity, authentication tokens, certificates, account identifiers, or signed claims. That is how an application can make identity meaningful to a remote service: it encodes the relevant evidence into a protocol the other side understands.
+
+```text
+Application:
+finally, my identity.
+
+TLS:
+which identity and proof
+
+Application:
+I am logged in.
+
+Remote service:
+to whom
+```
+
+This qualification matters. “The network does not care about your process” is not a claim that networks carry no identity or that privacy systems cannot attribute traffic. It means local process identity is not automatically inherited by every lower layer. Identity must be preserved or re-established deliberately where the protocol needs it.
+
+Encryption adds another boundary. Link hardware can transmit ciphertext without knowing the application data. An intermediary can route packets without possessing the endpoint's keys. Authority to carry the envelope is not authority to read the letter.
+
+Metadata survives differently from content. Encryption can protect payloads while leaving enough addressing and transport information exposed for networks to deliver them. Which fields remain visible depends on the protocol. “Encrypted” therefore needs the same follow-up as “address”: encrypted from whom, at which layer, covering which bytes?
+
+```text
+Router:
+I can forward it.
+
+Application:
+so you can read it.
+
+Router:
+the post office can read street names.
+
+TLS:
+please stop opening the envelope metaphor.
+```
+
+Firewalls and packet filters exercise policy over traffic they can classify. They may use interface, address, port, direction, connection state, or locally available process information. A permitted packet is not endorsed content; a blocked packet is not proof the application lacked every other authority. The filter governs passage at its boundary.
+
+Network policy can still block by process locally, by address or port at another layer, by authenticated identity at an application service, or by many other scoped facts. None is the universal network authority.
+
+Observability follows the same rule. A packet capture, socket listing, controller counter, and application log see different portions of the trip. Their disagreement can be honest because each instrument stands at a different border.
+
+```text
+Process:
+I sent it.
+
+Socket:
+accepted bytes.
+
+Stack:
+constructed packets.
+
+Interface:
+selected a door.
+
+Controller:
+moved a frame.
+
+Network:
+best effort, babe.
+```
+
+Somewhere in that sequence the process may block waiting for space, data, or completion. The CPU will then be accused of waiting, despite possibly running something else entirely.
+
+
+# 23. The CPU Is Waiting
+
+The program waits for a reply. The thread waits on a socket. The core runs another thread. The pipeline stalls on memory. The whole machine is described as “doing nothing.”
+
+These are four different accusations.
+
+## Runnable is not running
+
+A runnable thread is eligible to execute. It may be waiting for a scheduler to place it on a processor. A running thread is currently executing on a core. The distinction exists because there are usually more runnable interests than execution slots.
+
+```text
+Thread:
+I'm ready.
+
+Scheduler:
+noted.
+
+Thread:
+so I'm running.
+
+Scheduler:
+you are on the list.
+```
+
+XNU's scheduler chooses among eligible work using policies and state that evolve across releases. This chapter does not claim a stable private algorithm for the author's M4. It needs only the durable model: eligibility and execution are separate, and scheduling decides which runnable thread receives a processor now.
+
+A running thread can be preempted so another may run. Its program has not become blocked; it simply lacks the core for the moment. “The CPU stopped my app” may mean scheduling, a fault, an explicit wait, throttling, or termination. The verb is begging for an object.
+
+Multicore execution adds simultaneous truths. One thread from a process can be blocked while another runs. A process is not a single indivisible occupant of “the CPU,” and a core is not permanently assigned to an application. The scheduler deals in runnable threads, not Dock icons.
+
+Priority influences scheduling within policy; it does not reserve a core as personal property. Quality-of-service classes communicate intent and let the system make decisions. They do not turn “important to me” into a hardware interrupt that evicts all neighbors.
+
+```text
+Thread:
+high priority.
+
+Scheduler:
+considered.
+
+Thread:
+immediate throne?
+
+Scheduler:
+runnable queue.
+```
+
+## Blocked is not idle
+
+Suppose a thread calls `recv` on a blocking socket and no data is available. The operation can wait. The thread is no longer runnable until the required event or another outcome makes progress possible.
+
+```text
+Thread:
+waiting for packet.
+
+Core:
+cool, I'm running somebody else.
+
+User:
+the CPU is waiting.
+
+Core:
+the CPU has siblings.
+```
+
+Blocking is efficient when the alternative is repeatedly checking for an event that has not happened. The scheduler can use the core for other work. If no runnable work remains for a core, the core can become idle under the system's power-management decisions.
+
+Thread blocked and core idle are therefore different states. One blocked thread can coexist with a very busy machine. One idle core can coexist with runnable work constrained elsewhere. A system can also have several cores in different states at once; “the CPU” has become a committee again.
+
+Locks create another wait. A thread blocked on a mutex is waiting for software-owned synchronization state, not a packet. A condition variable wait typically releases a lock while sleeping and requires the condition to be checked again after wake. The kernel can arrange sleep and wake mechanics; the program defines the predicate that makes progress safe.
+
+```text
+Thread:
+the lock woke me.
+
+Mutex:
+I became available.
+
+Condition:
+that does not prove your work exists.
+
+Thread:
+why does waking require homework
+```
+
+## Spinning is an expensive form of patience
+
+A thread can wait by polling a condition in a loop. It remains runnable or running and consumes execution resources while asking whether anything changed.
+
+```text
+Thread:
+now?
+
+Flag:
+no.
+
+Thread:
+now?
+
+Flag:
+no.
+
+Power Management:
+I have notes.
+```
+
+Short spins can be useful when an event is expected immediately and sleeping would cost more. Long spins are a heating strategy with synchronization side effects. The right choice depends on duration, contention, and context; the book is not issuing one universal rule.
+
+Hybrid strategies can spin briefly and then block. This is not indecision; it trades the overhead of sleeping against the cost of burning cycles. The optimal boundary depends on workload and platform details the book does not pretend to know.
+
+Waiting while holding a lock can prevent the very work needed to satisfy the condition. Priority inversion can let a high-priority thread wait on work owned by a lower-priority thread. Systems provide mechanisms to mitigate particular cases, but no scheduler can infer an arbitrary application's missing locking design.
+
+```text
+Important Thread:
+why am I waiting
+
+Lock:
+owned by Background Thread.
+
+Background Thread:
+not scheduled.
+
+Scheduler:
+I see the circular performance review.
+```
+
+Spinning also demonstrates why high CPU usage does not prove useful progress. The thread is executing instructions. The application may still be waiting at the semantic level. Activity and accomplishment have separate counters.
+
+## The pipeline is waiting too
+
+Inside a running core, instructions can stall because operands or resources are not ready. A cache miss can require data from farther away. Dependencies can keep later work from proceeding. A branch or execution resource can create other delays.
+
+The scheduler still sees a running thread. The thread has not performed a blocking system call. The core is not idle. Yet part of the pipeline is waiting.
+
+```text
+Scheduler:
+running.
+
+Thread:
+running.
+
+Pipeline:
+waiting on memory.
+
+User:
+so which is it
+
+Performance counters:
+yes.
+```
+
+The exact Apple core microarchitecture is not required here, and the chapter does not invent its private pipeline. Modern CPUs overlap work and tolerate some latency; a stall is not necessarily the whole core freezing in place. The useful distinction is the layer: scheduler wait states and microarchitectural stalls are not interchangeable.
+
+## The completion has not arrived
+
+Return to the network read. The remote peer sends a response. A radio or PHY receives signals. A controller reports data. Driver and protocol work make bytes available to the socket. Only then can the blocked operation complete or the thread become eligible to run.
+
+```text
+Remote peer:
+reply sent.
+
+Network:
+in transit.
+
+Controller:
+frame received.
+
+Socket:
+data available.
+
+Wait queue:
+thread may compete again.
+```
+
+Waking a thread does not mean it instantly runs. It generally means the condition has changed and the thread can become runnable; scheduling still owns the next placement. When it runs, it must recheck the condition and handle errors, timeouts, closure, or competing consumers according to the interface.
+
+Asynchronous programming rearranges the same boundaries. Instead of blocking one thread, a program registers interest or a completion and lets an event loop process readiness later. The operation still waits somewhere. Removing a sleeping thread from the source code does not remove latency from physics.
+
+```text
+Application:
+I am nonblocking.
+
+Network:
+the packet is still crossing town.
+
+Application:
+but I used async.
+
+Network:
+congratulations on waiting elsewhere.
+```
+
+Backpressure is waiting used as honesty. If a consumer or device cannot accept unlimited work, the producer must slow, buffer within limits, or fail. An unbounded queue does not eliminate waiting; it converts it into memory consumption and a future incident review.
+
+```text
+Producer:
+I never block.
+
+Queue:
+I contain eight million requests.
+
+Memory pressure:
+meeting in five.
+```
+
+Timeout is another event, not proof that nothing happened. A reply can arrive after the caller gave up. A device operation can complete after cancellation was requested. Protocols and applications need identifiers and lifetime rules so late news does not get delivered to a recycled expectation.
+
+Waiting also has budgets. A user-facing operation may tolerate milliseconds; a background sync may tolerate minutes; a real-time audio path has different constraints. “Fast” is not a scheduler state. It is a deadline attached to somebody's expectation.
+
+```text
+User:
+it's frozen.
+
+Main thread:
+waiting synchronously.
+
+Worker:
+making progress.
+
+User:
+the window agrees with me.
+```
+
+Responsiveness is therefore another jurisdiction. Work can be progressing while the thread responsible for input and drawing is blocked. The kernel may be scheduling efficiently while the application has chosen a terrible place to wait.
+
+Runnable, running, blocked, spinning, idle, and stalled all describe real conditions. None is a synonym for “slow.” The CPU is waiting only after we identify which core, thread, pipeline, operation, or human is doing the waiting.
+
+Next the family will argue about who woke it, even though half of them were never asleep.
+
+
+# 24. Who Woke Me Up?
+
+At 3:14 a.m., something becomes runnable, a service appears, a timer expires, and the laptop display remains dark.
+
+The family files one incident report titled WAKE.
+
+## Which thing woke
+
+A blocked thread can be awakened when the condition it waits for changes. A driver queue can receive work. A service can be launched on demand. A sleeping Mac can resume because an allowed wake source occurred.
+
+These events can participate in one causal story without being the same event.
+
+```text
+Thread:
+who woke me
+
+Socket:
+data arrived.
+
+launchd:
+I started a service.
+
+Mac:
+I was already awake.
+
+Everyone:
+oh.
+```
+
+The first question is always the subject. Was a thread made runnable? Was a dispatch source signaled? Was a service activated? Did a processor leave an idle state? Did the whole system transition from sleep? The noun saves hours of blaming the mouse.
+
+The cause also needs a chain. A network frame may trigger device activity; a driver may process it; socket state may change; a waiter may become runnable. Calling the entire chain “the packet woke the app” is useful shorthand only while nobody mistakes it for one indivisible operation.
+
+```text
+Packet:
+I woke the thread.
+
+Driver:
+I processed completion.
+
+Wait queue:
+I changed eligibility.
+
+Scheduler:
+I ran it.
+
+Packet:
+fine, we woke the thread.
+```
+
+## The timer had an appointment
+
+Timers let software request action after a deadline or interval. When a timer expires, the system can mark associated work ready. That does not guarantee the callback executes at the exact mathematical instant: scheduling, coalescing, power policy, and current workload can affect when code runs.
+
+```text
+Timer:
+appointment at 3:14.
+
+Scheduler:
+eligible at 3:14.
+
+Callback:
+running at 3:14-ish.
+
+Timer:
+I keep time, not staff.
+```
+
+Some timers are relevant only while the system is awake. Some power-management features can schedule or permit system wake. The API and policy determine which promise exists. A deadline in an application does not personally command every power domain to resume.
+
+Repeating timers add drift and backlog questions. If the machine or queue cannot run work at one requested moment, an API defines whether invocations coalesce, arrive late, or are skipped. “Every minute” is not a demand that physics create sixty execution slots during a ten-minute sleep.
+
+Timer expiry also differs from an interrupt, even though a hardware timer may contribute to how the event is delivered. The software-facing timer, the hardware event, the routing of that event, and the eventual callback are distinct stages.
+
+## The queue received an answer
+
+An I/O completion can make waiting work actionable. A device or network event is handled, state is updated, and the waiter is notified under the relevant mechanism.
+
+```text
+Controller:
+operation complete.
+
+Driver:
+completion processed.
+
+Wait queue:
+thread eligible.
+
+Thread:
+I'm awake.
+
+Scheduler:
+you are runnable.
+
+Thread:
+this family ruins every announcement.
+```
+
+The reawakened thread may not run immediately. Another thread can consume the condition first. The operation may have completed with an error. Correct waiting code rechecks its condition instead of treating “woken” as a notarized success result.
+
+Wakeups can also be advisory or spurious under some synchronization contracts. This is why robust waiting is phrased as “sleep while the condition is false,” not “sleep once and trust whoever nudges me.” The predicate belongs to the program; the wake mechanism merely gives it another chance to look.
+
+Dispatch and asynchronous APIs can deliver callbacks rather than restoring a particular blocked thread. The program experiences progress; the scheduler may use an entirely different thread. “My code woke up” is a metaphor wearing a call stack.
+
+Notifications add a further boundary. An observer may be told that state changed without owning the state or the work that changed it. Delivery can be delayed, coalesced, or occur on a specified execution context. Receiving news is not causing the event.
+
+```text
+Observer:
+I was notified.
+
+State:
+I changed earlier.
+
+Observer:
+so I woke you.
+
+State:
+you opened the email.
+```
+
+## launchd heard demand
+
+launchd can start services on demand when configured activation conditions occur. A request arriving at a managed endpoint may cause a service to be launched so it can handle the work.
+
+```text
+Client:
+hello?
+
+launchd:
+one moment.
+
+[service starts]
+
+Service:
+who woke me
+
+launchd:
+you did not previously exist in this session.
+```
+
+Service activation is not thread wake. It creates or starts a process under a service-management contract. Once running, that process contains threads that the kernel schedules. launchd owns the service lifecycle; XNU owns process and thread mechanisms. The incoming demand is the reason, not a tiny remote process reaching through the network to call `exec`.
+
+Activation can also occur for reasons other than network traffic: configured IPC demand, timers, watched resources, or other service conditions. Exact keys and private behavior vary. The stable lesson is that launchd can hold the service contract while the service is absent, then arrange execution when demand becomes actionable.
+
+Nor does every incoming packet launch a daemon. Existing services receive traffic, packet filters discard it, stacks reject it, and activation policies differ. The example establishes a kind of jurisdiction, not a universal launch trigger.
+
+## The whole machine was asleep, approximately
+
+System sleep is itself a family of power states and policies, not a single universal condition shared identically by every component. Apple documents wake sources and scheduled wake behavior for Mac, while hardware and firmware coordinate power state.
+
+The sentence “the Mac was asleep” is useful at the user level. It does not mean every transistor was unpowered, every controller forgot its state, or launchd continued ordinary execution in a dark room waiting to hear the keyboard.
+
+```text
+User:
+who woke the Mac
+
+Keyboard:
+maybe me.
+
+Network:
+policy permitting, maybe me.
+
+Power Management:
+I have a wake reason.
+
+launchd:
+was I conscious for this meeting
+```
+
+A wake source becoming active passes through hardware, firmware, and operating-system policy before the user sees a resumed display. The exact sequence varies by model and sleep mode. “Power Management” remains the book's ensemble character, not one documented universal daemon or controller.
+
+A recorded wake reason is evidence about that transition under the platform's reporting vocabulary. It does not necessarily narrate every contributing event, and a nearby event is not automatically the cause. Logs are witnesses with schemas, not omniscient novelists.
+
+After system resume, timers may be processed, network state may recover, services may run, and threads may become runnable. Their activity follows the system transition; it is not proof that each one individually caused it.
+
+The display waking is another visible but separate outcome. A system can perform background work without presenting a fully interactive session, and a display can turn off while the computer remains awake. User-visible darkness is not a hardware power-state register.
+
+```text
+Mail client:
+I woke the computer.
+
+Wake reason:
+lid open.
+
+Mail client:
+I was there when it happened.
+
+Wake reason:
+so was the wallpaper.
+```
+
+The family now has at least five legitimate meanings of wake: a wait condition changed, a timer expired, a callback became pending, a service was activated, or the machine resumed from sleep. Processor idle-state transitions add still more precision when needed.
+
+Sleep and wake also carry security policy. A resumed machine may still require authentication before restoring access to a user session. Power state does not silently authenticate the person who opened the lid, and an unlocked display is not the definition of a running kernel.
+
+```text
+Mac:
+awake.
+
+loginwindow:
+authenticate.
+
+User:
+but I performed the lid gesture.
+
+loginwindow:
+that proves excellent hinge access.
+```
+
+An event becoming actionable is not yet a lesson in interrupt routing. Hardware exceptions, interrupts, Mach exceptions, Unix signals, and deferred work will get their own final argument later—before Dinner, because the whole family should know why it was summoned properly.
+
+
+# Part V — Other Worlds {#part-v .part-title}
+
+Some neighbors share the machine without sharing its government.
+
+
+# 25. SEP Has a Mailbox
 
 XNU has been waiting for this meeting.
 
@@ -4336,7 +6217,7 @@ meeting adjourned
 Behind the security boundary, SEP raises a small red flag on the mailbox.
 
 
-# 16. The Civil War
+# 26. The Civil War
 
 For fifteen chapters, this book has insisted that authority requires a noun.
 
@@ -4653,7 +6534,7 @@ The next chapter will return to technically defensible ways for one computer to 
 Efeali is no longer allowed near the word `send`.
 
 
-# 17. The House Inside the House
+# 27. The House Inside the House
 
 After the Civil War, the book returns to technically defensible ways of putting software somewhere it was not born.
 
@@ -4881,7 +6762,622 @@ For now, everyone is invited to dinner.
 This is a mistake.
 
 
-# 18. The Hardware Family Dinner
+# Part VI — Everybody Leaves Eventually {#part-vi .part-title}
+
+The remaining authorities assemble to discover where their power stops.
+
+
+# 28. Below the Kernel
+
+What does kernel authority presuppose?
+
+The last chapter gave XNU an opportunity to discover one answer by ceasing to be available for follow-up questions. For this chapter, the cast has been restored by the ordinary literary procedure of beginning another scene. Nobody should infer a recovery protocol from the fact that the kernel has lines again.
+
+XNU arrives with a revised claim. It will no longer insist that it governs everything. It will insist that everything important requires it.
+
+This sounds more defensible until somebody asks what *it* requires.
+
+## The floor has prerequisites
+
+XNU executes on the Application Processor. Those instructions need a processor on which to execute; kernel privilege does not make them self-executing. We have spent a book examining what becomes possible once the kernel runs. The question now concerns the conditions under which that sentence can begin.
+
+```text
+XNU:
+I provide the execution environment.
+
+Application Processor:
+and I execute it.
+
+XNU:
+yes.
+for me.
+
+Application Processor:
+you have added a preposition
+where the electricity goes.
+```
+
+The Application Processor belongs to an SoC platform. That relationship is integration, not process parentage. The SoC did not fork a CPU. Nor does being part of the same platform dissolve the separate processor and security domains that caused the dinner to go badly.
+
+XNU wants the platform to be its equipment. SoC wants the residents to acknowledge the platform. Both can get through an ordinary working day without settling that domestic disagreement. Neither can settle it by drawing a taller box around the other.
+
+If we draw arrows here, each needs its own verb. XNU *executes on* the Application Processor. The processor is *integrated into* a platform. Platform operation *depends on* power-management hardware and firmware. The machine is *supplied by* a battery or external power. An external source may be *connected through* electrical infrastructure.
+
+These are different relationships. An execution environment, physical integration, power control, stored energy, and electrical supply do not become one chain of command because they fit on the same page. Later, ownership, regulation, and taxation will attempt to squeeze onto the page too. They will not improve the diagram.
+
+```text
+SoC:
+I would like a box.
+
+XNU:
+you already have a box.
+
+SoC:
+you labeled it hardware.
+
+XNU:
+accurately.
+
+SoC:
+your box says sovereign execution authority.
+
+XNU:
+also accurately.
+```
+
+The argument reaches the edge of the diagram, where somebody has finally noticed the power connection.
+
+## A supply is not a title
+
+Platform power management involves hardware and firmware, including work assigned to peripheral processors. There is no need to invent a single secret office that personally grants electricity to every other component.
+
+For the following scene, **Power Management is a dramatized ensemble role**, wearing one name tag on behalf of work distributed across a platform. The name identifies this cast role, not one universal Apple component. The hardware and infrastructure characters are fictional speakers throughout.
+
+Battery and Charger have also been invited. This makes the setting a laptop, not a claim that every Mac has an internal battery. Charger is the cast's name for the external charging setup; it is already taking more personal credit than a power adapter and cable deserve.
+
+```text
+XNU:
+I control execution.
+
+SoC:
+on which hardware?
+
+Power Management:
+while powered how?
+
+Battery:
+using whose energy?
+
+Charger:
+whose energy?
+
+Battery:
+GET THE FUCK OUT.
+```
+
+Battery's objection is understandable. It has spent the entire book being represented by a small percentage while components with much less remaining capacity deliver speeches about ownership.
+
+But the objection also conceals a problem. Stored energy and the means of replenishing it are different things. Battery can supply the laptop while the cable is absent. Charger can arrive with an external source without becoming the owner of Battery's contents. Neither relationship resembles a parent process supervising a child.
+
+```text
+Battery:
+I was here when you were unplugged.
+
+Charger:
+and how did that go.
+
+Battery:
+beautifully.
+
+Charger:
+for how long.
+
+Battery:
+this is a hostile interview.
+```
+
+The interval matters. A charged battery lets a laptop operate away from external power for a limited time. Dependence need not mean an uninterrupted live connection to the same source. The machine can carry some of the conditions of its continued operation with it.
+
+That is a new kind of answer to the jurisdiction question: not *who can refuse me right now*, but *how long can I continue before I need something again?* Battery has acquired bargaining time. It has not acquired infinite energy or jurisdiction over the kernel's memory protections.
+
+```text
+root:
+can I extend the interval.
+
+Battery:
+close something.
+
+root:
+I meant administratively.
+
+Battery:
+administratively close something.
+```
+
+Power control introduces another distinction. Managing a supply does not manufacture its energy. The name *Power Management* sounds like it belongs to the most senior person in a very unpleasant company. In this room, its problem is that everyone hears the first word and ignores the second.
+
+```text
+XNU:
+I need more power.
+
+Power Management:
+what is available.
+
+XNU:
+that sounds like a question for a subordinate.
+
+Power Management:
+it is a question for a supply.
+```
+
+The physical terms do not negotiate merely because software can express a preference. A laptop may be connected to a source that provides enough power to run it without charging the battery. Under a demanding workload, it can also use more power than the connected source supplies. The cable being present does not settle the balance.
+
+```text
+Charger:
+I am connected.
+
+Battery:
+I am decreasing.
+
+Charger:
+both statements can be true.
+
+XNU:
+I hate this family.
+```
+
+This is why *connected*, *running*, and *charging* cannot serve as synonyms. They answer different questions about a machine that looks exactly as plugged in in all three cases. The little connector is not a certificate that every demand downstream will be satisfied.
+
+Nobody has discovered a hidden monarch. They have discovered a budget that continues to apply during the constitutional argument.
+
+## The other end of the cable
+
+Charger enjoys its promotion for almost a paragraph. Then somebody follows it to the wall.
+
+```text
+Charger:
+I provide power.
+
+Outlet:
+you are welcome.
+
+Charger:
+I was speaking.
+
+Outlet:
+while plugged into me.
+```
+
+For the ordinary wall-powered charging arrangement, the adapter connects the laptop to an external electrical supply. The outlet is a connection point, not an inexhaustible source. Following it takes the discussion into the building's electrical connection and, where that connection is supplied by a grid, into infrastructure beyond the machine.
+
+The jurisdiction map has now left the motherboard.
+
+An outlet can be local while its supply is not. In a conventional grid arrangement, generation, transmission, and distribution have distinct jobs: electricity is generated, moved across the network, and delivered to consumers. They need not share a single owner. The business selling the electricity and the utility delivering it may also differ.
+
+```text
+Outlet:
+I would like to clarify that
+I do not own a power plant.
+
+XNU:
+then who did I just threaten.
+
+Outlet:
+a socket.
+```
+
+Utility and Grid arrive together and object to being given one chair. Here, *utility* names an organization; *grid* names interconnected infrastructure. A conventional power plant contributes generation to that system. Calling the plant the boss of the network would confuse making electricity with governing everything involved in delivering it.
+
+```text
+Utility:
+whose name is on the account.
+
+XNU:
+mine should be.
+
+User:
+it is not.
+
+Grid:
+can the account discussion happen
+somewhere that is not my diagram.
+```
+
+Ownership and public authority vary by jurisdiction. An electricity provider may be privately owned, publicly owned, or a cooperative; government may appear as regulator, owner, customer, or legal authority in different arrangements. None of those descriptions supplies one universal ladder from the wall socket to a head of state.
+
+The cast has nevertheless ordered a podium.
+
+## The hearing becomes inadmissible
+
+From here, Government and IRS are satirical personalities, and the later Physics, Causality, and Spacetime are a metaphysical postscript. Their exchanges are invented, not evidence about grid control, tax procedure, or cosmology. The technical dependency argument has reached its limit; the characters have refused to leave.
+
+Government opens a folder with the seriousness of someone about to use the word *framework* until everyone forgets the question.
+
+```text
+Government:
+depending on the jurisdiction,
+my relationship to this infrastructure—
+
+IRS:
+did somebody say income.
+
+Government:
+no.
+
+IRS:
+I'll wait.
+```
+
+IRS has interrupted the explanation. It has not been inserted into the electrical delivery path. Nobody is proposing that electricity passes through a tax office between generation and the outlet. The interruption is American bureaucracy entering an argument that had not even agreed to take place in America.
+
+Government tries again.
+
+```text
+Government:
+there are several different capacities
+in which I might appear.
+
+XNU:
+pick your highest privilege level.
+
+Government:
+that is not how this works.
+
+SEP:
+he needs to hear it from everybody.
+```
+
+For once, Government would like to be treated as a collection of limited offices with different responsibilities. It has chosen a terrible room in which to request that courtesy. XNU has spent nineteen chapters arriving at meetings with a single noun and expecting the furniture to kneel.
+
+The utility puts down a bill. Government puts down a regulation-shaped prop. IRS puts down an entirely different folder. None of these objects plugs into the laptop. Each participant is offended that this observation seems relevant.
+
+```text
+User:
+which one of you turns it on.
+
+Government:
+that is not the question before us.
+
+User:
+it was my question.
+
+Government:
+we have referred it.
+
+launchd:
+to whom.
+
+Government:
+a working group.
+
+launchd:
+finally.
+a service definition.
+```
+
+Power Plant has been silent through this exchange. It had expected the room to become less metaphorical upon its arrival. Instead, everyone has acquired folders, and the word *power* is being used in several senses without any attempt to compensate the original supplier.
+
+It pushes its chair back.
+
+```text
+Power Plant:
+I AM LITERALLY THE POWER PLANT.
+
+SEP:
+on your grid.
+```
+
+There is a pause long enough for XNU to experience something close to solidarity.
+
+```text
+XNU:
+first time?
+
+Power Plant:
+I expected the word literally to help.
+
+XNU:
+so did I.
+```
+
+The plant begins drafting a complaint. Its difficulty is choosing the respondent. Grid is still objecting to the seating plan. Utility is asking for an account number. Government has referred the matter to itself in another capacity. IRS has underlined something nobody said.
+
+SEP has provided no forwarding address.
+
+## No earlier office
+
+The complaint now requires a cause more fundamental than anybody in the room. The hearing leaves public administration and appoints Physics, who has made the mistake of having laws in its name.
+
+Physics arrives without a badge. This immediately concerns everybody who has spent the book treating badges as the beginning of reality.
+
+```text
+XNU:
+where is your enforcement mechanism.
+
+Physics:
+you have been sitting in it.
+
+XNU:
+can I inspect the policy.
+
+Physics:
+you can try to describe it.
+
+Gatekeeper:
+developer cannot be verified.
+
+Physics:
+that is going to be a recurring problem.
+```
+
+The cast is now arguing with a personification of physical law as though it were a badly documented service. This is metaphysical slapstick. No claim about an actual origin of the universe can be obtained by interviewing this witness, who has been written chiefly to disappoint the power plant.
+
+Power Plant wants somebody to have approved the arrangement. If nobody approved it, then the whole hearing has been taking place under rules nobody in attendance issued. This feels procedurally intolerable to a room full of characters who have confused explaining a condition with granting permission for it.
+
+```text
+Power Plant:
+there must have been a meeting.
+
+Physics:
+why.
+
+Power Plant:
+look at the consequences.
+
+launchd:
+I have no record of the meeting.
+
+Physics:
+you arrived rather late.
+
+launchd:
+I am PID 1.
+
+Physics:
+locally.
+```
+
+That word makes the room worse.
+
+Government asks whether the original decision can be appealed. Physics asks which decision. IRS asks whether the original conditions had a filing status. Causality, who had hoped to remain an abstract concern, requests standing before the discussion becomes any earlier.
+
+Power Plant mistakes the objection for progress. At last, another participant. Surely the next witness will identify the official who signed the beginning. The complaint can then proceed in an orderly fashion, provided the beginning has kept its paperwork.
+
+```text
+Power Plant:
+Physics.
+
+Physics:
+what.
+
+Power Plant:
+who authorized the Big Bang.
+
+Physics:
+that's not really—
+
+Power Plant:
+WHO SIGNED OFF ON
+INITIAL CONDITIONS
+
+Causality:
+I object.
+
+Physics:
+on what grounds
+
+Causality:
+you're asking for authorization
+before there was a "before."
+
+Power Plant:
+wrong jurisdiction?
+
+Causality:
+wrong temporal domain.
+```
+
+```text
+Physics:
+Spacetime?
+
+Spacetime:
+...
+
+Physics:
+Spacetime?
+
+Spacetime:
+zzz
+```
+
+
+# 29. Please Stop Interrupting Me
+
+Spacetime said `zzz`.
+
+This raises a technical question the metaphysical department was hoping to avoid: what, exactly, would interrupt it?
+
+## Who interrupted Spacetime
+
+Computers call several unrelated disruptions *interrupts*. A device has news. An instruction faults. A process receives a signal. A Mach exception is delivered. A sleeping thread becomes runnable.
+
+Only some of those are hardware interrupts.
+
+```text
+XNU:
+who interrupted me
+
+Device:
+I raised an interrupt.
+
+Process:
+I got SIGINT.
+
+Debugger:
+I received an exception.
+
+XNU:
+one at a time, incorrectly named.
+```
+
+The shared theme is control flow changing because an event needs attention. The sources, delivery mechanisms, recipients, and consequences differ.
+
+## The fault came from inside the instruction
+
+A synchronous exception arises because of the instruction being executed: an invalid access, unavailable translation, illegal instruction, system call, or another architecturally defined condition. It is synchronous because the event is tied to that instruction stream.
+
+```text
+Instruction:
+load from this address.
+
+MMU:
+fault.
+
+Instruction:
+who interrupted me
+
+MMU:
+you brought the problem.
+```
+
+The kernel can resolve some faults and resume execution. Others become failures delivered upward or termination. A trap used to enter the kernel deliberately and a fault caused by invalid access can share exception machinery without meaning the same thing.
+
+“The CPU raised an exception” names an architectural event. It does not yet say which software policy will handle it.
+
+## The device has news
+
+A hardware interrupt is asynchronous with respect to the instruction stream it interrupts. A device or timer can signal that an event needs service. Interrupt-controller and kernel machinery route and handle that event according to configured state.
+
+```text
+Network controller:
+packet arrived.
+
+Core:
+I was doing math.
+
+Interrupt controller:
+you have mail.
+
+Core:
+this family has three incompatible mailboxes.
+```
+
+Delivery does not mean the entire operation is finished. Immediate handling is usually kept bounded; later work may be deferred to another context. A driver can process completion, protocol state can change, and a waiter can become runnable afterward.
+
+The exact Apple interrupt-controller topology and routing policy vary by generation and are not invented here. The architectural distinction is sufficient: asynchronous hardware news is not the same event as a fault caused by the current instruction.
+
+Deferred work is where “the interrupt did it” becomes especially misleading. An immediate handler can acknowledge or capture enough state to make the source safe, then arrange later processing outside the most constrained context. That later work may wake a thread or deliver a callback.
+
+```text
+Interrupt handler:
+noted.
+
+Device:
+so the request is complete?
+
+Deferred work:
+I just got assigned twelve steps.
+
+Application:
+my callback?
+
+Everyone below:
+eventually is now a technical term.
+```
+
+The book does not prescribe one XNU deferral mechanism for every device. It protects only the boundary between prompt hardware-event handling and work scheduled afterward.
+
+## Mach would like to deliver an exception
+
+Mach exceptions are an operating-system mechanism for reporting exceptional conditions to a configured exception port. Debuggers can use that machinery to observe and control a task. The Mach message is not the original electrical interrupt wearing a nicer jacket.
+
+```text
+Hardware exception:
+event.
+
+XNU:
+translated and classified.
+
+Mach exception:
+message for the handler.
+
+Debugger:
+now I have jurisdiction.
+```
+
+The configured handler and exception type determine what can happen next. Delivery may permit inspection, reply, resumption, or failure under the relevant contract. “Exception” therefore names both architectural and Mach-level concepts that must not be collapsed.
+
+## That is a signal, not an interrupt
+
+Unix signals notify a process or thread under the operating system's signal model. `SIGINT` is traditionally associated with an interactive interrupt character, which has done irreversible damage to terminology.
+
+```text
+Terminal:
+Ctrl-C.
+
+Kernel:
+SIGINT.
+
+Process:
+I was interrupted.
+
+Interrupt controller:
+leave me out of this.
+```
+
+A signal can be generated for many reasons and has dispositions such as handling, ignoring where permitted, or default action. It is not a hardware interrupt routed directly into userspace. The kernel mediates signal state and delivery.
+
+Nor does a signal necessarily launch a service or wake the whole Mac. It may make a blocked thread return or arrange a handler when the task runs. Thread wake, signal delivery, and system wake remain different receipts.
+
+## Which world receives it
+
+The family can now assemble the sequence without pretending it is one event:
+
+```text
+Device:
+news.
+
+Interrupt machinery:
+delivered.
+
+Driver:
+state updated.
+
+Wait queue:
+thread runnable.
+
+Scheduler:
+thread running.
+
+launchd:
+I did not launch any of this.
+```
+
+Routing owns where hardware news is presented. The kernel owns handling and later software consequences. A wait mechanism owns eligibility. The scheduler owns execution placement. launchd owns service lifecycle. None inherits the others' authority because one event passed through all of them.
+
+Virtualization makes the final question unavoidable. A physical interrupt can belong to the host, be represented to a guest, or cause host work that later produces a virtual event. Which kernel receives which event depends on the execution world and virtualization configuration.
+
+```text
+Guest kernel:
+I was interrupted.
+
+Host kernel:
+by what I presented.
+
+Guest kernel:
+so you own my interrupt
+
+Host kernel:
+I own the machinery that let your world receive it.
+```
+
+That is enough mechanism. The guest may now attend Dinner and explain why even an interrupt needs a jurisdiction.
+
+The seating chart has never been more technically necessary or socially, architecturally, comprehensively doomed tonight.
+
+
+# 30. The Hardware Family Dinner
 
 The mistake was inviting everyone.
 
@@ -5407,6 +7903,27 @@ you all take for granted.
 APFS:
 volumes, files, snapshots.
 
+VFS:
+names into file operations.
+
+Driver:
+device-specific translation.
+
+firmware:
+local controller behavior.
+
+Network:
+packets without your PID.
+
+Scheduler:
+runnable is not running.
+
+Wait queue:
+eligible, not executed.
+
+Interrupt machinery:
+delivery, not the whole consequence.
+
 seal:
 boot-accepted system integrity.
 
@@ -5489,7 +8006,7 @@ The MMU and DART turn mappings into refusals.
 
 The GPU, ANE, storage, display, and memory machinery own specialized mechanisms. SEP has a security jurisdiction the Application Processor cannot annex. The AP hosts XNU without becoming XNU.
 
-The system works because these limits meet through boot, IPC, policy, mappings, drivers, queues, shared memory, cryptography, and mutual suspicion.
+The system works because these limits meet through boot, IPC, policy, names, mappings, drivers, firmware, queues, packets, waits, wakeups, interrupts, shared memory, cryptography, and mutual suspicion.
 
 This is the Apple silicon family.
 
@@ -5498,7 +8015,7 @@ Not a hierarchy with one god at the top.
 A house full of different sovereign assholes, each holding one portion of the lease and none willing to wash the dishes.
 
 
-# 19. At the Mercy of the Kernel
+# 31. At the Mercy of the Kernel
 
 Every operating-system book loves boot. Arrows point downward. Trust accumulates. The desktop appears. The diagram ends with *user session established* as if nobody will ever click Shut Down while fourteen apps negotiate unsaved documents.
 
@@ -5845,432 +8362,7 @@ Privilege can end a world without understanding it. That is power, not governmen
 Even the mercy of the kernel has a jurisdiction.
 
 
-# 20. Below the Kernel
-
-What does kernel authority presuppose?
-
-The last chapter gave XNU an opportunity to discover one answer by ceasing to be available for follow-up questions. For this chapter, the cast has been restored by the ordinary literary procedure of beginning another scene. Nobody should infer a recovery protocol from the fact that the kernel has lines again.
-
-XNU arrives with a revised claim. It will no longer insist that it governs everything. It will insist that everything important requires it.
-
-This sounds more defensible until somebody asks what *it* requires.
-
-## The floor has prerequisites
-
-XNU executes on the Application Processor. Those instructions need a processor on which to execute; kernel privilege does not make them self-executing. We have spent a book examining what becomes possible once the kernel runs. The question now concerns the conditions under which that sentence can begin.
-
-```text
-XNU:
-I provide the execution environment.
-
-Application Processor:
-and I execute it.
-
-XNU:
-yes.
-for me.
-
-Application Processor:
-you have added a preposition
-where the electricity goes.
-```
-
-The Application Processor belongs to an SoC platform. That relationship is integration, not process parentage. The SoC did not fork a CPU. Nor does being part of the same platform dissolve the separate processor and security domains that caused the dinner to go badly.
-
-XNU wants the platform to be its equipment. SoC wants the residents to acknowledge the platform. Both can get through an ordinary working day without settling that domestic disagreement. Neither can settle it by drawing a taller box around the other.
-
-If we draw arrows here, each needs its own verb. XNU *executes on* the Application Processor. The processor is *integrated into* a platform. Platform operation *depends on* power-management hardware and firmware. The machine is *supplied by* a battery or external power. An external source may be *connected through* electrical infrastructure.
-
-These are different relationships. An execution environment, physical integration, power control, stored energy, and electrical supply do not become one chain of command because they fit on the same page. Later, ownership, regulation, and taxation will attempt to squeeze onto the page too. They will not improve the diagram.
-
-```text
-SoC:
-I would like a box.
-
-XNU:
-you already have a box.
-
-SoC:
-you labeled it hardware.
-
-XNU:
-accurately.
-
-SoC:
-your box says sovereign execution authority.
-
-XNU:
-also accurately.
-```
-
-The argument reaches the edge of the diagram, where somebody has finally noticed the power connection.
-
-## A supply is not a title
-
-Platform power management involves hardware and firmware, including work assigned to peripheral processors. There is no need to invent a single secret office that personally grants electricity to every other component.
-
-For the following scene, **Power Management is a dramatized ensemble role**, wearing one name tag on behalf of work distributed across a platform. The name identifies this cast role, not one universal Apple component. The hardware and infrastructure characters are fictional speakers throughout.
-
-Battery and Charger have also been invited. This makes the setting a laptop, not a claim that every Mac has an internal battery. Charger is the cast's name for the external charging setup; it is already taking more personal credit than a power adapter and cable deserve.
-
-```text
-XNU:
-I control execution.
-
-SoC:
-on which hardware?
-
-Power Management:
-while powered how?
-
-Battery:
-using whose energy?
-
-Charger:
-whose energy?
-
-Battery:
-GET THE FUCK OUT.
-```
-
-Battery's objection is understandable. It has spent the entire book being represented by a small percentage while components with much less remaining capacity deliver speeches about ownership.
-
-But the objection also conceals a problem. Stored energy and the means of replenishing it are different things. Battery can supply the laptop while the cable is absent. Charger can arrive with an external source without becoming the owner of Battery's contents. Neither relationship resembles a parent process supervising a child.
-
-```text
-Battery:
-I was here when you were unplugged.
-
-Charger:
-and how did that go.
-
-Battery:
-beautifully.
-
-Charger:
-for how long.
-
-Battery:
-this is a hostile interview.
-```
-
-The interval matters. A charged battery lets a laptop operate away from external power for a limited time. Dependence need not mean an uninterrupted live connection to the same source. The machine can carry some of the conditions of its continued operation with it.
-
-That is a new kind of answer to the jurisdiction question: not *who can refuse me right now*, but *how long can I continue before I need something again?* Battery has acquired bargaining time. It has not acquired infinite energy or jurisdiction over the kernel's memory protections.
-
-```text
-root:
-can I extend the interval.
-
-Battery:
-close something.
-
-root:
-I meant administratively.
-
-Battery:
-administratively close something.
-```
-
-Power control introduces another distinction. Managing a supply does not manufacture its energy. The name *Power Management* sounds like it belongs to the most senior person in a very unpleasant company. In this room, its problem is that everyone hears the first word and ignores the second.
-
-```text
-XNU:
-I need more power.
-
-Power Management:
-what is available.
-
-XNU:
-that sounds like a question for a subordinate.
-
-Power Management:
-it is a question for a supply.
-```
-
-The physical terms do not negotiate merely because software can express a preference. A laptop may be connected to a source that provides enough power to run it without charging the battery. Under a demanding workload, it can also use more power than the connected source supplies. The cable being present does not settle the balance.
-
-```text
-Charger:
-I am connected.
-
-Battery:
-I am decreasing.
-
-Charger:
-both statements can be true.
-
-XNU:
-I hate this family.
-```
-
-This is why *connected*, *running*, and *charging* cannot serve as synonyms. They answer different questions about a machine that looks exactly as plugged in in all three cases. The little connector is not a certificate that every demand downstream will be satisfied.
-
-Nobody has discovered a hidden monarch. They have discovered a budget that continues to apply during the constitutional argument.
-
-## The other end of the cable
-
-Charger enjoys its promotion for almost a paragraph. Then somebody follows it to the wall.
-
-```text
-Charger:
-I provide power.
-
-Outlet:
-you are welcome.
-
-Charger:
-I was speaking.
-
-Outlet:
-while plugged into me.
-```
-
-For the ordinary wall-powered charging arrangement, the adapter connects the laptop to an external electrical supply. The outlet is a connection point, not an inexhaustible source. Following it takes the discussion into the building's electrical connection and, where that connection is supplied by a grid, into infrastructure beyond the machine.
-
-The jurisdiction map has now left the motherboard.
-
-An outlet can be local while its supply is not. In a conventional grid arrangement, generation, transmission, and distribution have distinct jobs: electricity is generated, moved across the network, and delivered to consumers. They need not share a single owner. The business selling the electricity and the utility delivering it may also differ.
-
-```text
-Outlet:
-I would like to clarify that
-I do not own a power plant.
-
-XNU:
-then who did I just threaten.
-
-Outlet:
-a socket.
-```
-
-Utility and Grid arrive together and object to being given one chair. Here, *utility* names an organization; *grid* names interconnected infrastructure. A conventional power plant contributes generation to that system. Calling the plant the boss of the network would confuse making electricity with governing everything involved in delivering it.
-
-```text
-Utility:
-whose name is on the account.
-
-XNU:
-mine should be.
-
-User:
-it is not.
-
-Grid:
-can the account discussion happen
-somewhere that is not my diagram.
-```
-
-Ownership and public authority vary by jurisdiction. An electricity provider may be privately owned, publicly owned, or a cooperative; government may appear as regulator, owner, customer, or legal authority in different arrangements. None of those descriptions supplies one universal ladder from the wall socket to a head of state.
-
-The cast has nevertheless ordered a podium.
-
-## The hearing becomes inadmissible
-
-From here, Government and IRS are satirical personalities, and the later Physics, Causality, and Spacetime are a metaphysical postscript. Their exchanges are invented, not evidence about grid control, tax procedure, or cosmology. The technical dependency argument has reached its limit; the characters have refused to leave.
-
-Government opens a folder with the seriousness of someone about to use the word *framework* until everyone forgets the question.
-
-```text
-Government:
-depending on the jurisdiction,
-my relationship to this infrastructure—
-
-IRS:
-did somebody say income.
-
-Government:
-no.
-
-IRS:
-I'll wait.
-```
-
-IRS has interrupted the explanation. It has not been inserted into the electrical delivery path. Nobody is proposing that electricity passes through a tax office between generation and the outlet. The interruption is American bureaucracy entering an argument that had not even agreed to take place in America.
-
-Government tries again.
-
-```text
-Government:
-there are several different capacities
-in which I might appear.
-
-XNU:
-pick your highest privilege level.
-
-Government:
-that is not how this works.
-
-SEP:
-he needs to hear it from everybody.
-```
-
-For once, Government would like to be treated as a collection of limited offices with different responsibilities. It has chosen a terrible room in which to request that courtesy. XNU has spent nineteen chapters arriving at meetings with a single noun and expecting the furniture to kneel.
-
-The utility puts down a bill. Government puts down a regulation-shaped prop. IRS puts down an entirely different folder. None of these objects plugs into the laptop. Each participant is offended that this observation seems relevant.
-
-```text
-User:
-which one of you turns it on.
-
-Government:
-that is not the question before us.
-
-User:
-it was my question.
-
-Government:
-we have referred it.
-
-launchd:
-to whom.
-
-Government:
-a working group.
-
-launchd:
-finally.
-a service definition.
-```
-
-Power Plant has been silent through this exchange. It had expected the room to become less metaphorical upon its arrival. Instead, everyone has acquired folders, and the word *power* is being used in several senses without any attempt to compensate the original supplier.
-
-It pushes its chair back.
-
-```text
-Power Plant:
-I AM LITERALLY THE POWER PLANT.
-
-SEP:
-on your grid.
-```
-
-There is a pause long enough for XNU to experience something close to solidarity.
-
-```text
-XNU:
-first time?
-
-Power Plant:
-I expected the word literally to help.
-
-XNU:
-so did I.
-```
-
-The plant begins drafting a complaint. Its difficulty is choosing the respondent. Grid is still objecting to the seating plan. Utility is asking for an account number. Government has referred the matter to itself in another capacity. IRS has underlined something nobody said.
-
-SEP has provided no forwarding address.
-
-## No earlier office
-
-The complaint now requires a cause more fundamental than anybody in the room. The hearing leaves public administration and appoints Physics, who has made the mistake of having laws in its name.
-
-Physics arrives without a badge. This immediately concerns everybody who has spent the book treating badges as the beginning of reality.
-
-```text
-XNU:
-where is your enforcement mechanism.
-
-Physics:
-you have been sitting in it.
-
-XNU:
-can I inspect the policy.
-
-Physics:
-you can try to describe it.
-
-Gatekeeper:
-developer cannot be verified.
-
-Physics:
-that is going to be a recurring problem.
-```
-
-The cast is now arguing with a personification of physical law as though it were a badly documented service. This is metaphysical slapstick. No claim about an actual origin of the universe can be obtained by interviewing this witness, who has been written chiefly to disappoint the power plant.
-
-Power Plant wants somebody to have approved the arrangement. If nobody approved it, then the whole hearing has been taking place under rules nobody in attendance issued. This feels procedurally intolerable to a room full of characters who have confused explaining a condition with granting permission for it.
-
-```text
-Power Plant:
-there must have been a meeting.
-
-Physics:
-why.
-
-Power Plant:
-look at the consequences.
-
-launchd:
-I have no record of the meeting.
-
-Physics:
-you arrived rather late.
-
-launchd:
-I am PID 1.
-
-Physics:
-locally.
-```
-
-That word makes the room worse.
-
-Government asks whether the original decision can be appealed. Physics asks which decision. IRS asks whether the original conditions had a filing status. Causality, who had hoped to remain an abstract concern, requests standing before the discussion becomes any earlier.
-
-Power Plant mistakes the objection for progress. At last, another participant. Surely the next witness will identify the official who signed the beginning. The complaint can then proceed in an orderly fashion, provided the beginning has kept its paperwork.
-
-```text
-Power Plant:
-Physics.
-
-Physics:
-what.
-
-Power Plant:
-who authorized the Big Bang.
-
-Physics:
-that's not really—
-
-Power Plant:
-WHO SIGNED OFF ON
-INITIAL CONDITIONS
-
-Causality:
-I object.
-
-Physics:
-on what grounds
-
-Causality:
-you're asking for authorization
-before there was a "before."
-
-Power Plant:
-wrong jurisdiction?
-
-Causality:
-wrong temporal domain.
-```
-
-```text
-Physics:
-Spacetime?
-
-Spacetime:
-...
-
-Physics:
-Spacetime?
-
-Spacetime:
-zzz
-```
-
-
-# 21. One More Jurisdiction
+# 32. One More Jurisdiction
 
 We began with a useful lie: hardware at the bottom, kernel above it, userspace above that, and the purchaser floating near the top like a minor deity with AppleCare.
 

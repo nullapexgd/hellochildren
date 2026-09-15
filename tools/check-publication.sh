@@ -92,14 +92,14 @@ for chapter in \
     22-the-network-does-not-care-about-your-process.md \
     23-the-cpu-is-waiting.md \
     24-who-woke-me-up.md \
-    31-please-stop-interrupting-me.md \
+    29-please-stop-interrupting-me.md \
     18-memory-has-borders.md \
     25-sep-has-a-mailbox.md \
     26-the-civil-war.md \
     27-the-house-inside-the-house.md \
-    28-the-hardware-family-dinner.md \
-    29-shutdown.md \
-    30-below-the-kernel.md \
+    28-below-the-kernel.md \
+    30-hardware-family-dinner.md \
+    31-shutdown.md \
     32-epilogue.md; do
     test -f "$project_dir/chapters/$chapter" || fail "missing v0.7 chapter: $chapter"
 done
@@ -109,16 +109,17 @@ contains "$project_dir/chapters/14-your-file-does-not-exist.md" "what's a Users"
 contains "$project_dir/chapters/14-your-file-does-not-exist.md" "what's a file"
 contains "$project_dir/chapters/21-the-firmware-nobody-invited.md" "what's your PID"
 contains "$project_dir/chapters/21-the-firmware-nobody-invited.md" 'my what'
-contains "$project_dir/chapters/30-below-the-kernel.md" 'zzz'
-contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'synchronous exceptions'
-contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'hardware interrupts'
-contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Mach exceptions'
-contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Unix signals'
-contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'deferred work'
+contains "$project_dir/chapters/28-below-the-kernel.md" 'zzz'
+contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'synchronous exception'
+contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'hardware interrupt'
+contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Mach exception'
+contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Unix signal'
+contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Deferred work'
 contains "$project_dir/chapters/32-epilogue.md" 'Hyprvisor'
-not_contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'moo.'
-chapter30_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/chapters/30-below-the-kernel.md")
-test "$chapter30_last_nonblank" = 'zzz' || fail 'Chapter 30 does not end at zzz.'
+not_contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Hyprvisor'
+not_contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'moo.'
+chapter28_last_content=$(awk 'NF && $0 != "```" { line=$0 } END { print line }' "$project_dir/chapters/28-below-the-kernel.md")
+test "$chapter28_last_content" = 'zzz' || fail 'Chapter 28 does not end its dialogue at zzz.'
 chapter32_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/chapters/32-epilogue.md")
 test "$chapter32_last_nonblank" = 'moo.' || fail 'Chapter 32 does not end at moo.'
 test "$(count_standalone "$project_dir/chapters/32-epilogue.md")" = 1 || fail 'Chapter 32 must contain exactly one standalone moo.'
@@ -151,7 +152,10 @@ for marker in \
     'parts/05-other-worlds.md' \
     'chapters/25-sep-has-a-mailbox.md' \
     'parts/06-everybody-leaves-eventually.md' \
-    'chapters/28-the-hardware-family-dinner.md' \
+    'chapters/28-below-the-kernel.md' \
+    'chapters/29-please-stop-interrupting-me.md' \
+    'chapters/30-hardware-family-dinner.md' \
+    'chapters/31-shutdown.md' \
     'chapters/32-epilogue.md'; do
     contains "$project_dir/book/contents.txt" "$marker"
 done
@@ -173,7 +177,10 @@ assert_order "$project_dir/book/contents.txt" \
     'chapters/25-sep-has-a-mailbox.md' \
     'chapters/27-the-house-inside-the-house.md' \
     'parts/06-everybody-leaves-eventually.md' \
-    'chapters/28-the-hardware-family-dinner.md' \
+    'chapters/28-below-the-kernel.md' \
+    'chapters/29-please-stop-interrupting-me.md' \
+    'chapters/30-hardware-family-dinner.md' \
+    'chapters/31-shutdown.md' \
     'chapters/32-epilogue.md'
 
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
@@ -182,14 +189,14 @@ contains "$project_dir/book/metadata.yaml" 'author: "Efeali Bel"'
 contains "$project_dir/chapters/02-the-boot-chain.md" 'Owner Identity Key'
 contains "$project_dir/chapters/05-the-children.md" '`iBootd` is fictional.'
 contains "$project_dir/chapters/08-trust-and-signatures.md" '`amfidd` is fictional.'
-contains "$project_dir/chapters/28-hardware-family-dinner.md" 'you are all PART OF ME.'
-contains "$project_dir/chapters/29-shutdown.md" 'bro really turned himself off'
-contains "$project_dir/chapters/30-below-the-kernel.md" '# 30. Below the Kernel'
-contains "$project_dir/chapters/30-below-the-kernel.md" 'The jurisdiction map has now left the motherboard.'
-contains "$project_dir/chapters/30-below-the-kernel.md" 'wrong temporal domain.'
-contains "$project_dir/chapters/30-below-the-kernel.md" 'Spacetime:'
+contains "$project_dir/chapters/28-below-the-kernel.md" '# 28. Below the Kernel'
+contains "$project_dir/chapters/28-below-the-kernel.md" 'The jurisdiction map has now left the motherboard.'
+contains "$project_dir/chapters/28-below-the-kernel.md" 'wrong temporal domain.'
+contains "$project_dir/chapters/28-below-the-kernel.md" 'Spacetime:'
+contains "$project_dir/chapters/30-hardware-family-dinner.md" 'you are all PART OF ME.'
+contains "$project_dir/chapters/31-shutdown.md" 'bro really turned himself off'
 contains "$project_dir/chapters/32-epilogue.md" '# 32. One More Jurisdiction'
-not_contains "$project_dir/chapters/28-hardware-family-dinner.md" 'physically inside me'
+not_contains "$project_dir/chapters/30-hardware-family-dinner.md" 'physically inside me'
 
 test -f "$project_dir/notes/receipts-v0.6.md" || fail 'missing notes/receipts-v0.6.md'
 test -f "$project_dir/releases/on-your-processor-v0.6.md" || fail 'missing frozen v0.6 manuscript'
@@ -235,8 +242,24 @@ not_contains "$project_dir/book/book.css" 'column-fill'
 not_contains "$project_dir/book/book.css" '.book-pages > main'
 contains "$project_dir/README.md" '[Interactive HTML reader](dist/on-your-processor.html)'
 contains "$project_dir/README.md" 'Left/Right arrow keys'
-contains "$project_dir/manuscript.md" '# 30. Below the Kernel'
+contains "$project_dir/manuscript.md" '# 28. Below the Kernel'
 contains "$project_dir/manuscript.md" '# 32. One More Jurisdiction'
+
+reconstructed_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-manifest.XXXXXX")
+: > "$reconstructed_file"
+first_source=1
+while IFS= read -r relative_file || [ -n "$relative_file" ]; do
+    case "$relative_file" in
+        ''|'#'*) continue ;;
+    esac
+    if [ "$first_source" -eq 0 ]; then
+        printf '\n\n' >> "$reconstructed_file"
+    fi
+    cat "$project_dir/$relative_file" >> "$reconstructed_file"
+    first_source=0
+done < "$project_dir/book/contents.txt"
+cmp -s "$reconstructed_file" "$project_dir/manuscript.md" || fail 'manifest reconstruction differs from manuscript.md'
+rm -f "$reconstructed_file"
 
 test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
@@ -272,8 +295,10 @@ assert_order "$epub_order_file" \
     'Part IV — Nobody Touched the Hardware' \
     'Part V — Other Worlds' \
     'Part VI — Everybody Leaves Eventually' \
-    '30. Below the Kernel' \
-    '31. Please Stop Interrupting Me' \
+    '28. Below the Kernel' \
+    '29. Please Stop Interrupting Me' \
+    '30. The Hardware Family Dinner' \
+    '31. At the Mercy of the Kernel' \
     '32. One More Jurisdiction'
 assert_order "$epub_nav_file" \
     'Part I — Who Let You Run?' \
@@ -282,8 +307,10 @@ assert_order "$epub_nav_file" \
     'Part IV — Nobody Touched the Hardware' \
     'Part V — Other Worlds' \
     'Part VI — Everybody Leaves Eventually' \
-    '30. Below the Kernel' \
-    '31. Please Stop Interrupting Me' \
+    '28. Below the Kernel' \
+    '29. Please Stop Interrupting Me' \
+    '30. The Hardware Family Dinner' \
+    '31. At the Mercy of the Kernel' \
     '32. One More Jurisdiction'
 contains "$epub_opf_file" '<spine'
 for navigation_marker in \
@@ -293,8 +320,10 @@ for navigation_marker in \
     'Part IV — Nobody Touched the Hardware' \
     'Part V — Other Worlds' \
     'Part VI — Everybody Leaves Eventually' \
-    '30. Below the Kernel' \
-    '31. Please Stop Interrupting Me' \
+    '28. Below the Kernel' \
+    '29. Please Stop Interrupting Me' \
+    '30. The Hardware Family Dinner' \
+    '31. At the Mercy of the Kernel' \
     '32. One More Jurisdiction'; do
     navigation_href=$(grep -F -m1 -- "$navigation_marker" "$epub_nav_file" | sed -n 's/.*href="\([^"]*\)".*/\1/p')
     test -n "$navigation_href" || fail "EPUB navigation target missing: $navigation_marker"
@@ -310,8 +339,10 @@ assert_order "$html_toc_file" \
     'Part IV — Nobody Touched the Hardware' \
     'Part V — Other Worlds' \
     'Part VI — Everybody Leaves Eventually' \
-    '30. Below the Kernel' \
-    '31. Please Stop Interrupting Me' \
+    '28. Below the Kernel' \
+    '29. Please Stop Interrupting Me' \
+    '30. The Hardware Family Dinner' \
+    '31. At the Mercy of the Kernel' \
     '32. One More Jurisdiction'
 
 contains "$html_file" '<h1 class="title">On Your Processor</h1>'
@@ -326,7 +357,8 @@ contains "$html_file" 'id="reader-track"'
 contains "$html_file" 'reader-page'
 contains "$html_file" 'ArrowLeft'
 contains "$html_file" 'ArrowRight'
-contains "$html_file" '30. Below the Kernel'
+contains "$html_file" '28. Below the Kernel'
+contains "$html_file" '30. The Hardware Family Dinner'
 contains_with_normalized_whitespace "$html_file" '32. One More Jurisdiction'
 contains "$html_file" 'data:image/png;base64,'
 not_contains "$html_file" '<link rel="stylesheet"'
@@ -339,7 +371,8 @@ printf '%s' "$epub_metadata" | grep -Fq '<dc:title' || fail 'EPUB title metadata
 printf '%s' "$epub_metadata" | grep -Fq '>On Your Processor</dc:title>' || fail 'EPUB title is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq '>Efeali Bel</dc:creator>' || fail 'EPUB author is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq 'cover-image' || fail 'EPUB cover image is missing'
-epub_contains '30. Below the Kernel' "$epub_file"
+epub_contains '28. Below the Kernel' "$epub_file"
+epub_contains '30. The Hardware Family Dinner' "$epub_file"
 epub_contains '32. One More Jurisdiction' "$epub_file"
 
 contains "$project_dir/chapters/04-launchd.md" '# 4. launchd: Hello Children'
@@ -350,8 +383,8 @@ not_contains "$project_dir/chapters/05-the-children.md" 'The v0.3 reproduction p
 not_contains "$project_dir/chapters/08-trust-and-signatures.md" 'The v0.3 reproduction pass'
 not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The earlier source-conversation build'
 not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The v0.3 reproduction target'
-not_contains "$project_dir/chapters/29-shutdown.md" 'The earlier source archaeology'
-not_contains "$project_dir/chapters/29-shutdown.md" 'the v0.3 reproduction pass'
+not_contains "$project_dir/chapters/31-shutdown.md" 'The earlier source archaeology'
+not_contains "$project_dir/chapters/31-shutdown.md" 'the v0.3 reproduction pass'
 
 last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/manuscript.md")
 test "$last_nonblank" = 'moo.' || fail 'manuscript does not end at moo.'
