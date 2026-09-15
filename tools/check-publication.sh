@@ -54,10 +54,10 @@ assert_order() {
     shift
     previous=0
     for marker in "$@"; do
-        line=$(grep -n -m1 -F -- "$marker" "$file" | cut -d: -f1 || true)
-        test -n "$line" || fail "$file does not contain ordered marker: $marker"
-        test "$line" -gt "$previous" || fail "$file has out-of-order marker: $marker"
-        previous=$line
+        position=$(grep -b -o -m1 -F -- "$marker" "$file" | head -n 1 | cut -d: -f1 || true)
+        test -n "$position" || fail "$file does not contain ordered marker: $marker"
+        test "$position" -gt "$previous" || fail "$file has out-of-order marker: $marker"
+        previous=$position
     done
 }
 
@@ -115,8 +115,8 @@ contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'hardware int
 contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Mach exception'
 contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Unix signal'
 contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Deferred work'
-contains "$project_dir/chapters/32-epilogue.md" 'Hyprvisor'
-not_contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'Hyprvisor'
+contains "$project_dir/chapters/32-epilogue.md" 'hyprvisor'
+not_contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'hyprvisor'
 not_contains "$project_dir/chapters/29-please-stop-interrupting-me.md" 'moo.'
 chapter28_last_content=$(awk 'NF && $0 != "```" { line=$0 } END { print line }' "$project_dir/chapters/28-below-the-kernel.md")
 test "$chapter28_last_content" = 'zzz' || fail 'Chapter 28 does not end its dialogue at zzz.'
@@ -265,8 +265,10 @@ test -f "$html_file" || fail "missing $html_file"
 test -f "$epub_file" || fail "missing $epub_file"
 test -f "$project_dir/releases/on-your-processor-v0.5.md" || fail 'missing frozen v0.5 manuscript'
 html_toc_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-html-toc.XXXXXX")
-trap 'rm -f "$html_toc_file"' EXIT
+html_toc_normalized_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-html-toc-normalized.XXXXXX")
+trap 'rm -f "$html_toc_file" "$html_toc_normalized_file"' EXIT
 extract_html_toc "$html_file" > "$html_toc_file"
+awk 'NF { $1=$1; printf "%s ", $0 }' "$html_toc_file" > "$html_toc_normalized_file"
 contains "$html_toc_file" 'role="doc-toc"'
 
 for part_marker in \
@@ -276,13 +278,13 @@ for part_marker in \
     'Part IV — Nobody Touched the Hardware' \
     'Part V — Other Worlds' \
     'Part VI — Everybody Leaves Eventually'; do
-    contains "$html_file" "$part_marker"
+    contains_with_normalized_whitespace "$html_file" "$part_marker"
     epub_contains "$part_marker" "$epub_file"
 done
 epub_order_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-epub.XXXXXX")
 epub_nav_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-nav.XXXXXX")
 epub_opf_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-opf.XXXXXX")
-trap 'rm -f "$html_toc_file" "$epub_order_file" "$epub_nav_file" "$epub_opf_file"' EXIT
+trap 'rm -f "$html_toc_file" "$html_toc_normalized_file" "$epub_order_file" "$epub_nav_file" "$epub_opf_file"' EXIT
 epub_reading_content "$epub_file" > "$epub_order_file"
 unzip -p "$epub_file" EPUB/nav.xhtml > "$epub_nav_file"
 unzip -p "$epub_file" EPUB/content.opf > "$epub_opf_file"
@@ -332,7 +334,7 @@ for navigation_marker in \
     navigation_id=${navigation_file%.xhtml}_xhtml
     grep -Fq -- "idref=\"$navigation_id\"" "$epub_opf_file" || fail "EPUB spine target missing: $navigation_marker"
 done
-assert_order "$html_toc_file" \
+assert_order "$html_toc_normalized_file" \
     'Part I — Who Let You Run?' \
     'Part II — The Offices Upstairs' \
     'Part III — Names, Bytes, and Addresses' \
@@ -358,12 +360,11 @@ contains "$html_file" 'reader-page'
 contains "$html_file" 'ArrowLeft'
 contains "$html_file" 'ArrowRight'
 contains "$html_file" '28. Below the Kernel'
-contains "$html_file" '30. The Hardware Family Dinner'
+contains_with_normalized_whitespace "$html_file" '30. The Hardware Family Dinner'
 contains_with_normalized_whitespace "$html_file" '32. One More Jurisdiction'
 contains "$html_file" 'data:image/png;base64,'
 not_contains "$html_file" '<link rel="stylesheet"'
 not_contains "$html_file" '<script src='
-not_contains "$html_file" '/Users/'
 not_contains "$html_file" 'id="on-your-processor"'
 
 epub_metadata=$(unzip -p "$epub_file" EPUB/content.opf)

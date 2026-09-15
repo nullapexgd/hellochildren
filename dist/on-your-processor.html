@@ -796,7 +796,8 @@ background: black;
 Dysfunctional Family Living Inside Your Mac</p>
                         <p class="author"><span>Written by</span> Efeali
 Bel</p>
-                        <p class="edition">v0.6 — Below the Kernel</p>
+                        <p class="edition">v0.7 — Expanded Jurisdiction
+Edition</p>
                     </section>
 
                     <nav id="TOC" role="doc-toc" aria-label="Table of contents">
@@ -895,7 +896,11 @@ Bel</p>
                         the User Session?</a>
                         <ul>
                         <li><a href="#please-authenticate-before-existing" id="toc-please-authenticate-before-existing">Please
-                        authenticate before existing</a></li>
+                        authenticate before existing</a>
+                        <ul>
+                        <li><a href="#coreauthentication-left-its-verbs-in-the-lobby" id="toc-coreauthentication-left-its-verbs-in-the-lobby">CoreAuthentication
+                        left its verbs in the lobby</a></li>
+                        </ul></li>
                         <li><a href="#the-account-was-already-here" id="toc-the-account-was-already-here">The
                         account was already here</a></li>
                         <li><a href="#root-arrives-without-an-appointment" id="toc-root-arrives-without-an-appointment">Root
@@ -917,7 +922,11 @@ Bel</p>
                         <li><a href="#the-pixel-custody-dispute" id="toc-the-pixel-custody-dispute">The pixel
                         custody dispute</a></li>
                         <li><a href="#private-archaeology" id="toc-private-archaeology">Private
-                        archaeology</a></li>
+                        archaeology</a>
+                        <ul>
+                        <li><a href="#the-export-table-has-entered-the-chat" id="toc-the-export-table-has-entered-the-chat">The
+                        export table has entered the chat</a></li>
+                        </ul></li>
                         <li><a href="#a-tenant-who-doesnt-pay-rent" id="toc-a-tenant-who-doesnt-pay-rent">A tenant
                         who doesn’t pay rent</a></li>
                         <li><a href="#the-sandbox-has-a-side-door" id="toc-the-sandbox-has-a-side-door">The sandbox
@@ -2881,6 +2890,43 @@ and what furniture that version expects.</code></pre>
                     for initiating an authenticated computing
                     environment while the guest repeatedly asks why the
                     wallpaper has not appeared.</p>
+                    <h3 id="coreauthentication-left-its-verbs-in-the-lobby">CoreAuthentication
+                    left its verbs in the lobby</h3>
+                    <p>The installed <code>coreauthd</code> binary is
+                    less shy about nouns than it is about architecture.
+                    On this edition’s macOS 27.0 build, its embedded
+                    Objective-C selector strings include
+                    <code>evaluatePolicy:options:uiDelegate:reply:</code>,
+                    <code>checkCredentialSatisfied:policy:reply:</code>,
+                    <code>findMechanismForEvent:mustBeRunning:plugin:</code>,
+                    and
+                    <code>authenticationSuccessfulForEvent:reply:</code>.</p>
+                    <p>Those are real names. They are also not a
+                    sequence diagram. A selector can show that code has
+                    vocabulary for policies, credentials, mechanisms,
+                    events, UI delegation, and replies. It cannot tell
+                    us which caller used it, which branch ran, or which
+                    private protocol joined the pieces during this
+                    login.</p>
+                    <pre class="text"><code>coreauthd:
+policy.
+credential.
+mechanism.
+event.
+
+root:
+which one makes me authenticated
+
+coreauthd:
+you have mistaken my vocabulary
+for your outcome.</code></pre>
+                    <p>This is the evidence rule in miniature: quote the
+                    names, keep their punctuation, and decline to write
+                    fan fiction in the colons. CoreAuthentication can
+                    help evaluate an authentication request without
+                    becoming the owner of the account, the creator of
+                    the session, the keeper of every credential, or the
+                    artist responsible for the wallpaper.</p>
                     <h2 id="the-account-was-already-here">The account
                     was already here</h2>
                     <p>This is the part humans find suspicious. If the
@@ -3319,6 +3365,75 @@ nobody touch it</code></pre>
                     documents a behavior or we reproduce it under stated
                     conditions, they do not authorize us to publish a
                     complete invisible constitution.</p>
+                    <h3 id="the-export-table-has-entered-the-chat">The
+                    export table has entered the chat</h3>
+                    <p>The installed binaries on this edition’s target
+                    build are willing to provide name tags. SkyLight
+                    exports <code>_SLSMainConnectionID</code>,
+                    <code>_SLSGetWindowOwner</code>,
+                    <code>_SLSOrderWindow</code>,
+                    <code>_SLSCopyManagedDisplaySpaces</code>,
+                    <code>_SLSSetWindowAlpha</code>, and
+                    <code>_SLSSetWindowLevel</code>. CoreGraphics
+                    exports <code>_CGWindowListCopyWindowInfo</code>,
+                    <code>_CGDisplayBounds</code>,
+                    <code>_CGMainDisplayID</code>,
+                    <code>_CGEventCreate</code>, and
+                    <code>_CGDisplayRegisterReconfigurationCallback</code>.</p>
+                    <p>That is an excellent list of verbs and a terrible
+                    constitution.</p>
+                    <pre class="text"><code>Researcher:
+I found SLSGetWindowOwner.
+
+SkyLight:
+good.
+
+Researcher:
+so I understand window ownership.
+
+SkyLight:
+you understand one exported name.</code></pre>
+                    <p>The names support the chapter’s geography:
+                    connections, windows, ordering, Spaces, display
+                    bounds, events, and display reconfiguration are
+                    separate objects and operations. They do not reveal
+                    every accepted argument, authorization check, daemon
+                    boundary, side effect, or promise across releases.
+                    <code>_SLSGetWindowOwner</code> is evidence that
+                    somebody can ask an ownership-shaped question. It is
+                    not a deed to the window.</p>
+                    <p>Brightness provides an even cleaner jurisdiction
+                    fight. CoreBrightness exports names including
+                    <code>_CBALCGetDisplayAutoBrightnessEnabled</code>,
+                    <code>_CBALCSetDisplayAutoBrightnessEnabled</code>,
+                    and <code>_CBALCALSCopyALSServiceClient</code>.
+                    DisplayServices separately exports
+                    <code>_DisplayServicesCanChangeBrightness</code>,
+                    <code>_DisplayServicesGetAuthorized</code>,
+                    <code>_DisplayServicesGetBrightness</code>,
+                    <code>_DisplayServicesSetBrightness</code>,
+                    <code>_DisplayServicesEnableAmbientLightCompensation</code>,
+                    and <code>_DisplayServicesCommitSettings</code>.</p>
+                    <pre class="text"><code>App:
+set brightness.
+
+DisplayServices:
+can change?
+
+CoreBrightness:
+auto brightness enabled?
+
+Ambient light sensor:
+I have context.
+
+App:
+I had a slider.</code></pre>
+                    <p>Even the symbol names refuse to collapse
+                    capability, authorization, current value, automatic
+                    policy, ambient-light input, and committed settings
+                    into one knob. We quote them because they are real.
+                    We stop there because names are evidence of
+                    vocabulary, not complete semantics.</p>
                     <h2 id="a-tenant-who-doesnt-pay-rent">A tenant who
                     doesn’t pay rent</h2>
                     <p>The Parrot-derived <code>CGSSpace.swift</code>
@@ -11219,27 +11334,30 @@ Linux on larpintosh:
                     <h2 id="back-cover-title" class="unlisted">About the
                     book</h2>
                     <p>Your Mac is not run by one all-powerful piece of
-                    software. It is run by a dysfunctional bureaucracy.
-                    On Your Processor is a field guide to the
-                    overlapping jurisdictions inside modern macOS and
-                    Apple Silicon: Boot ROM and iBoot deciding what may
-                    run, XNU governing the kernel, launchd raising
+                    software. It is run by a dysfunctional
+                    bureaucracy.</p>
+                    <p><em>On Your Processor</em> is a field guide to
+                    the overlapping jurisdictions inside modern macOS
+                    and Apple silicon: Boot ROM and iBoot deciding what
+                    may run, XNU governing the kernel, launchd raising
                     userspace, WindowServer owning the graphical world,
-                    the MMU and DART enforcing memory borders, the
-                    Secure Enclave guarding a security domain of its
-                    own, and a cast of daemons with enough private
-                    entitlements to make any organizational chart cry.
-                    The tour now follows authority across the
-                    system-on-chip and down into the power
-                    infrastructure beneath computation, where dependence
-                    keeps changing shape without becoming a universal
-                    chain of command. Through technical explanation,
-                    reverse-engineering receipts, and increasingly
-                    hostile family dialogue, the book asks one question
-                    over and over: who is actually in charge? The answer
-                    is always the same. It depends what you are trying
-                    to do. Because inside a modern computer, authority
-                    has a jurisdiction.</p>
+                    and the Secure Enclave guarding a security domain of
+                    its own.</p>
+                    <p>The expanded tour follows a request sideways and
+                    downward. APFS argues about which file exists.
+                    Virtual memory separates addresses from residency.
+                    MMU and DART enforce different maps. CPU caches
+                    negotiate shared reality. Drivers, firmware,
+                    controllers, networks, schedulers, and wake
+                    machinery all perform narrow jobs while somebody
+                    farther upstairs takes credit.</p>
+                    <p>Through technical explanation, primary-source
+                    receipts, labeled reverse engineering, and
+                    increasingly hostile family dialogue, the book asks
+                    one question over and over: who is actually in
+                    charge?</p>
+                    <p>It depends what you are trying to do. Inside a
+                    modern computer, authority has a jurisdiction.</p>
                     </section>
                     </main>
                 </div>
