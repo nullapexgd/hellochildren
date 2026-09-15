@@ -198,8 +198,6 @@ Older snapshot:
 in which century
 ```
 
-The joke is not that one view lies. The joke is that the user asked for *the* state.
-
 ## The seal would like a word
 
 The Signed System Volume protects system content with a tree of cryptographic hashes whose root measurement is called a seal. On Apple silicon, Apple documents the bootloader verifying the seal before handing control to the kernel under the normal protected boot configuration.
@@ -238,7 +236,7 @@ SSV:
 historical fiction is on another volume.
 ```
 
-The useful distinction is between a byte existing and a boot policy accepting a system built from it. A recovery tool can operate under authority that an ordinary process does not possess. A changed security configuration can authorize a different boot path. Neither event travels backward in time and turns the original running root shell into Boot ROM's supervisor.
+Here, “the write succeeded” concerns altered system content and boot acceptance. Whether those bytes survive a power failure is a separate question. A recovery tool can operate under authority that an ordinary process does not possess. Neither event travels backward in time and turns the original running root shell into Boot ROM's supervisor.
 
 ```text
 root:
@@ -256,55 +254,9 @@ that is a time, not an answer.
 
 Filesystems preserve states. Boot policy chooses among states it is willing to trust. The path `/System` cannot explain either decision by itself.
 
-## The path is lying politely again
-
-> **Sidebar: `/private` has been here the whole time**
->
-> Familiar macOS paths such as `/var`, `/tmp`, and `/etc` resolve through links into `/private`. This indirection predates the modern System/Data split and should not be confused with firmlinks or the Signed System Volume.
->
-> ```text
-> User:
-> /var
->
-> Filesystem:
-> /private/var
->
-> User:
-> why hide the word private
->
-> Filesystem:
-> it was in the path.
-> ```
->
-> A visible pathname is an interface. Following it may cross a symbolic link, a firmlink-backed volume boundary, or a mount point. Similar surprise does not make those mechanisms identical.
-
 ## Namespace lies politely
 
-The directory tree is one of computing's best user interfaces because it lets wildly different storage arrangements answer to paths. Local volumes, snapshots, firmlinks, mounted disk images, network shares, and synthetic locations can all appear under one navigable shape.
-
-The lie is polite because the alternative is asking the user to provide a volume-group UUID before opening Downloads.
-
-```text
-User:
-open my file.
-
-Path resolver:
-which mounted view
-
-User:
-the normal one.
-
-Path resolver:
-finally, an honest abstraction.
-```
-
-Three authorities remain distinct:
-
-- A process may have permission to write.
-- A particular mounted view may expose a path and permit mutation.
-- The resulting filesystem state may or may not be the snapshot and seal accepted for boot.
-
-Changing one answer does not automatically change the others. Root can possess write authority somewhere without controlling which snapshot the boot chain accepts. Finder can display one “Macintosh HD” without erasing the System/Data split. APFS can present a coherent path without claiming every byte lives on one volume.
+The directory tree lets the System and Data volumes appear as one navigable place. That saves the user from providing a volume-group UUID before opening Downloads. The visible path still leaves mount state and boot acceptance to their respective offices.
 
 Authority through abstraction is the friendliest form of lying in the house.
 

@@ -20,6 +20,10 @@ This ledger records callbacks, not claims of implementation.
 | `sharingd` | 12 | Observed binary plus conservative role | Entitlement names show access, not every action taken. Exact counts are build-specific: 132 on the v0.3 target and 134 in later observations. |
 | Finder: “this is Macintosh HD.” / APFS: “which one.” | 13 | Dramatized | The unified view does not erase System/Data volume roles. |
 | SSV: “that's adorable.” / seal: “explain yourself.” | 13 | Dramatized | Separate comic voices, never separate daemons. Writing bytes is not producing boot-accepted sealed state. |
+| SSD: “what's a Users” / “what's a file” | 14 | Protected dramatization | Preserve the exact XNU pathname exchange. The ordinary filesystem/block-storage boundary supplies the joke; it is not a command transcript or a universal inability of firmware to interpret filesystems. |
+| File existence needs a reference and view | 14 | Documented distinctions plus dramatization | Pathname, directory entry, object, open reference, mount, and snapshot differ. Chapter 13 retains APFS System/Data and SSV; Chapter 14 hands bytes to Chapter 15. |
+| Save, write, close, sync, and durable state | 15 | Documented distinctions plus dramatization | A successful ordinary write has real visibility semantics. Close is not full sync; full sync has the documented device-scoped guarantee. Do not invent exact NAND placement or one universal I/O pipeline. |
+| Clean exit is not a durability certificate | 15, 29 | Scoped callback | Chapter 15 teaches the mechanism; Chapter 29 may cash it in one short shutdown callback. A process ending does not by itself certify completion of every related write. |
 | SEP mailbox dap-up | 25 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |
 | Efeali sends launchd to SEP | 26 | Deliberately impossible dramatization | `send` is invented; AirDrop does not cross trust domains; the evidence note must say the architecture argues against the scene. |
 | iBoot: “personal matters.” | 26 | Dramatized | iBoot accepts the impossible premise for personal reasons and never explains them. |

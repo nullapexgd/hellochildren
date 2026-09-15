@@ -438,3 +438,27 @@ congratulations on having a demolition permit
 ```
 
 The exchange is dramatization around the established XNU/launchd authority boundary. Keep one compact nearby distinction between destructive authority and service organization; do not explain the joke again.
+
+## v0.7 storage protections
+
+Preserve the Chapter 14 exchange verbatim:
+
+```text
+XNU:
+read /Users/efeali/book.txt.
+
+SSD:
+what's a Users
+
+XNU:
+...
+
+SSD:
+what's a file
+```
+
+The exchange dramatizes the ordinary filesystem/block-storage boundary. Keep the nearby scope once; do not turn it into a literal command trace, a single documented SSD component, or a universal claim about what firmware can understand.
+
+Chapter 13 retains APFS volume roles, firmlinks, mount state, snapshots, and SSV. Its “the write succeeded” exchange concerns boot-accepted sealed content, not power-loss durability. Chapter 14 owns names, object/open lifetime, and view-relative existence. Chapter 15 owns acceptance, write/close/sync distinctions and durability, including the narrow documented F_FULLFSYNC guarantee and error/device qualification.
+
+Chapter 29's callback must preserve the distinction that a clean process exit does not by itself certify durable storage. It should cash Chapter 15's lesson without retelling it.
