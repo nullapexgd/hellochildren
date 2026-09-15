@@ -188,3 +188,41 @@ Apple documents peripheral processors for networking, graphics, power management
 Classification: dramatization grounded in `PUB-FIRMWARE-001`.
 
 The exact launchd/firmware exchange is fictional. “firmware” is a composite character outside the ordinary macOS process model, not an undocumented daemon. Firmware-related loaders, helpers, and update tools may be ordinary processes; their PIDs do not become the PID of code executing on a peripheral processor.
+
+## PUB-SOCKET-001 — a socket is a local endpoint object
+
+Classification: installed macOS SDK manuals and IETF standards.
+
+Sources: macOS 27.0 SDK `socket(2)`, `connect(2)`, `send(2)`, and `recv(2)` manuals; [RFC 9293](https://www.rfc-editor.org/rfc/rfc9293) for TCP and [RFC 8200](https://www.rfc-editor.org/rfc/rfc8200) for IPv6.
+
+Supports: Chapter 22's descriptor/socket/protocol distinction, send-result scope, and protocol-defined address/port/header fields. Local policy may attribute sockets to processes; no claim says every packet carries a macOS PID.
+
+## PUB-NET-PATH-001 — interfaces and device paths are scoped
+
+Classification: public protocol standards and Apple driver documentation.
+
+Sources: `PUB-SOCKET-001`, Apple [NetworkExtension](https://developer.apple.com/documentation/networkextension), and DriverKit networking/device-family documentation under `PUB-DRIVER-001`.
+
+Supports: the conceptual socket → protocol → interface → driver/controller → physical-link handoff. Loopback, tunnels, filtering, polling, kernel paths, and device variation prevent this from being a universal literal pipeline.
+
+## PUB-WAIT-001 — runnable, blocked, spinning, idle, and stalled differ
+
+Classification: Apple OSS/XNU interfaces and durable operating-system model.
+
+Sources: Apple OSS XNU [`sched_prim.h`](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/sched_prim.h), [`thread.h`](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/thread.h), and the installed `kevent(2)`/`select(2)` manuals.
+
+Supports: Chapter 23's eligibility/execution/wait distinction, network-read example, timeout, and asynchronous readiness. Scheduler policy, Apple core pipelines, and exact wait-channel internals are intentionally unclaimed.
+
+## PUB-WAKE-001 — wake needs a subject
+
+Classification: Apple public API/support documentation and installed manuals.
+
+Sources: DriverKit `IODispatchQueue` and event-source documentation under `PUB-DRIVER-001`; installed `launchd.plist(5)` and `pmset(1)` manuals; Apple [Set sleep and wake settings for your Mac](https://support.apple.com/guide/mac-help/set-sleep-and-wake-settings-mchle41a6ccd/mac).
+
+Supports: Chapter 24 separating waiter eligibility, timer expiry, callback delivery, launch-on-demand, and whole-system wake. Exact wake routing, model-specific sleep state, and private launch conditions remain unclaimed.
+
+## DRAM-NET-001 and DRAM-WAKE-001 — packet and wake family dialogue
+
+Classification: dramatization grounded in the four receipts above.
+
+The packet does not literally argue about PIDs, and Power Management is an ensemble character. Dialogue never establishes that one packet always launches a service, one callback always uses a particular thread, or one reported wake reason is a complete causal trace.

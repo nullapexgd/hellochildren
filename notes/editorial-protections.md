@@ -505,3 +505,11 @@ my what
 ```
 
 “firmware” is a composite dramatized character, not a real Apple process. Do not give it a PID, launchd label, universal boot path, or cross-generation controller topology. `iBootd` and `amfidd` remain explicitly fictional elsewhere.
+
+## v0.7 network, waiting, and wake protections
+
+Chapter 22 must state both qualifications: local policy may attribute sockets to processes, and higher-level protocols may explicitly carry identity. Its socket-to-link route is illustrative, not universal.
+
+Chapter 23 separates runnable, running, blocked, spinning, core idle, and pipeline stall. Do not invent private XNU scheduler policy or M4 microarchitecture. Asynchronous code waits elsewhere; it does not remove latency.
+
+Chapter 24 always asks what woke. Thread eligibility, timer expiry, callback delivery, service activation, processor/display activity, and system wake are not synonyms. It may point toward interrupt routing but must not teach or spend Chapter 29's interrupt material.

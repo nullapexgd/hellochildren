@@ -30,6 +30,9 @@ This ledger records callbacks, not claims of implementation.
 | The cache has receipts | 19 | Generic Arm architecture plus dramatization | Cache kind, object, visibility, ordering, authorization, and persistence must remain separate. No M4 cache-topology guesses. |
 | You never talked to the hardware | 20 | Scoped DriverKit example | Client, managed connection, driver, mapping, queue, device, and completion have distinct contracts. Never present the route as universal. |
 | Firmware: “my what” | 21 | Protected dramatization | Preserve the exact launchd/PID exchange. Firmware is a composite character outside the ordinary userspace process model, not a hidden daemon. |
+| The packet leaves without your PID | 22 | Protocol boundary | Local attribution and explicit higher-level identity remain real; PID is not automatically an Internet routing field. |
+| The CPU is waiting | 23 | State-vocabulary joke | Always name thread, core, pipeline, operation, or user. Async moves waiting; it does not remove latency. |
+| Who woke me up? | 24 | Multi-boundary callback | Waiter, timer, callback, service activation, core, display, and system wake remain distinct. Interrupt routing belongs to Chapter 29. |
 | SEP mailbox dap-up | 25 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |
 | Efeali sends launchd to SEP | 26 | Deliberately impossible dramatization | `send` is invented; AirDrop does not cross trust domains; the evidence note must say the architecture argues against the scene. |
 | iBoot: “personal matters.” | 26 | Dramatized | iBoot accepts the impossible premise for personal reasons and never explains them. |

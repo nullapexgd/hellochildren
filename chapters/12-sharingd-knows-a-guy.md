@@ -160,6 +160,8 @@ The daemon’s broad access is not automatically evidence of abuse. It is eviden
 
 ## Finding is not knowing is not sending
 
+This chapter owns discovery, identity, policy, and the decision to send. Chapter 22 takes the resulting bytes from a socket through protocol and interface boundaries toward a network that has never heard of `sharingd`'s reputation.
+
 The Share button conceals several questions because putting all of them in the menu would make the menu the size of a tax return.
 
 Is another device nearby? Does it advertise a compatible service? Which account or contact might correspond to it? Is the recipient eligible for this feature? Which transport can carry the payload? Will the other side accept it?
