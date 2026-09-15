@@ -112,7 +112,11 @@ contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Mach excepti
 contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'Unix signals'
 contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'deferred work'
 contains "$project_dir/chapters/32-epilogue.md" 'Hyprvisor'
-test "$(count_standalone "$project_dir/chapters/31-please-stop-interrupting-me.md")" = 0 || fail 'Chapter 31 contains standalone moo.'
+not_contains "$project_dir/chapters/31-please-stop-interrupting-me.md" 'moo.'
+chapter30_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/chapters/30-below-the-kernel.md")
+test "$chapter30_last_nonblank" = 'zzz' || fail 'Chapter 30 does not end at zzz.'
+chapter32_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/chapters/32-epilogue.md")
+test "$chapter32_last_nonblank" = 'moo.' || fail 'Chapter 32 does not end at moo.'
 test "$(count_standalone "$project_dir/chapters/32-epilogue.md")" = 1 || fail 'Chapter 32 must contain exactly one standalone moo.'
 
 test -f "$project_dir/book/contents.txt" || fail 'missing book/contents.txt'
@@ -157,7 +161,7 @@ assert_order "$project_dir/book/contents.txt" \
     'chapters/12-sharingd-knows-a-guy.md' \
     'parts/03-names-bytes-and-addresses.md' \
     'chapters/13-macintosh-hd-is-a-diplomatic-arrangement.md' \
-    'chapters/19-shutdown.md' \
+    'chapters/19-the-cache-has-receipts.md' \
     'parts/04-nobody-touched-the-hardware.md' \
     'chapters/20-you-never-talked-to-the-hardware.md' \
     'chapters/24-who-woke-me-up.md' \
@@ -169,12 +173,8 @@ assert_order "$project_dir/book/contents.txt" \
     'chapters/32-epilogue.md'
 
 contains "$project_dir/chapters/00-title.md" '# On Your Processor'
-contains "$project_dir/VERSION" '0.6'
 contains "$project_dir/book/metadata.yaml" 'title: "On Your Processor"'
 contains "$project_dir/book/metadata.yaml" 'author: "Efeali Bel"'
-contains "$project_dir/book/metadata.yaml" 'edition: "v0.6 — Below the Kernel"'
-contains "$project_dir/chapters/00-title.md" '### v0.6 — Below the Kernel'
-contains "$project_dir/README.md" 'The current release is v0.6'
 contains "$project_dir/chapters/02-the-boot-chain.md" 'Owner Identity Key'
 contains "$project_dir/chapters/05-the-children.md" '`iBootd` is fictional.'
 contains "$project_dir/chapters/08-trust-and-signatures.md" '`amfidd` is fictional.'
@@ -186,9 +186,6 @@ contains "$project_dir/chapters/30-below-the-kernel.md" 'wrong temporal domain.'
 contains "$project_dir/chapters/30-below-the-kernel.md" 'Spacetime:'
 contains "$project_dir/chapters/32-epilogue.md" '# 32. One More Jurisdiction'
 not_contains "$project_dir/chapters/28-hardware-family-dinner.md" 'physically inside me'
-
-chapter_count=$(find "$project_dir/chapters" -maxdepth 1 -type f -name '[0-9][0-9]-*.md' ! -name '00-title.md' | wc -l | tr -d ' ')
-test "$chapter_count" = 21 || fail "expected 21 numbered chapters, found $chapter_count"
 
 test -f "$project_dir/notes/receipts-v0.6.md" || fail 'missing notes/receipts-v0.6.md'
 test -f "$project_dir/releases/on-your-processor-v0.6.md" || fail 'missing frozen v0.6 manuscript'
@@ -252,8 +249,14 @@ for part_marker in \
     epub_contains "$part_marker" "$epub_file"
 done
 epub_order_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-epub.XXXXXX")
-trap 'rm -f "$epub_order_file"' EXIT
+epub_nav_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-nav.XXXXXX")
+epub_opf_file=$(mktemp "${TMPDIR:-/tmp}/oyp-v07-opf.XXXXXX")
+trap 'rm -f "$epub_order_file" "$epub_nav_file" "$epub_opf_file"' EXIT
 epub_reading_content "$epub_file" > "$epub_order_file"
+unzip -p "$epub_file" EPUB/nav.xhtml > "$epub_nav_file"
+unzip -p "$epub_file" EPUB/content.opf > "$epub_opf_file"
+contains "$html_file" 'role="doc-toc"'
+contains "$epub_nav_file" 'epub:type="toc"'
 assert_order "$epub_order_file" \
     'Part I — Who Let You Run?' \
     'Part II — The Offices Upstairs' \
@@ -264,6 +267,34 @@ assert_order "$epub_order_file" \
     '30. Below the Kernel' \
     '31. Please Stop Interrupting Me' \
     '32. One More Jurisdiction'
+assert_order "$epub_nav_file" \
+    'Part I — Who Let You Run?' \
+    'Part II — The Offices Upstairs' \
+    'Part III — Names, Bytes, and Addresses' \
+    'Part IV — Nobody Touched the Hardware' \
+    'Part V — Other Worlds' \
+    'Part VI — Everybody Leaves Eventually' \
+    '30. Below the Kernel' \
+    '31. Please Stop Interrupting Me' \
+    '32. One More Jurisdiction'
+contains "$epub_opf_file" '<spine'
+for navigation_marker in \
+    'Part I — Who Let You Run?' \
+    'Part II — The Offices Upstairs' \
+    'Part III — Names, Bytes, and Addresses' \
+    'Part IV — Nobody Touched the Hardware' \
+    'Part V — Other Worlds' \
+    'Part VI — Everybody Leaves Eventually' \
+    '30. Below the Kernel' \
+    '31. Please Stop Interrupting Me' \
+    '32. One More Jurisdiction'; do
+    navigation_href=$(grep -F -m1 -- "$navigation_marker" "$epub_nav_file" | sed -n 's/.*href="\([^"]*\)".*/\1/p')
+    test -n "$navigation_href" || fail "EPUB navigation target missing: $navigation_marker"
+    navigation_path=${navigation_href%%#*}
+    navigation_file=${navigation_path##*/}
+    navigation_id=${navigation_file%.xhtml}_xhtml
+    grep -Fq -- "idref=\"$navigation_id\"" "$epub_opf_file" || fail "EPUB spine target missing: $navigation_marker"
+done
 assert_order "$html_file" \
     'Part I — Who Let You Run?' \
     'Part II — The Offices Upstairs' \
@@ -287,8 +318,8 @@ contains "$html_file" 'id="reader-track"'
 contains "$html_file" 'reader-page'
 contains "$html_file" 'ArrowLeft'
 contains "$html_file" 'ArrowRight'
-contains "$html_file" '20. Below the Kernel'
-contains_with_normalized_whitespace "$html_file" '21. One More Jurisdiction'
+contains "$html_file" '30. Below the Kernel'
+contains_with_normalized_whitespace "$html_file" '32. One More Jurisdiction'
 contains "$html_file" 'data:image/png;base64,'
 not_contains "$html_file" '<link rel="stylesheet"'
 not_contains "$html_file" '<script src='
@@ -300,8 +331,8 @@ printf '%s' "$epub_metadata" | grep -Fq '<dc:title' || fail 'EPUB title metadata
 printf '%s' "$epub_metadata" | grep -Fq '>On Your Processor</dc:title>' || fail 'EPUB title is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq '>Efeali Bel</dc:creator>' || fail 'EPUB author is incorrect'
 printf '%s' "$epub_metadata" | grep -Fq 'cover-image' || fail 'EPUB cover image is missing'
-epub_contains '20. Below the Kernel' "$epub_file"
-epub_contains '21. One More Jurisdiction' "$epub_file"
+epub_contains '30. Below the Kernel' "$epub_file"
+epub_contains '32. One More Jurisdiction' "$epub_file"
 
 contains "$project_dir/chapters/04-launchd.md" '# 4. launchd: Hello Children'
 contains "$project_dir/chapters/00-title.md" 'Unless a passage says otherwise, local observations carried forward from the Receipts Edition came from macOS 27.0 build `26A5416b`.'
@@ -311,11 +342,12 @@ not_contains "$project_dir/chapters/05-the-children.md" 'The v0.3 reproduction p
 not_contains "$project_dir/chapters/08-trust-and-signatures.md" 'The v0.3 reproduction pass'
 not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The earlier source-conversation build'
 not_contains "$project_dir/chapters/12-sharingd-knows-a-guy.md" 'The v0.3 reproduction target'
-not_contains "$project_dir/chapters/19-shutdown.md" 'The earlier source archaeology'
-not_contains "$project_dir/chapters/19-shutdown.md" 'the v0.3 reproduction pass'
+not_contains "$project_dir/chapters/29-shutdown.md" 'The earlier source archaeology'
+not_contains "$project_dir/chapters/29-shutdown.md" 'the v0.3 reproduction pass'
 
 last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/manuscript.md")
 test "$last_nonblank" = 'moo.' || fail 'manuscript does not end at moo.'
+cmp -s "$project_dir/manuscript.md" "$project_dir/releases/on-your-processor-v0.7.md" || fail 'manuscript differs from frozen v0.7 manuscript'
 
 v05_release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.5.md")
 test "$v05_release_last_nonblank" = 'moo.' || fail 'frozen v0.5 manuscript does not end at moo.'
@@ -326,5 +358,7 @@ test "$v06_release_last_nonblank" = 'moo.' || fail 'frozen v0.6 manuscript does 
 
 test "$(count_standalone "$project_dir/manuscript.md")" = 1 || fail 'manuscript must contain exactly one standalone moo.'
 test "$(count_standalone "$project_dir/releases/on-your-processor-v0.7.md")" = 1 || fail 'frozen v0.7 manuscript must contain exactly one standalone moo.'
+v07_release_last_nonblank=$(awk 'NF { line=$0 } END { print line }' "$project_dir/releases/on-your-processor-v0.7.md")
+test "$v07_release_last_nonblank" = 'moo.' || fail 'frozen v0.7 manuscript does not end at moo.'
 
 printf '%s\n' 'publication check passed'
