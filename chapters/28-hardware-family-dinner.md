@@ -1,4 +1,4 @@
-# 18. The Hardware Family Dinner
+# 28. The Hardware Family Dinner
 
 The mistake was inviting everyone.
 

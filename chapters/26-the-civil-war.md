@@ -1,4 +1,4 @@
-# 16. The Civil War
+# 26. The Civil War
 
 For fifteen chapters, this book has insisted that authority requires a noun.
 

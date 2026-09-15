@@ -241,6 +241,16 @@ This is not weakness. It is separation of responsibility hardened into boundarie
 
 The insecure alternative is not “XNU, but more kingly.” It is “one compromise gets the whole house.”
 
+```text
+XNU:
+I can destroy the entire userspace.
+
+launchd:
+congratulations on having a demolition permit
+```
+
+Destructive authority is not service organization.
+
 ## The first child
 
 At some point, XNU creates the conditions for PID 1.

@@ -89,7 +89,7 @@ The final nonblank line remains exactly:
 
 ## v0.4 impossible-chapter protections
 
-Chapter 16 is openly impossible. Preserve this sequence and never convert it into a technical mechanism:
+Chapter 26 is openly impossible. Preserve this sequence and never convert it into a technical mechanism:
 
 ```text
 efeali@sheetofpaper ~ % id -u
@@ -130,20 +130,20 @@ personal matters.
 
 The chapter must remain labeled dramatization. It must never acquire an exploit explanation, magical entitlement, SEP migration protocol, or real `send` command.
 
-The Chapter 19 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
+The Chapter 29 core count remains a machine-specific observation. The v0.6 Five-Minute Kernel protection below supersedes the shorter staging of that exchange. Do not generalize the count to every M4 configuration or silently turn it back into eight.
 
 ## Structural protections (v0.4, updated for v0.6)
 
 - The reading copy has twenty-one numbered chapters plus `00-title.md`.
-- Chapter 16 is the openly impossible Civil War.
-- Chapter 17 introduces Apple virtualization lightly and does not spend the Hyprvisor reveal.
-- Chapter 18 is the Hardware Family Dinner climax.
-- Chapter 19 is the shutdown denouement.
-- Chapter 20 is Below the Kernel; its `zzz` ends the chapter, not the book.
-- Chapter 21 is the Hyprvisor epilogue.
+- Chapter 26 is the openly impossible Civil War.
+- Chapter 27 introduces Apple virtualization lightly and does not spend the Hyprvisor reveal.
+- Chapter 28 is the Hardware Family Dinner climax.
+- Chapter 29 is the shutdown denouement.
+- Chapter 30 is Below the Kernel; its `zzz` ends the chapter, not the book.
+- Chapter 32 is the Hyprvisor epilogue.
 - No reading-copy prose follows `moo.`
 
-Preserve Chapter 21's final Larpintosh exchange immediately before Hyprvisor clears its throat:
+Preserve Chapter 32's final Larpintosh exchange immediately before Hyprvisor clears its throat:
 
 ```text
 Linux on larpintosh:
@@ -194,7 +194,7 @@ OIK and AMFI may argue only across their documented jurisdiction boundary. OIK c
 
 ## v0.6 SoC dinner protections
 
-Chapter 18 remains the Hardware Family Dinner. Preserve this exchange verbatim:
+Chapter 28 remains the Hardware Family Dinner. Preserve this exchange verbatim:
 
 ```text
 SoC:
@@ -337,7 +337,7 @@ Preserve the chapter's returning thesis exactly:
 
 ## v0.6 Below the Kernel protections
 
-Chapter 20 follows different dependency relations, not a universal technical or political hierarchy. Keep execution, integration, power control, stored energy, electrical supply, ownership, regulation, and taxation distinct. Power Management must remain labeled as a dramatized ensemble role. The battery scene is a laptop example. Keep the following exchange verbatim:
+Chapter 30 follows different dependency relations, not a universal technical or political hierarchy. Keep execution, integration, power control, stored energy, electrical supply, ownership, regulation, and taxation distinct. Power Management must remain labeled as a dramatized ensemble role. The battery scene is a laptop example. Keep the following exchange verbatim:
 
 ```text
 XNU:
@@ -373,7 +373,7 @@ SEP:
 on your grid.
 ```
 
-The metaphysical postscript is satire, not an extension of the evidence chain or an explanation of cosmology. Preserve the final exchanges verbatim, with no prose between them or after them in Chapter 20:
+The metaphysical postscript is satire, not an extension of the evidence chain or an explanation of cosmology. Preserve the final exchanges verbatim, with no prose between them or after them in Chapter 30:
 
 ```text
 Power Plant:
@@ -423,4 +423,18 @@ Spacetime:
 zzz
 ```
 
-Chapter 20 contains no `moo.`. Chapter 21 changes only its chapter number for this expansion: preserve the Larpintosh question, the breathing beat, and exactly one final `moo.` outside the dialogue block. Nothing follows it in the reading sequence.
+Chapter 30 contains no `moo.`. Chapter 32 changes only its chapter number for this expansion: preserve the Larpintosh question, the breathing beat, and exactly one final `moo.` outside the dialogue block. Nothing follows it in the reading sequence.
+
+## v0.7 demolition-permit protection
+
+Preserve the Chapter 3 exchange verbatim:
+
+```text
+XNU:
+I can destroy the entire userspace.
+
+launchd:
+congratulations on having a demolition permit
+```
+
+The exchange is dramatization around the established XNU/launchd authority boundary. Keep one compact nearby distinction between destructive authority and service organization; do not explain the joke again.

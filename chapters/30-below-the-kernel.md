@@ -1,4 +1,4 @@
-# 20. Below the Kernel
+# 30. Below the Kernel
 
 What does kernel authority presuppose?
 

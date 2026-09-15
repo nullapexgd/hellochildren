@@ -1,4 +1,4 @@
-# 19. At the Mercy of the Kernel
+# 29. At the Mercy of the Kernel
 
 Every operating-system book loves boot. Arrows point downward. Trust accumulates. The desktop appears. The diagram ends with *user session established* as if nobody will ever click Shut Down while fourteen apps negotiate unsaved documents.
 

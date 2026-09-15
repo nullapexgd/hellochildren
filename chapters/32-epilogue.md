@@ -1,4 +1,4 @@
-# 21. One More Jurisdiction
+# 32. One More Jurisdiction
 
 We began with a useful lie: hardware at the bottom, kernel above it, userspace above that, and the purchaser floating near the top like a minor deity with AppleCare.
 
