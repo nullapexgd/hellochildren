@@ -137,9 +137,10 @@ The Chapter 29 core count remains a machine-specific observation. The v0.6 Five-
 - The reading copy has twenty-one numbered chapters plus `00-title.md`.
 - Chapter 26 is the openly impossible Civil War.
 - Chapter 27 introduces Apple virtualization lightly and does not spend the Hyprvisor reveal.
-- Chapter 28 is the Hardware Family Dinner climax.
-- Chapter 29 is the shutdown denouement.
-- Chapter 30 is Below the Kernel; its `zzz` ends the chapter, not the book.
+- Chapter 28 is Below the Kernel; its `zzz` ends the chapter, not the book.
+- Chapter 29 is the interrupt bridge and the final expansion chapter.
+- Chapter 30 is the Hardware Family Dinner climax; no new jurisdiction follows it.
+- Chapter 31 is the shutdown denouement.
 - Chapter 32 is the Hyprvisor epilogue.
 - No reading-copy prose follows `moo.`
 
@@ -194,7 +195,7 @@ OIK and AMFI may argue only across their documented jurisdiction boundary. OIK c
 
 ## v0.6 SoC dinner protections
 
-Chapter 28 remains the Hardware Family Dinner. Preserve this exchange verbatim:
+Chapter 30 is the Hardware Family Dinner. Preserve this exchange verbatim:
 
 ```text
 SoC:
