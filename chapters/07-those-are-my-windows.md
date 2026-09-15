@@ -188,6 +188,49 @@ The author found the name, the call, and an integer associated with observed beh
 
 SkyLight and related private surfaces deserve the same restraint. Their names and observed artifacts can establish that machinery exists. Unless Apple documents a behavior or we reproduce it under stated conditions, they do not authorize us to publish a complete invisible constitution.
 
+### The export table has entered the chat
+
+The installed binaries on this edition's target build are willing to provide name tags. SkyLight exports `_SLSMainConnectionID`, `_SLSGetWindowOwner`, `_SLSOrderWindow`, `_SLSCopyManagedDisplaySpaces`, `_SLSSetWindowAlpha`, and `_SLSSetWindowLevel`. CoreGraphics exports `_CGWindowListCopyWindowInfo`, `_CGDisplayBounds`, `_CGMainDisplayID`, `_CGEventCreate`, and `_CGDisplayRegisterReconfigurationCallback`.
+
+That is an excellent list of verbs and a terrible constitution.
+
+```text
+Researcher:
+I found SLSGetWindowOwner.
+
+SkyLight:
+good.
+
+Researcher:
+so I understand window ownership.
+
+SkyLight:
+you understand one exported name.
+```
+
+The names support the chapter's geography: connections, windows, ordering, Spaces, display bounds, events, and display reconfiguration are separate objects and operations. They do not reveal every accepted argument, authorization check, daemon boundary, side effect, or promise across releases. `_SLSGetWindowOwner` is evidence that somebody can ask an ownership-shaped question. It is not a deed to the window.
+
+Brightness provides an even cleaner jurisdiction fight. CoreBrightness exports names including `_CBALCGetDisplayAutoBrightnessEnabled`, `_CBALCSetDisplayAutoBrightnessEnabled`, and `_CBALCALSCopyALSServiceClient`. DisplayServices separately exports `_DisplayServicesCanChangeBrightness`, `_DisplayServicesGetAuthorized`, `_DisplayServicesGetBrightness`, `_DisplayServicesSetBrightness`, `_DisplayServicesEnableAmbientLightCompensation`, and `_DisplayServicesCommitSettings`.
+
+```text
+App:
+set brightness.
+
+DisplayServices:
+can change?
+
+CoreBrightness:
+auto brightness enabled?
+
+Ambient light sensor:
+I have context.
+
+App:
+I had a slider.
+```
+
+Even the symbol names refuse to collapse capability, authorization, current value, automatic policy, ambient-light input, and committed settings into one knob. We quote them because they are real. We stop there because names are evidence of vocabulary, not complete semantics.
+
 ## A tenant who doesn't pay rent
 
 The Parrot-derived `CGSSpace.swift` comment told us one integer's secret. It didn't tell us what somebody would eventually build on top of it.

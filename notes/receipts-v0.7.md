@@ -22,6 +22,36 @@ Supports: stable final source paths for the v0.7 chapter spine.
 
 Does **not** change the factual meaning or evidence classification of the renamed chapters.
 
+## OBS-COREAUTH-001 — CoreAuthentication selector vocabulary
+
+Classification: direct build-specific string observation.
+
+On macOS 27.0 build `26A428`, `otool -ov` over `/System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd` identified Objective-C selector strings including:
+
+- `evaluatePolicy:options:uiDelegate:reply:`
+- `checkCredentialSatisfied:policy:reply:`
+- `findMechanismForEvent:mustBeRunning:plugin:`
+- `authenticationSuccessfulForEvent:reply:`
+
+Supports: Chapter 6 quoting installed CoreAuthentication vocabulary around policy, credentials, mechanisms, authentication events, UI delegation, and replies.
+
+Does **not** establish that the selectors execute in one sequence, identify their callers, document argument semantics, or reconstruct a complete login/authentication/session protocol. `coreauthd` exports only its Mach-O header through the ordinary export table on this build; these names were observed as embedded selector strings, not advertised C exports.
+
+## OBS-DISPLAY-SYMBOLS-001 — installed display and brightness export names
+
+Classification: direct build-specific export-table observation.
+
+On macOS 27.0 build `26A428`, `/usr/bin/dyld_info -exports` resolved the installed shared-cache images through their normal framework paths. Selected exact exports:
+
+- SkyLight: `_SLSMainConnectionID`, `_SLSGetWindowOwner`, `_SLSOrderWindow`, `_SLSCopyManagedDisplaySpaces`, `_SLSSetWindowAlpha`, `_SLSSetWindowLevel`
+- CoreGraphics: `_CGWindowListCopyWindowInfo`, `_CGDisplayBounds`, `_CGMainDisplayID`, `_CGEventCreate`, `_CGDisplayRegisterReconfigurationCallback`
+- CoreBrightness: `_CBALCGetDisplayAutoBrightnessEnabled`, `_CBALCSetDisplayAutoBrightnessEnabled`, `_CBALCALSCopyALSServiceClient`
+- DisplayServices: `_DisplayServicesCanChangeBrightness`, `_DisplayServicesGetAuthorized`, `_DisplayServicesGetBrightness`, `_DisplayServicesSetBrightness`, `_DisplayServicesEnableAmbientLightCompensation`, `_DisplayServicesCommitSettings`
+
+Supports: Chapter 7's conservative claim that the installed binaries expose vocabulary distinguishing connections, windows, ordering, Spaces, displays, events, brightness capability, authorization, automatic brightness, ambient-light participation, current values, setters, and committed settings.
+
+Does **not** document private parameter meanings, call order, authorization rules, owning process, complete side effects, or stability across releases. An exported name proves an exported name. It does not grant the book authority to complete the undocumented sentence.
+
 ## Storage documentation context — inspected 2026-09-15
 
 The storage receipts below were recorded before drafting Chapters 14–15. Local `man` resolves to the manuals shipped in the macOS 27.0 SDK under `/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/share/man/`. Host: macOS 27.0 build `26A428`; Xcode 27.0 build `27A5252f`; `xcrun --sdk macosx --show-sdk-version`: `27.0`. These are inspected documentation, not tests of storage behavior. Do not replace earlier receipts' different build labels with this one.

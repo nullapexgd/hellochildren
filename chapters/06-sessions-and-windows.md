@@ -53,6 +53,29 @@ Authentication, directory identity, keychain state, preferences, and graphical s
 
 The family metaphor calls `loginwindow` the receptionist. This is unfair to receptionists, who are rarely responsible for initiating an authenticated computing environment while the guest repeatedly asks why the wallpaper has not appeared.
 
+### CoreAuthentication left its verbs in the lobby
+
+The installed `coreauthd` binary is less shy about nouns than it is about architecture. On this edition's macOS 27.0 build, its embedded Objective-C selector strings include `evaluatePolicy:options:uiDelegate:reply:`, `checkCredentialSatisfied:policy:reply:`, `findMechanismForEvent:mustBeRunning:plugin:`, and `authenticationSuccessfulForEvent:reply:`.
+
+Those are real names. They are also not a sequence diagram. A selector can show that code has vocabulary for policies, credentials, mechanisms, events, UI delegation, and replies. It cannot tell us which caller used it, which branch ran, or which private protocol joined the pieces during this login.
+
+```text
+coreauthd:
+policy.
+credential.
+mechanism.
+event.
+
+root:
+which one makes me authenticated
+
+coreauthd:
+you have mistaken my vocabulary
+for your outcome.
+```
+
+This is the evidence rule in miniature: quote the names, keep their punctuation, and decline to write fan fiction in the colons. CoreAuthentication can help evaluate an authentication request without becoming the owner of the account, the creator of the session, the keeper of every credential, or the artist responsible for the wallpaper.
+
 ## The account was already here
 
 This is the part humans find suspicious. If the account already existed, what exactly did login create?
