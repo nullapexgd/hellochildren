@@ -154,3 +154,37 @@ Supports: Chapter 19's distinction among coherent copies, synchronization/order,
 Classification: dramatization grounded in `PUB-CACHE-001`, `PUB-COHERENCE-001`, existing trust-cache receipts, and Chapter 15's durability receipts.
 
 The talking caches, joint-tenancy cache line, and `F_FULLFSYNC` confusion are not traces. They preserve the boundary: “cache” names a strategy, not one authority, and CPU-cache writeback is not a storage-durability oath.
+
+## PUB-DRIVER-001 — DriverKit delegation and client boundaries
+
+Classification: Apple Developer documentation and sample code.
+
+Sources: Apple [DriverKit](https://developer.apple.com/documentation/driverkit), [`IOUserClient`](https://developer.apple.com/documentation/driverkit/iouserclient), [`IODispatchQueue`](https://developer.apple.com/documentation/driverkit/iodispatchqueue), [`IOBufferMemoryDescriptor`](https://developer.apple.com/documentation/driverkit/iobuffermemorydescriptor), and [Communicating between a DriverKit extension and a client app](https://developer.apple.com/documentation/driverkit/communicating-between-a-driverkit-extension-and-a-client-app).
+
+Supports: Chapter 20's specific client → system-managed connection → user-space driver example, validation, memory descriptors, serial driver queues, and asynchronous completion. It does not define every macOS I/O path.
+
+## PUB-HW-PATH-001 — one example is not a universal hardware pipeline
+
+Classification: scoped synthesis of `PUB-DRIVER-001`.
+
+The DriverKit sample documents a client opening an `IOUserClient`, submitting validated method arguments, and receiving a callback. DriverKit separately documents device-family frameworks and hardware-related event sources. Chapter 20 uses that route to demonstrate delegation while explicitly preserving kernel drivers, Apple-provided services, polling, controlled direct mechanisms, and device-specific paths as alternatives.
+
+## PUB-FIRMWARE-001 — peripheral firmware has separate startup models
+
+Classification: Apple Platform Security documentation.
+
+Source: Apple [Peripheral processor security in Mac computers](https://support.apple.com/guide/security/peripheral-processor-security-seca500d4f2b/web).
+
+Supports: Chapters 2 and 21 distinguishing firmware downloaded and verified by the primary CPU at startup from firmware verified by a peripheral processor's own secure-boot chain. These are categories, not a universal simultaneous sequence.
+
+## PUB-CONTROLLER-001 — controller characters are scoped composites
+
+Classification: Apple documentation plus explicitly labeled Asahi reverse engineering already recorded in `notes/receipts-v0.5.md`.
+
+Apple documents peripheral processors for networking, graphics, power management, and other tasks. Asahi documents DCP and S5E on named Apple-silicon targets. Chapter 21 uses generic controller dialogue without claiming a current private ABI, one firmware model, one queue design, or cross-generation topology.
+
+## DRAM-FIRMWARE-PID-001 — launchd asks firmware for a PID
+
+Classification: dramatization grounded in `PUB-FIRMWARE-001`.
+
+The exact launchd/firmware exchange is fictional. “firmware” is a composite character outside the ordinary macOS process model, not an undocumented daemon. Firmware-related loaders, helpers, and update tools may be ordinary processes; their PIDs do not become the PID of code executing on a peripheral processor.

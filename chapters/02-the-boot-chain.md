@@ -188,32 +188,7 @@ That is as far as documented ownership goes. Chapter 5 will now misuse the famil
 
 ## The other processors have childhoods too
 
-Apple documents peripheral processors dedicated to display, storage, system management, Thunderbolt, graphics, and other functions. Some download verified firmware at startup; others may implement their own secure boot.
-
-This matters because the popular diagram shows hardware as a silent gray rectangle labeled HARDWARE.
-
-The gray rectangle is lying by omission.
-
-Inside it are specialists who also have startup requirements, firmware, memory, protection boundaries, and the capacity to make the main CPU’s day much worse.
-
-```text
-Application Processor:
-everybody ready?
-
-Display controller:
-firmware verified
-
-Storage controller:
-firmware verified
-
-Thunderbolt controller:
-I brought—
-
-DART:
-don't
-```
-
-The hardware relatives implement execution privilege, memory translation, DMA isolation, secure key operations, storage translation, rendering, inference, and display. Boot is customs opening several borders in order while everybody insists their form was already stamped.
+Apple also documents peripheral processors whose firmware may be verified after loading from the primary CPU or by a separate secure-boot chain. The main boot story therefore opens more than one execution world. Chapter 21 will meet the relatives who were never ordinary launchd jobs.
 
 ## The ancestor leaves the plot
 

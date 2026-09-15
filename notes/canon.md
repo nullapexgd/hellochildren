@@ -28,6 +28,8 @@ This ledger records callbacks, not claims of implementation.
 | Unified is not communal | 17 | Documented Metal/VM boundary | One memory architecture does not erase mappings, storage modes, synchronization, lifetime, capacity, or permissions. |
 | Memory has borders | 18 | Documented enforcement plus labeled DART reverse engineering | Preserve the MMU/DART loading-dock energy and all four protected lines; do not invent Apple topology. |
 | The cache has receipts | 19 | Generic Arm architecture plus dramatization | Cache kind, object, visibility, ordering, authorization, and persistence must remain separate. No M4 cache-topology guesses. |
+| You never talked to the hardware | 20 | Scoped DriverKit example | Client, managed connection, driver, mapping, queue, device, and completion have distinct contracts. Never present the route as universal. |
+| Firmware: “my what” | 21 | Protected dramatization | Preserve the exact launchd/PID exchange. Firmware is a composite character outside the ordinary userspace process model, not a hidden daemon. |
 | SEP mailbox dap-up | 25 | Dramatized around a hardware mechanism | `/var/mail` and the SEP mailbox are explicitly not the same thing. |
 | Efeali sends launchd to SEP | 26 | Deliberately impossible dramatization | `send` is invented; AirDrop does not cross trust domains; the evidence note must say the architecture argues against the scene. |
 | iBoot: “personal matters.” | 26 | Dramatized | iBoot accepts the impossible premise for personal reasons and never explains them. |

@@ -483,3 +483,25 @@ absolutely fucking not.
 Apple's public documentation calls the DMA boundary an IOMMU; public Asahi reverse engineering supplies the DART name. Do not merge those evidence classes or invent current Apple-silicon topology.
 
 Chapter 19 owns CPU-cache locality, coherence, visibility, ordering, and cache-kind ambiguity. It must not claim a specific M4 cache hierarchy. CPU-cache writeback is never storage durability, and coherence never grants authorization or repairs an unsynchronized program.
+
+## v0.7 driver and firmware protections
+
+Chapter 20 uses one documented DriverKit client/driver path to show delegation. It must explicitly reject a universal I/O pipeline and preserve alternate kernel, framework, polling, and controlled direct paths. Queue acceptance, submission, completion, and callback are separate receipts.
+
+Preserve the Chapter 21 exchange verbatim:
+
+```text
+launchd:
+I manage userspace.
+
+firmware:
+cool.
+
+launchd:
+what's your PID
+
+firmware:
+my what
+```
+
+“firmware” is a composite dramatized character, not a real Apple process. Do not give it a PID, launchd label, universal boot path, or cross-generation controller topology. `iBootd` and `amfidd` remain explicitly fictional elsewhere.
